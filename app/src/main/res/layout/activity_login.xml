@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_login"
+    tools:context=".LoginActivity">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/wraper_login"
+            android:orientation="vertical"
+            android:paddingBottom="20dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="80dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:text="Sign in please"
+                android:textAlignment="center"
+                android:textColor="@android:color/darker_gray" />
+
+            <!--Field Username-->
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_face_black_24dp"
+                android:drawablePadding="20dp"
+                android:hint="Masukkan Username..."
+                android:inputType="text"
+                android:paddingBottom="10dp" />
+
+            <!--Field Password-->
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:drawableLeft="@drawable/ic_lock_outline_black_24dp"
+                android:drawablePadding="20dp"
+                android:hint="Masukkan Password..."
+                android:inputType="textPassword"
+                android:paddingBottom="10dp" />
+
+            <!--button login-->
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="31dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/button_style"
+                android:text="Sign In"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white" />
+
+            <View
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider" />
+
+            <TextView
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:text=" Copyright © 2018 Kantor Desa Balung Kidul" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/button_style"
+            android:gravity="center"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/editText"
+            app:layout_constraintEnd_toEndOf="@+id/linearLayout"
+            app:layout_constraintStart_toStartOf="@+id/linearLayout">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="E-Arsip"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/white"
+                    android:textSize="25dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Kantor Desa Balung Kidul"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/white"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Name"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.constraint.ConstraintLayout>
