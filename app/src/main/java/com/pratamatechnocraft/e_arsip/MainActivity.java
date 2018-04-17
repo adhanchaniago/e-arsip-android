@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_surat_keluar) {
 
         } else if (id == R.id.nav_disposisi) {
-            fragment = new DisposisiFragment();
+
         } else if (id == R.id.nav_signout) {
 
         }
