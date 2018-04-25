@@ -13,17 +13,21 @@
             android:icon="@drawable/ic_notifications_black_24dp"
             android:title="Notifikasi" />
         <item
-            android:id="@+id/nav_surat_masuk"
+            android:id="@+id/nav_suratmasuk"
             android:icon="@drawable/ic_archive_black_24dp"
             android:title="Surat Masuk" />
         <item
-            android:id="@+id/nav_surat_keluar"
+            android:id="@+id/nav_suratkeluar"
             android:icon="@drawable/ic_unarchive_black_24dp"
             android:title="Surat Keluar" />
         <item
             android:id="@+id/nav_disposisi"
-            android:icon="@drawable/ic_menu_send"
+            android:icon="@drawable/ic_send_black_24dp"
             android:title="Disposisi" />
+        <item
+            android:id="@+id/nav_setting"
+            android:icon="@drawable/ic_settings_black_24dp"
+            android:title="Setting" />
         <item
             android:id="@+id/nav_signout"
             android:icon="@drawable/ic_power_settings_new_black_24dp"

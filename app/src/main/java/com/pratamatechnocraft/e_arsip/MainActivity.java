@@ -87,12 +87,14 @@ public class MainActivity extends AppCompatActivity
             fragment = new DashboardFragment();
         } else if (itemId == R.id.nav_notifikasi) {
             fragment = new NotifikasiFragment();
-        } else if (id == R.id.nav_surat_masuk) {
+        } else if (id == R.id.nav_suratmasuk) {
 
-        } else if (id == R.id.nav_surat_keluar) {
+        }else if (id == R.id.nav_suratkeluar) {
+
+        } else if (id == R.id.nav_setting) {
 
         } else if (id == R.id.nav_disposisi) {
-
+            fragment = new DisposisiFragment();
         } else if (id == R.id.nav_signout) {
 
         }
