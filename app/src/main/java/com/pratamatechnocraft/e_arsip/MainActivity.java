@@ -88,9 +88,9 @@ public class MainActivity extends AppCompatActivity
         } else if (itemId == R.id.nav_notifikasi) {
             fragment = new NotifikasiFragment();
         } else if (id == R.id.nav_suratmasuk) {
-
+            fragment = new SuratMasukFragment();
         }else if (id == R.id.nav_suratkeluar) {
-
+            fragment = new SuratKeluarFragment();
         } else if (id == R.id.nav_setting) {
 
         } else if (id == R.id.nav_disposisi) {
