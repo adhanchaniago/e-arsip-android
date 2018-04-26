@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name="com.pratamatechnocraft.e_arsip.LoginActivity">
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -17,7 +17,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.pratamatechnocraft.e_arsip.MainActivity"
+            android:name=".MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -26,9 +26,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.pratamatechnocraft.e_arsip.DashboardFragment" />
-        <activity android:name="com.pratamatechnocraft.e_arsip.NotifikasiFragment" />
-        <activity android:name="com.pratamatechnocraft.e_arsip.DisposisiFragment"></activity>
+        <activity android:name=".DashboardFragment" />
+        <activity android:name=".NotifikasiFragment" />
+        <activity android:name=".DisposisiFragment" />
+        <activity android:name=".SuratMasukFragment" />
+        <activity android:name=".SuratKeluarFragment"></activity>
     </application>
 
 </manifest>
