@@ -3,17 +3,46 @@ package com.pratamatechnocraft.e_arsip;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SuratKeluarFragment extends Fragment {
+    private RecyclerView recyclerViewSuratKeluar;
+    private RecyclerView.Adapter adapterSuratKeluar;
+
+    private List<ListItemSuratKeluar> listItemSuratKeluars;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.activity_surat_keluar_fragment, container, false);
+        View view = inflater.inflate(R.layout.activity_surat_keluar_fragment, container, false);
+        recyclerViewSuratKeluar = (RecyclerView) view.findViewById(R.id.recycleViewSuratKeluar);
+        recyclerViewSuratKeluar.setHasFixedSize(true);
+        recyclerViewSuratKeluar.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        listItemSuratKeluars = new ArrayList<>();
+
+        for (int i = 0;i<=10; i++){
+            ListItemSuratKeluar listItemSuratKeluar = new ListItemSuratKeluar(
+                    "Tujuam Surat",
+                    "Perihal Surat",
+                    "Tanggal Arsip"
+            );
+
+            listItemSuratKeluars.add(listItemSuratKeluar);
+        }
+
+        adapterSuratKeluar = new AdapterRecycleViewSuratKeluar(listItemSuratKeluars, getContext());
+
+        recyclerViewSuratKeluar.setAdapter(adapterSuratKeluar);
+
+        return view;
     }
 
 

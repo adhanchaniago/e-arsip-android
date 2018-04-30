@@ -27,6 +27,7 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="10dp"
                 android:clickable="true"
+                android:focusable="true"
                 android:foreground="?android:attr/selectableItemBackground"
                 app:cardCornerRadius="4dp"
                 app:cardElevation="6dp"
@@ -38,13 +39,11 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/textView3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Surat Masuk dari Kecamatan Balung perihal Undangan Apel Pagi scjssnvs svsnvsvnjs svsvnsn" />
 
                     <View
-                        android:id="@+id/divider"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginBottom="10dp"
@@ -57,32 +56,31 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/textView4"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="23 April 2018 14:26" />
+                            android:text="23 Desember 2018 14:26" />
 
                         <Button
-                            android:id="@+id/button"
-                            android:layout_width="50dp"
-                            android:layout_height="25dp"
+                            style="@style/Widget.AppCompat.Button.Colored"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:background="@drawable/button_style"
-                            android:clickable="true"
                             android:text="Lihat"
-                            android:textColor="@color/cardview_light_background"
-                            android:textStyle="bold" />
+                            android:textAllCaps="false"
+                            android:textColor="@android:color/white"
+                            android:textSize="12sp" />
                     </LinearLayout>
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginBottom="10dp"
                 android:clickable="true"
+                android:focusable="true"
                 android:foreground="?android:attr/selectableItemBackground"
                 app:cardCornerRadius="4dp"
                 app:cardElevation="6dp"
@@ -94,13 +92,11 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/textView3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Surat Masuk dari Kecamatan Balung perihal Undangan Apel Pagi scjssnvs svsnvsvnjs svsvnsn" />
 
                     <View
-                        android:id="@+id/divider"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginBottom="10dp"
@@ -113,25 +109,77 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/textView4"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="23 April 2018 14:26" />
+                            android:text="23 Desember 2018 14:26" />
 
                         <Button
-                            android:id="@+id/button"
-                            android:layout_width="50dp"
-                            android:layout_height="25dp"
+                            style="@style/Widget.AppCompat.Button.Colored"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:background="@drawable/button_style"
-                            android:clickable="true"
                             android:text="Lihat"
-                            android:textColor="@color/cardview_light_background"
-                            android:textStyle="bold" />
+                            android:textAllCaps="false"
+                            android:textColor="@android:color/white"
+                            android:textSize="12sp" />
                     </LinearLayout>
                 </LinearLayout>
             </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:cardCornerRadius="4dp"
+                app:cardElevation="6dp"
+                app:contentPadding="10dp"
+                android:focusable="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Surat Masuk dari Kecamatan Balung perihal Undangan Apel Pagi scjssnvs svsnvsvnjs svsvnsn" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="10dp"
+                        android:background="?android:attr/listDivider" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="23 Desember 2018 14:26" />
+
+                        <Button
+                            style="@style/Widget.AppCompat.Button.Colored"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Lihat"
+                            android:textAllCaps="false"
+                            android:textColor="@android:color/white"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
         </LinearLayout>
     </ScrollView>
 

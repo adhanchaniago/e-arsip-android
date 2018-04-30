@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LembarDisposisiActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_lembardisposisi"
+        android:minHeight="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"/>
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_lembardisposisi"
+        app:layout_constraintVertical_bias="0.0">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cardView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:cardCornerRadius="4dp"
+                app:cardElevation="6dp"
+                app:contentPadding="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar_detailsuratmasuk">
+
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/cellpadingdetailsuratmasuk"
+                            android:text="Asal Surat"
+                            android:textColor="@color/ColorPrimaryText"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/cellpadingdetailsuratmasuk"
+                            android:text=":"
+                            android:textColor="@color/ColorPrimaryText" />
+
+                        <TextView
+                            android:id="@+id/txtDetailNoSuratMasuk"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/cellpadingdetailsuratmasuk"
+                            android:text="Value"
+                            android:textColor="@color/ColorPrimaryText" />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/cellpadingdetailsuratmasuk"
+                            android:text="Tanggal Surat"
+                            android:textColor="@color/ColorPrimaryText"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/cellpadingdetailsuratmasuk"
+                            android:text=":"
+                            android:textColor="@color/ColorPrimaryText" />
+
+                        <TextView
+                            android:id="@+id/txtDetailJenisSuratMasuk"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/cellpadingdetailsuratmasuk"
+                            android:text="Value"
+                            android:textColor="@color/ColorPrimaryText" />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/cellpadingdetailsuratmasuk"
+                            android:text="No. Surat"
+                            android:textColor="@color/ColorPrimaryText"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/cellpadingdetailsuratmasuk"
+                            android:text=":"
+                            android:textColor="@color/ColorPrimaryText" />
+
+                        <TextView
+                            android:id="@+id/txtDetailAsalSuratMasuk"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/cellpadingdetailsuratmasuk"
+                            android:text="Value"
+                            android:textColor="@color/ColorPrimaryText" />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/cellpadingdetailsuratmasuk"
+                            android:text="Tanggal Terima"
+                            android:textColor="@color/ColorPrimaryText"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/cellpadingdetailsuratmasuk"
+                            android:text=":"
+                            android:textColor="@color/ColorPrimaryText" />
+
+                        <TextView
+                            android:id="@+id/txtDetailPerihalSuratMasuk"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/cellpadingdetailsuratmasuk"
+                            android:text="Value"
+                            android:textColor="@color/ColorPrimaryText" />
+                    </TableRow>
+
+
+                </TableLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:cardCornerRadius="4dp"
+                app:cardElevation="6dp"
+                app:contentPadding="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar_detailsuratmasuk">
+
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TableRow
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/cellpadingdetailsuratmasuk"
+                            android:text="Diteruskan Ke :"
+                            android:textColor="@color/ColorPrimaryText"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <CheckBox
+                                android:id="@+id/checkBox"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Kasi Perencanaan" />
+
+                            <CheckBox
+                                android:id="@+id/checkBox6"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Kasi Keuangan" />
+
+                            <CheckBox
+                                android:id="@+id/checkBox7"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Kaur Pemerintahan" />
+
+                            <CheckBox
+                                android:id="@+id/checkBox8"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Kaur Pelayanan" />
+                        </LinearLayout>
+
+                    </TableRow>
+
+
+                </TableLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:cardCornerRadius="4dp"
+                app:cardElevation="6dp"
+                app:contentPadding="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar_detailsuratmasuk">
+
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TableRow
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:weightSum="2">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textAlignment="center"
+                            android:padding="@dimen/cellpadingdetailsuratmasuk"
+                            android:text="Isi Disposisi"
+                            android:textColor="@color/ColorPrimaryText"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:id="@+id/divider2"
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="?android:attr/listDivider" />
+
+                        <TextView
+                            android:textAlignment="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:padding="@dimen/cellpadingdetailsuratmasuk"
+                            android:text="*Catatan"
+                            android:textColor="@color/ColorPrimaryText"
+                            android:textStyle="bold" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:weightSum="2">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:padding="@dimen/cellpadingdetailsuratmasuk"
+                            android:text="divdvdvd dvdv dkvdvnkdv dvdv"
+                            android:textColor="@color/ColorPrimaryText"
+                            android:textSize="12sp" />
+
+                        <View
+                            android:id="@+id/divider3"
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="?android:attr/listDivider" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:padding="@dimen/cellpadingdetailsuratmasuk"
+                            android:text="divdvdvd dvdv dkvdvnkdv dvdv"
+                            android:textColor="@color/ColorPrimaryText"
+                            android:textSize="12sp" />
+
+                    </TableRow>
+
+
+                </TableLayout>
+            </android.support.v7.widget.CardView>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/buttonSelesai"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="15dp"
+                    android:text="Selesai"
+                    android:textAllCaps="false" />
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>
