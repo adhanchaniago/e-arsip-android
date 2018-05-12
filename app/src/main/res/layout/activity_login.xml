@@ -12,8 +12,10 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -53,13 +55,20 @@
                 android:orientation="horizontal"
                 android:weightSum="2">
 
-                <EditText
-                    android:id="@+id/editTxtUsernameLogin"
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:hint="Username"
-                    android:inputType="text" />
+                    android:layout_weight="1">
+
+                    <EditText
+                        android:id="@+id/editTxtUsernameLogin"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:hint="Username"
+                        android:inputType="text" />
+                </android.support.design.widget.TextInputLayout>
+
             </LinearLayout>
 
             <!--Field Password-->
@@ -72,39 +81,61 @@
                 android:orientation="horizontal"
                 android:weightSum="2">
 
-                <EditText
-                    android:id="@+id/editTxtPasswordLogin"
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:hint="Password"
-                    android:inputType="textPassword" />
+                    android:layout_weight="1">
+
+                    <EditText
+                        android:id="@+id/editTxtPasswordLogin"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:hint="Password"
+                        android:inputType="textPassword" />
+
+                </android.support.design.widget.TextInputLayout>
+
             </LinearLayout>
 
-            <Button
-                android:id="@+id/buttonLogin"
-                style="@style/Widget.AppCompat.Button.Colored"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:text="Sign In"
-                android:textAllCaps="false"
-                android:textColor="@android:color/white" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/buttonLogin"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:text="Sign In"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white" />
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:visibility="gone" />
+            </RelativeLayout>
 
             <View
-                android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
+                android:layout_marginTop="20dp"
                 android:background="?android:attr/listDivider" />
 
             <TextView
-                android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
+                android:layout_marginTop="5dp"
+                android:text=" Copyright © 2018 Kantor Desa Balung Kidul"
                 android:textAlignment="center"
-                android:text=" Copyright © 2018 Kantor Desa Balung Kidul" />
+                android:textStyle="bold" />
         </LinearLayout>
 
         <RelativeLayout
