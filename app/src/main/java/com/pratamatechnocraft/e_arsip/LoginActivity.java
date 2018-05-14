@@ -37,6 +37,10 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         sessionManager = new SessionManager( this );
+        if (sessionManager.isLoggin()){
+            Intent i = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(i);
+        }
 
         btnLogin = findViewById(R.id.buttonLogin);
         eTxtUsername = findViewById(R.id.editTxtUsernameLogin);
@@ -79,10 +83,8 @@ public class LoginActivity extends AppCompatActivity {
 
                         Toast.makeText(LoginActivity.this, "Login Berhasil !", Toast.LENGTH_SHORT).show();
                         Intent i = new Intent(LoginActivity.this, MainActivity.class);
-                        i.putExtra("nama", nama);
-                        i.putExtra("foto_user", foto_user);
-
                         startActivity(i);
+
                         loading.setVisibility(View.GONE);
                         btnLogin.setVisibility(View.VISIBLE);
                     }else if(success.equals("2")){
