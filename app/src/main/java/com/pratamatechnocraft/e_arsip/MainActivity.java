@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_suratkeluar) {
             fragment = new SuratKeluarFragment();
         } else if (id == R.id.nav_setting) {
-
+            fragment = new ProfileFragment();
         } else if (id == R.id.nav_disposisi) {
             fragment = new DisposisiFragment();
         } else if (id == R.id.nav_signout) {
