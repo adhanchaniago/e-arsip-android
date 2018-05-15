@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 
 public class DashboardFragment extends Fragment {
 
-    private CardView kliknotifikasi;
+    private CardView kliknotifikasi, kliksuratmasuk, kliksuratkeluar, klikdisposisi;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -28,6 +28,9 @@ public class DashboardFragment extends Fragment {
         //you can set the title for your toolbar here for different fragments different titles
         getActivity().setTitle("E-Arsip | Dashboard");
         kliknotifikasi = view.findViewById(R.id.cardhomenotifikasi);
+        kliksuratmasuk = view.findViewById(R.id.cardhomesuratmasuk);
+        kliksuratkeluar = view.findViewById(R.id.cardhomesuratkeluar);
+        klikdisposisi = view.findViewById(R.id.cardhomedisposisi);
     }
 
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -38,18 +41,51 @@ public class DashboardFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 NotifikasiFragment Notifikasi = new NotifikasiFragment();
-                //buat object fragmentkedua
 
                 getFragmentManager().beginTransaction()
                         .replace(R.id.screen_area, Notifikasi)
-                        //menggant fragment
                         .addToBackStack(null)
-                        //menyimpan fragment
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                        //transisi fragment
                         .commit();
-                //mengeksekusi fragment transaction
+            }
+        });
 
+        kliksuratmasuk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SuratMasukFragment SuratMasuk = new SuratMasukFragment();
+
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.screen_area, SuratMasuk)
+                        .addToBackStack(null)
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                        .commit();
+            }
+        });
+
+        kliksuratkeluar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SuratKeluarFragment SuratKeluar = new SuratKeluarFragment();
+
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.screen_area, SuratKeluar)
+                        .addToBackStack(null)
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                        .commit();
+            }
+        });
+
+        klikdisposisi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DisposisiFragment Disposisi = new DisposisiFragment();
+
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.screen_area, Disposisi)
+                        .addToBackStack(null)
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                        .commit();
             }
         });
 

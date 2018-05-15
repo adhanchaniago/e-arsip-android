@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.pratamatechnocraft.e_arsip">
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -30,6 +31,7 @@
         </activity>
         <activity
             android:name=".DetailSuratMasukActivity"
+            android:label="E-ARSIP | Detail Surat Masuk"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -37,10 +39,27 @@
         </activity>
         <activity
             android:name=".DetailSuratKeluarActivity"
+            android:label="E-ARSIP | Detail Surat Keluar"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
+        </activity>
+        <activity
+            android:name=".LembarDisposisiActivity"
+            android:label="E-ARSIP | Lembar Disposisi"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity
+            android:name=".MendisposisikanActivity"
+            android:label="E-ARSIP | Mendisposisikan"
+            android:parentActivityName=".DetailSuratMasukActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".DetailSuratMasukActivity" />
         </activity>
     </application>
 

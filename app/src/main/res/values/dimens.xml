@@ -7,4 +7,8 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="ukuran_cardview_home">160dp</dimen>
     <dimen name="ukuran_height_cardview_home">90dp</dimen>
+    <dimen name="cellpadingdetailsuratmasuk">10dp</dimen>
+    <dimen name="app_bar_height">200dp</dimen>
+    <dimen name="item_width">200dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
 </resources>
