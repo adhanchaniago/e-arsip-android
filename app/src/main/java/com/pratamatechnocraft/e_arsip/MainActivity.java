@@ -17,20 +17,29 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     public static String urlGambar = "";
     SessionManager sessionManager;
+    BaseUrlApiModel baseUrlApiModel = new BaseUrlApiModel();
+    private String baseUrl=baseUrlApiModel.getBaseURL();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_main );
 
-        Intent intent = getIntent();
-        String extraNama = intent.getStringExtra( "nama" );
-        String extrafotoUser = intent.getStringExtra( "foto_user" );
+        //start handle data extra
+        if(getIntent().getExtras()!=null){
+            for(String key : getIntent().getExtras().keySet()){
+                String value = getIntent().getExtras().getString(key);
+                Log.d("TAG", "KEY : " + key + "Value : " + value);
+            }
+        }
+
+        FirebaseMessaging.getInstance().subscribeToTopic( "perbagian" );
 
         Toolbar toolbar = (Toolbar) findViewById( R.id.toolbar );
         setSupportActionBar( toolbar );
@@ -60,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         HashMap<String, String> user = sessionManager.getUserDetail();
 
         namaUser.setText( String.valueOf( user.get( sessionManager.NAMA )  ) );
-        urlGambar = "http://192.168.1.4/proyek/e-surat/"+String.valueOf( user.get( sessionManager.FOTO )  );
+        urlGambar = baseUrl+String.valueOf( user.get( sessionManager.FOTO )  );
 
         Glide.with(MainActivity.this)
                 // LOAD URL DARI INTERNET

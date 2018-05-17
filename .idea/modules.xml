@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/app/E-Arsip-app.iml" filepath="$PROJECT_DIR$/app/E-Arsip-app.iml" />
+=======
+      <module fileurl="file://$PROJECT_DIR$/E-Arsip.iml" filepath="$PROJECT_DIR$/E-Arsip.iml" />
+>>>>>>> e6d2ec6e851ae77608f9252ed05ece8d27c710e6
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/e-arsip.iml" filepath="$PROJECT_DIR$/e-arsip.iml" />
     </modules>

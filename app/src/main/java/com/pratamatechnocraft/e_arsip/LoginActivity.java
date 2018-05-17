@@ -28,7 +28,9 @@ public class LoginActivity extends AppCompatActivity {
     EditText eTxtUsername, eTxtPassword;
     String username,password;
     ProgressBar loading;
-    private static String URL_LOGIN = "http://192.168.1.4/proyek/e-surat/api/user";
+    BaseUrlApiModel baseUrlApiModel = new BaseUrlApiModel();
+    private String baseUrl=baseUrlApiModel.getBaseURL();
+    private static String URL_LOGIN = "api/user";
     SessionManager sessionManager;
 
     @Override
@@ -67,7 +69,7 @@ public class LoginActivity extends AppCompatActivity {
     private void prosesLogin(final String user, final String pass){
         loading.setVisibility(View.VISIBLE);
         btnLogin.setVisibility(View.GONE);
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_LOGIN, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, baseUrl+URL_LOGIN, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
