@@ -36,7 +36,9 @@ public class SuratMasukFragment extends Fragment {
 
     private List<ListItemSuratMasuk> listItemSuratMasuks;
 
-    private static final String API_URL = "http://192.168.1.4/proyek/e-surat/api/surat_masuk";
+    BaseUrlApiModel baseUrlApiModel = new BaseUrlApiModel();
+    private String baseUrl=baseUrlApiModel.getBaseURL();
+    private static final String API_URL = "api/surat_masuk?api=suratmasukall";
 
 
     @Nullable
@@ -62,7 +64,7 @@ public class SuratMasukFragment extends Fragment {
     }
 
     private void loadSuratMasuk(){
-        StringRequest stringRequest = new StringRequest( Request.Method.GET, API_URL,
+        StringRequest stringRequest = new StringRequest( Request.Method.GET, baseUrl+API_URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -92,17 +94,10 @@ public class SuratMasukFragment extends Fragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText( getContext(),error.getMessage(), Toast.LENGTH_SHORT ).show();
+                        Toast.makeText( getContext(),"Error " +error.toString(), Toast.LENGTH_SHORT ).show();
                     }
                 }
-        ){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("api", "suratmasukall");
-                return params;
-            }
-        };
+        );
 
         RequestQueue requestQueue = Volley.newRequestQueue( getContext() );
         requestQueue.add( stringRequest );

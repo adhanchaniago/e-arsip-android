@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<<<<<<< HEAD
 <module external.linked.project.id="E-Arsip" external.linked.project.path="$MODULE_DIR$" external.root.project.path="$MODULE_DIR$" external.system.id="GRADLE" type="JAVA_MODULE" version="4">
-=======
-<module external.linked.project.id="e-arsip" external.linked.project.path="$MODULE_DIR$" external.root.project.path="$MODULE_DIR$" external.system.id="GRADLE" type="JAVA_MODULE" version="4">
->>>>>>> 21f271059dcebd99f525fb3bd682a82230cadefc
   <component name="FacetManager">
     <facet type="java-gradle" name="Java-Gradle">
       <configuration>
