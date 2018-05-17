@@ -53,7 +53,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="10dp"
-                    android:text="George Dunh"
+                    android:text="Bahrul Arif"
                     android:textColor="#fff"
                     android:textSize="21sp"
                     android:textStyle="bold" />
@@ -104,13 +104,58 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0">
-
-            <TextView
-                android:id="@+id/textView3"
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <ImageView
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:src="@drawable/tanggal"
+        android:layout_marginLeft="40sp"/>
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text=" 24 February 1974"
+        android:textSize="20sp"
+        android:layout_marginLeft="20sp"/>
+</LinearLayout>
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="scsccscscsc" />
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="20sp"
+                    android:layout_height="20sp"
+                    android:src="@drawable/agama"
+                    android:layout_marginLeft="40sp" />
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Islam"
+                    android:textSize="20sp"
+                    android:layout_marginLeft="20sp"/>
+            </LinearLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <ImageView
+        android:layout_marginLeft="40sp"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:src="@drawable/ttl"/>
+    <TextView
+        android:layout_marginLeft="20sp"
+        android:id="@+id/textView5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Balung Kidul,Jember "
+        android:textSize="20sp" />
+</LinearLayout>
+
 
         </LinearLayout>
     </LinearLayout>
