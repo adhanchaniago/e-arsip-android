@@ -1,4 +1,4 @@
-package com.pratamatechnocraft.e_arsip;
+package com.pratamatechnocraft.e_arsip.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.pratamatechnocraft.e_arsip.DetailSuratKeluarActivity;
+import com.pratamatechnocraft.e_arsip.Model.ListItemSuratKeluar;
+import com.pratamatechnocraft.e_arsip.R;
 
 import java.util.List;
 
@@ -24,7 +28,7 @@ public class AdapterRecycleViewSuratKeluar extends RecyclerView.Adapter<AdapterR
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_item_surat_keluar,parent,false);
+                .inflate( R.layout.list_item_surat_keluar,parent,false);
         return new ViewHolder(v);
     }
 

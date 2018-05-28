@@ -1,4 +1,4 @@
-package com.pratamatechnocraft.e_arsip;
+package com.pratamatechnocraft.e_arsip.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.pratamatechnocraft.e_arsip.LembarDisposisiActivity;
+import com.pratamatechnocraft.e_arsip.Model.ListItemDisposisi;
+import com.pratamatechnocraft.e_arsip.R;
 
 import java.util.List;
 
@@ -24,7 +28,7 @@ public class AdapterRecycleViewDisposisi extends RecyclerView.Adapter<AdapterRec
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_item_disposisi,parent,false);
+                .inflate( R.layout.list_item_disposisi,parent,false);
         return new ViewHolder(v);
     }
 

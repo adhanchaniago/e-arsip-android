@@ -16,6 +16,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.pratamatechnocraft.e_arsip.Model.BaseUrlApiModel;
+import com.pratamatechnocraft.e_arsip.Service.SessionManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -77,11 +79,13 @@ public class LoginActivity extends AppCompatActivity {
                     String success = jsonObject.getString("success");
                     if (success.equals("1")) {
                         JSONObject data_user = jsonObject.getJSONObject("data_user");
+                        String id_user = data_user.getString("id_user").trim();
                         String nama = data_user.getString("nama").trim();
                         String level_user = data_user.getString("level_user").trim();
                         String foto_user = data_user.getString("foto").trim();
+                        String id_bagian = data_user.getString("id_bagian").trim();
 
-                        sessionManager.createSession( nama, foto_user );
+                        sessionManager.createSession( id_user,nama, foto_user , level_user, id_bagian);
 
                         Toast.makeText(LoginActivity.this, "Login Berhasil !", Toast.LENGTH_SHORT).show();
                         Intent i = new Intent(LoginActivity.this, MainActivity.class);

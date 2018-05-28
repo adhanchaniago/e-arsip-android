@@ -1,8 +1,11 @@
-package com.pratamatechnocraft.e_arsip;
+package com.pratamatechnocraft.e_arsip.Service;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+
+import com.pratamatechnocraft.e_arsip.LoginActivity;
+import com.pratamatechnocraft.e_arsip.MainActivity;
 
 import java.util.HashMap;
 
@@ -17,7 +20,9 @@ public class SessionManager {
     private static final String LOGIN = "IS_LOGIN";
     public static final String NAMA = "NAMA";
     public static final String FOTO = "FOTO";
-    //public static final String LEVEL_USER = "LEVEL_USER";
+    public static final String LEVEL_USER = "LEVEL_USER";
+    public static final String ID_USER = "ID_USER";
+    public static final String ID_BAGIAN = "ID_BAGIAN";
 
 
     public SessionManager(Context context) {
@@ -27,11 +32,13 @@ public class SessionManager {
 
     }
 
-    public void createSession(String nama, String foto){
+    public void createSession(String id_user,String nama, String foto, String level_user, String id_bagian){
         editor.putBoolean(LOGIN, true);
+        editor.putString( "ID_USER", id_user );
         editor.putString( "NAMA", nama );
         editor.putString( "FOTO", foto );
-        //editor.putString( "LEVEL_USER", level_user );
+        editor.putString( "LEVEL_USER", level_user );
+        editor.putString( "ID_BAGIAN", id_bagian );
         editor.apply();
     }
 
@@ -49,8 +56,11 @@ public class SessionManager {
 
     public HashMap<String, String> getUserDetail(){
         HashMap<String, String> user = new HashMap<>(  );
+        user.put( ID_USER, sharedPreferences.getString( ID_USER, null ) );
         user.put( NAMA, sharedPreferences.getString( NAMA, null ) );
         user.put( FOTO, sharedPreferences.getString( FOTO, null ) );
+        user.put( LEVEL_USER, sharedPreferences.getString( LEVEL_USER, null ) );
+        user.put( ID_BAGIAN, sharedPreferences.getString( ID_BAGIAN, null ) );
         return user;
     }
 

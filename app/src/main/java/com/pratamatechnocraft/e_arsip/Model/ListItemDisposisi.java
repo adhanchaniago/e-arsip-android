@@ -1,4 +1,4 @@
-package com.pratamatechnocraft.e_arsip;
+package com.pratamatechnocraft.e_arsip.Model;
 
 public class ListItemDisposisi {
     private String noSurat,isiDisposisi;

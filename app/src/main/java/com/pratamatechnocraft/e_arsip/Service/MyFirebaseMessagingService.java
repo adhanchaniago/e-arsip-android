@@ -1,4 +1,4 @@
-package com.pratamatechnocraft.e_arsip;
+package com.pratamatechnocraft.e_arsip.Service;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -7,7 +7,6 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.pratamatechnocraft.e_arsip.MainActivity;
 import com.pratamatechnocraft.e_arsip.R;

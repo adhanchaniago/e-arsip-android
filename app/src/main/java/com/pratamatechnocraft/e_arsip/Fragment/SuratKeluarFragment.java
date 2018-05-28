@@ -1,4 +1,4 @@
-package com.pratamatechnocraft.e_arsip;
+package com.pratamatechnocraft.e_arsip.Fragment;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,6 +9,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.pratamatechnocraft.e_arsip.Adapter.AdapterRecycleViewSuratKeluar;
+import com.pratamatechnocraft.e_arsip.Model.ListItemSuratKeluar;
+import com.pratamatechnocraft.e_arsip.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +25,7 @@ public class SuratKeluarFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_surat_keluar_fragment, container, false);
+        View view = inflater.inflate( R.layout.activity_surat_keluar_fragment, container, false);
         recyclerViewSuratKeluar = (RecyclerView) view.findViewById(R.id.recycleViewSuratKeluar);
         recyclerViewSuratKeluar.setHasFixedSize(true);
         recyclerViewSuratKeluar.setLayoutManager(new LinearLayoutManager(getContext()));

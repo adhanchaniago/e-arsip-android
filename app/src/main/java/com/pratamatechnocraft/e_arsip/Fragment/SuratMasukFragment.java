@@ -1,4 +1,4 @@
-package com.pratamatechnocraft.e_arsip;
+package com.pratamatechnocraft.e_arsip.Fragment;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -6,28 +6,28 @@ import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.pratamatechnocraft.e_arsip.Adapter.AdapterRecycleViewSuratMasuk;
+import com.pratamatechnocraft.e_arsip.Model.BaseUrlApiModel;
+import com.pratamatechnocraft.e_arsip.Model.ListItemSuratMasuk;
+import com.pratamatechnocraft.e_arsip.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class SuratMasukFragment extends Fragment {
 
@@ -44,7 +44,7 @@ public class SuratMasukFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_surat_masuk_fragment, container, false);
+        View view = inflater.inflate( R.layout.activity_surat_masuk_fragment, container, false);
         recyclerViewSuratMasuk = (RecyclerView) view.findViewById(R.id.recycleViewSuratMasuk);
         recyclerViewSuratMasuk.setHasFixedSize(true);
         recyclerViewSuratMasuk.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -75,9 +75,10 @@ public class SuratMasukFragment extends Fragment {
                                 JSONObject suratmasukobject = suratmasuk.getJSONObject( i );
 
                                 ListItemSuratMasuk listItemSuratMasuk = new ListItemSuratMasuk(
+                                        suratmasukobject.getString( "id_surat_masuk"),
                                         suratmasukobject.getString( "asal_surat" ),
                                         suratmasukobject.getString( "perihal" ),
-                                        suratmasukobject.getString( "tgl_arsip" )
+                                        suratmasukobject.getString( "tgl_arsip")
                                 );
 
                                 listItemSuratMasuks.add(listItemSuratMasuk);
