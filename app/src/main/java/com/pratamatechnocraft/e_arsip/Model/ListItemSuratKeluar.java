@@ -1,12 +1,17 @@
 package com.pratamatechnocraft.e_arsip.Model;
 
 public class ListItemSuratKeluar {
-    private String tujuanSurat,perihalSurat, tanggalArsip;
+    private String IdSuratKeluar,tujuanSurat,perihalSurat, tanggalArsip;
 
-    public ListItemSuratKeluar(String asalSurat, String perihalSurat, String tanggalArsip) {
-        this.tujuanSurat = asalSurat;
+    public ListItemSuratKeluar(String IdSuratKeluar, String tujuanSurat, String perihalSurat, String tanggalArsip) {
+        this.IdSuratKeluar = IdSuratKeluar;
+        this.tujuanSurat = tujuanSurat;
         this.perihalSurat = perihalSurat;
         this.tanggalArsip = tanggalArsip;
+    }
+
+    public String getIdSuratKeluar() {
+        return IdSuratKeluar;
     }
 
     public String getTujuanSurat() {

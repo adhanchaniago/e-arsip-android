@@ -34,7 +34,7 @@ public class AdapterRecycleViewSuratKeluar extends RecyclerView.Adapter<AdapterR
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        ListItemSuratKeluar listItemSuratKeluar = listItemSuratKeluars.get(position);
+        final ListItemSuratKeluar listItemSuratKeluar = listItemSuratKeluars.get(position);
 
         holder.txtTujuanSurat.setText(listItemSuratKeluar.getTujuanSurat());
         holder.txtPerihalSurat.setText(listItemSuratKeluar.getPerihalSurat());
@@ -44,6 +44,7 @@ public class AdapterRecycleViewSuratKeluar extends RecyclerView.Adapter<AdapterR
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(context, DetailSuratKeluarActivity.class);
+                i.putExtra("idSuratKeluar", listItemSuratKeluar.getIdSuratKeluar());
                 context.startActivity(i);
 
             }
