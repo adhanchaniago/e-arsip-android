@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -37,7 +38,8 @@ public class NotifikasiFragment extends Fragment {
     private RecyclerView recyclerViewNotifikasi;
     private RecyclerView.Adapter adapterNotifikasi;
     SessionManager sessionManager;
-    ProgressBar loading;
+    ProgressBar loadingnotif;
+    TextView noDataNotif;
 
     private List<ListItemNotifikasi> listItemNotifikasis;
 
@@ -50,7 +52,8 @@ public class NotifikasiFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate( R.layout.activity_notifikasi_fragment, container, false);
-        loading = view.findViewById(R.id.progressBarnotif);
+        loadingnotif = view.findViewById(R.id.progressBarnotif);
+        noDataNotif = view.findViewById( R.id.noDatanotif );
 
         sessionManager = new SessionManager( getContext() );
         HashMap<String, String> user = sessionManager.getUserDetail();
@@ -73,36 +76,40 @@ public class NotifikasiFragment extends Fragment {
     }
 
     private void loadNotifikasi(String idUser){
-        loading.setVisibility(View.VISIBLE);
+        loadingnotif.setVisibility(View.VISIBLE);
         StringRequest stringRequest = new StringRequest( Request.Method.GET, baseUrl+API_URL+idUser,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            JSONArray notifikasi = new JSONArray( response );
+                            JSONObject jsonObject = new JSONObject(response);
+                            if (jsonObject.getInt( "jml_data" )==0){
+                                noDataNotif.setVisibility( View.VISIBLE );
+                            }else{
+                                JSONArray data = jsonObject.getJSONArray("data");
+                                for (int i = 0; i<data.length(); i++){
+                                    JSONObject notifikasiobject = data.getJSONObject( i );
 
-                            for (int i = 0; i<notifikasi.length(); i++){
-                                JSONObject notifikasiobject = notifikasi.getJSONObject( i );
+                                    ListItemNotifikasi listItemNotifikasi = new ListItemNotifikasi(
+                                            notifikasiobject.getString( "id_notif"),
+                                            notifikasiobject.getString( "id" ),
+                                            notifikasiobject.getString( "jenis_notif" ),
+                                            notifikasiobject.getString( "judul_notif"),
+                                            notifikasiobject.getString( "isi_notif"),
+                                            notifikasiobject.getString( "create_on")
+                                    );
 
-                                ListItemNotifikasi listItemNotifikasi = new ListItemNotifikasi(
-                                        notifikasiobject.getString( "id_notif"),
-                                        notifikasiobject.getString( "id" ),
-                                        notifikasiobject.getString( "jenis_notif" ),
-                                        notifikasiobject.getString( "judul_notif"),
-                                        notifikasiobject.getString( "isi_notif"),
-                                        notifikasiobject.getString( "create_on")
-                                );
+                                    listItemNotifikasis.add(listItemNotifikasi);
+                                }
 
-                                listItemNotifikasis.add(listItemNotifikasi);
+                                adapterNotifikasi = new AdapterRecycleViewNotifikasi(listItemNotifikasis, getContext());
+                                recyclerViewNotifikasi.setAdapter(adapterNotifikasi);
                             }
 
-                            adapterNotifikasi = new AdapterRecycleViewNotifikasi(listItemNotifikasis, getContext());
-
-                            recyclerViewNotifikasi.setAdapter(adapterNotifikasi);
-                            loading.setVisibility(View.GONE);
+                            loadingnotif.setVisibility(View.GONE);
                         }catch (JSONException e){
                             e.printStackTrace();
-                            loading.setVisibility(View.GONE);
+                            loadingnotif.setVisibility(View.GONE);
                         }
                     }
                 },
@@ -110,7 +117,7 @@ public class NotifikasiFragment extends Fragment {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText( getContext(),"Error " +error.toString(), Toast.LENGTH_SHORT ).show();
-                        loading.setVisibility(View.GONE);
+                        loadingnotif.setVisibility(View.GONE);
                     }
                 }
         );

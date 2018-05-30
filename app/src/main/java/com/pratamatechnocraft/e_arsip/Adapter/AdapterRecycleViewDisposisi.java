@@ -34,17 +34,18 @@ public class AdapterRecycleViewDisposisi extends RecyclerView.Adapter<AdapterRec
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        ListItemDisposisi listItemDisposisi = listItemDisposisis.get(position);
+        final ListItemDisposisi listItemDisposisi = listItemDisposisis.get(position);
 
         holder.txtNoSurat.setText(listItemDisposisi.getNoSurat());
         holder.txtIsiDisposisi.setText(listItemDisposisi.getIsiDisposisi());
+
 
         holder.linearLayoutDisposisi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(context, LembarDisposisiActivity.class);
+                i.putExtra("idDisposisi", listItemDisposisi.getidDisposisi());
                 context.startActivity(i);
-
             }
         });
     }

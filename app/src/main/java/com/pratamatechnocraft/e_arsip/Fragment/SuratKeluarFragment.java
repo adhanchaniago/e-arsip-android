@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -38,7 +39,8 @@ import java.util.List;
 public class SuratKeluarFragment extends Fragment {
     private RecyclerView recyclerViewSuratKeluar;
     private RecyclerView.Adapter adapterSuratKeluar;
-    ProgressBar loading;
+    ProgressBar loadingkeluar;
+    TextView noDataKeluar;
 
     SessionManager sessionManager;
 
@@ -51,7 +53,8 @@ public class SuratKeluarFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate( R.layout.activity_surat_keluar_fragment, container, false);
-        loading = view.findViewById(R.id.progressBarkeluar);
+        loadingkeluar = view.findViewById(R.id.progressBarkeluar);
+        noDataKeluar = view.findViewById( R.id.noDatakeluar );
 
         recyclerViewSuratKeluar = (RecyclerView) view.findViewById(R.id.recycleViewSuratKeluar);
         recyclerViewSuratKeluar.setHasFixedSize(true);
@@ -78,37 +81,38 @@ public class SuratKeluarFragment extends Fragment {
     }
 
     private void loadSuratKeluar(){
-        loading.setVisibility(View.VISIBLE);
+        loadingkeluar.setVisibility(View.VISIBLE);
         StringRequest stringRequest = new StringRequest( Request.Method.GET, baseUrl+API_URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            sessionManager = new SessionManager( getContext() );
-                            HashMap<String, String> user = sessionManager.getUserDetail();
-                            JSONArray suratkeluar = new JSONArray( response );
+                            JSONObject jsonObject = new JSONObject(response);
+                            if (jsonObject.getInt( "jml_data" )==0){
+                                noDataKeluar.setVisibility( View.VISIBLE );
+                            }else{
+                                JSONArray data = jsonObject.getJSONArray("data");
+                                for (int i = 0; i<data.length(); i++){
+                                    JSONObject suratkeluarobject = data.getJSONObject( i );
 
-                            for (int i = 0; i<suratkeluar.length(); i++){
-                                JSONObject suratkeluarobject = suratkeluar.getJSONObject( i );
+                                    ListItemSuratKeluar listItemSuratKeluar = new ListItemSuratKeluar(
+                                            suratkeluarobject.getString( "id_surat_keluar"),
+                                            suratkeluarobject.getString( "tujuan" ),
+                                            suratkeluarobject.getString( "perihal" ),
+                                            suratkeluarobject.getString( "tgl_arsip")
+                                    );
 
-                                ListItemSuratKeluar listItemSuratKeluar = new ListItemSuratKeluar(
-                                        suratkeluarobject.getString( "id_surat_keluar"),
-                                        suratkeluarobject.getString( "tujuan" ),
-                                        suratkeluarobject.getString( "perihal" ),
-                                        suratkeluarobject.getString( "tgl_arsip")
-                                );
+                                    listItemSuratKeluars.add(listItemSuratKeluar);
+                                }
 
-                                listItemSuratKeluars.add(listItemSuratKeluar);
+                                adapterSuratKeluar = new AdapterRecycleViewSuratKeluar(listItemSuratKeluars, getContext());
+                                recyclerViewSuratKeluar.setAdapter(adapterSuratKeluar);
                             }
 
-                            adapterSuratKeluar = new AdapterRecycleViewSuratKeluar(listItemSuratKeluars, getContext());
-
-                            recyclerViewSuratKeluar.setAdapter(adapterSuratKeluar);
-
-                            loading.setVisibility(View.GONE);
+                            loadingkeluar.setVisibility(View.GONE);
                         }catch (JSONException e){
                             e.printStackTrace();
-                            loading.setVisibility(View.GONE);
+                            loadingkeluar.setVisibility(View.GONE);
                         }
                     }
                 },
@@ -116,14 +120,12 @@ public class SuratKeluarFragment extends Fragment {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText( getContext(),"Error " +error.toString(), Toast.LENGTH_SHORT ).show();
-                        loading.setVisibility(View.GONE);
+                        loadingkeluar.setVisibility(View.GONE);
                     }
                 }
         );
 
         RequestQueue requestQueue = Volley.newRequestQueue( getContext() );
         requestQueue.add( stringRequest );
-
-
     }
 }
