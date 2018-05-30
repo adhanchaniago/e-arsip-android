@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -37,6 +38,8 @@ import java.util.List;
 public class SuratKeluarFragment extends Fragment {
     private RecyclerView recyclerViewSuratKeluar;
     private RecyclerView.Adapter adapterSuratKeluar;
+    ProgressBar loading;
+
     SessionManager sessionManager;
 
     private List<ListItemSuratKeluar> listItemSuratKeluars;
@@ -48,6 +51,8 @@ public class SuratKeluarFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate( R.layout.activity_surat_keluar_fragment, container, false);
+        loading = view.findViewById(R.id.progressBarkeluar);
+
         recyclerViewSuratKeluar = (RecyclerView) view.findViewById(R.id.recycleViewSuratKeluar);
         recyclerViewSuratKeluar.setHasFixedSize(true);
         recyclerViewSuratKeluar.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -55,10 +60,8 @@ public class SuratKeluarFragment extends Fragment {
         HashMap<String, String> user = sessionManager.getUserDetail();
         listItemSuratKeluars = new ArrayList<>();
         if (user.get( sessionManager.LEVEL_USER ).equals( "kepala desa" )){
-            Log.d( "TAG", "Level: "+user.get( sessionManager.LEVEL_USER ) );
             API_URL="api/surat_keluar?api=suratkeluarall";
         }else{
-            Log.d( "TAG", "Level1: "+user.get( sessionManager.LEVEL_USER ) );
             API_URL="api/surat_keluar?api=suratkeluarperbagian&id_bagian="+user.get( sessionManager.ID_BAGIAN );
         }
         loadSuratKeluar();
@@ -75,6 +78,7 @@ public class SuratKeluarFragment extends Fragment {
     }
 
     private void loadSuratKeluar(){
+        loading.setVisibility(View.VISIBLE);
         StringRequest stringRequest = new StringRequest( Request.Method.GET, baseUrl+API_URL,
                 new Response.Listener<String>() {
                     @Override
@@ -100,8 +104,11 @@ public class SuratKeluarFragment extends Fragment {
                             adapterSuratKeluar = new AdapterRecycleViewSuratKeluar(listItemSuratKeluars, getContext());
 
                             recyclerViewSuratKeluar.setAdapter(adapterSuratKeluar);
+
+                            loading.setVisibility(View.GONE);
                         }catch (JSONException e){
                             e.printStackTrace();
+                            loading.setVisibility(View.GONE);
                         }
                     }
                 },
@@ -109,6 +116,7 @@ public class SuratKeluarFragment extends Fragment {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText( getContext(),"Error " +error.toString(), Toast.LENGTH_SHORT ).show();
+                        loading.setVisibility(View.GONE);
                     }
                 }
         );

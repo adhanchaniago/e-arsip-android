@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -33,6 +34,7 @@ public class SuratMasukFragment extends Fragment {
 
     private RecyclerView recyclerViewSuratMasuk;
     private RecyclerView.Adapter adapterSuratMasuk;
+    ProgressBar loading;
 
     private List<ListItemSuratMasuk> listItemSuratMasuks;
 
@@ -45,6 +47,8 @@ public class SuratMasukFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate( R.layout.activity_surat_masuk_fragment, container, false);
+        loading = view.findViewById(R.id.progressBarmasuk);
+
         recyclerViewSuratMasuk = (RecyclerView) view.findViewById(R.id.recycleViewSuratMasuk);
         recyclerViewSuratMasuk.setHasFixedSize(true);
         recyclerViewSuratMasuk.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -64,40 +68,44 @@ public class SuratMasukFragment extends Fragment {
     }
 
     private void loadSuratMasuk(){
+        loading.setVisibility(View.VISIBLE);
         StringRequest stringRequest = new StringRequest( Request.Method.GET, baseUrl+API_URL,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONArray suratmasuk = new JSONArray( response );
+            new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    try {
+                        JSONArray suratmasuk = new JSONArray( response );
 
-                            for (int i = 0; i<suratmasuk.length(); i++){
-                                JSONObject suratmasukobject = suratmasuk.getJSONObject( i );
+                        for (int i = 0; i<suratmasuk.length(); i++){
+                            JSONObject suratmasukobject = suratmasuk.getJSONObject( i );
 
-                                ListItemSuratMasuk listItemSuratMasuk = new ListItemSuratMasuk(
-                                        suratmasukobject.getString( "id_surat_masuk"),
-                                        suratmasukobject.getString( "asal_surat" ),
-                                        suratmasukobject.getString( "perihal" ),
-                                        suratmasukobject.getString( "tgl_arsip")
-                                );
+                            ListItemSuratMasuk listItemSuratMasuk = new ListItemSuratMasuk(
+                                    suratmasukobject.getString( "id_surat_masuk"),
+                                    suratmasukobject.getString( "asal_surat" ),
+                                    suratmasukobject.getString( "perihal" ),
+                                    suratmasukobject.getString( "tgl_arsip")
+                            );
 
-                                listItemSuratMasuks.add(listItemSuratMasuk);
-                            }
-
-                            adapterSuratMasuk = new AdapterRecycleViewSuratMasuk(listItemSuratMasuks, getContext());
-
-                            recyclerViewSuratMasuk.setAdapter(adapterSuratMasuk);
-                        }catch (JSONException e){
-                            e.printStackTrace();
+                            listItemSuratMasuks.add(listItemSuratMasuk);
                         }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText( getContext(),"Error " +error.toString(), Toast.LENGTH_SHORT ).show();
+
+                        adapterSuratMasuk = new AdapterRecycleViewSuratMasuk(listItemSuratMasuks, getContext());
+
+                        recyclerViewSuratMasuk.setAdapter(adapterSuratMasuk);
+                        loading.setVisibility(View.GONE);
+                    }catch (JSONException e){
+                        e.printStackTrace();
+                        loading.setVisibility(View.GONE);
                     }
                 }
+            },
+            new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText( getContext(),"Error " +error.toString(), Toast.LENGTH_SHORT ).show();
+                    loading.setVisibility(View.GONE);
+                }
+            }
         );
 
         RequestQueue requestQueue = Volley.newRequestQueue( getContext() );

@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -36,6 +37,7 @@ public class NotifikasiFragment extends Fragment {
     private RecyclerView recyclerViewNotifikasi;
     private RecyclerView.Adapter adapterNotifikasi;
     SessionManager sessionManager;
+    ProgressBar loading;
 
     private List<ListItemNotifikasi> listItemNotifikasis;
 
@@ -48,6 +50,8 @@ public class NotifikasiFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate( R.layout.activity_notifikasi_fragment, container, false);
+        loading = view.findViewById(R.id.progressBarnotif);
+
         sessionManager = new SessionManager( getContext() );
         HashMap<String, String> user = sessionManager.getUserDetail();
 
@@ -69,6 +73,7 @@ public class NotifikasiFragment extends Fragment {
     }
 
     private void loadNotifikasi(String idUser){
+        loading.setVisibility(View.VISIBLE);
         StringRequest stringRequest = new StringRequest( Request.Method.GET, baseUrl+API_URL+idUser,
                 new Response.Listener<String>() {
                     @Override
@@ -94,8 +99,10 @@ public class NotifikasiFragment extends Fragment {
                             adapterNotifikasi = new AdapterRecycleViewNotifikasi(listItemNotifikasis, getContext());
 
                             recyclerViewNotifikasi.setAdapter(adapterNotifikasi);
+                            loading.setVisibility(View.GONE);
                         }catch (JSONException e){
                             e.printStackTrace();
+                            loading.setVisibility(View.GONE);
                         }
                     }
                 },
@@ -103,6 +110,7 @@ public class NotifikasiFragment extends Fragment {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText( getContext(),"Error " +error.toString(), Toast.LENGTH_SHORT ).show();
+                        loading.setVisibility(View.GONE);
                     }
                 }
         );
