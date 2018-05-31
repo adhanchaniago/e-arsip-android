@@ -80,6 +80,7 @@
                             android:id="@+id/txtDetailNoSuratKeluar"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:padding="@dimen/cellpadingdetailsuratmasuk"
                             android:textColor="@color/ColorPrimaryText" />
                     </TableRow>
@@ -107,6 +108,7 @@
                             android:id="@+id/txtDetailBagianSuratKeluar"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:padding="@dimen/cellpadingdetailsuratmasuk"
                             android:textColor="@color/ColorPrimaryText" />
                     </TableRow>
@@ -134,6 +136,7 @@
                             android:id="@+id/txtDetailJenisSuratKeluar"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:padding="@dimen/cellpadingdetailsuratmasuk"
                             android:textColor="@color/ColorPrimaryText" />
                     </TableRow>
@@ -161,6 +164,7 @@
                             android:id="@+id/txtDetailTujuanSuratKeluar"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:padding="@dimen/cellpadingdetailsuratmasuk"
                             android:textColor="@color/ColorPrimaryText" />
                     </TableRow>
@@ -188,6 +192,7 @@
                             android:id="@+id/txtDetailPerihalSuratKeluar"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:padding="@dimen/cellpadingdetailsuratmasuk"
                             android:textColor="@color/ColorPrimaryText" />
                     </TableRow>
@@ -215,6 +220,7 @@
                             android:id="@+id/txtDetailIsiSuratKeluar"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:padding="@dimen/cellpadingdetailsuratmasuk"
                             android:textColor="@color/ColorPrimaryText" />
                     </TableRow>
@@ -242,6 +248,7 @@
                             android:id="@+id/txtDetailTanggalSuratKeluar"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:padding="@dimen/cellpadingdetailsuratmasuk"
                             android:textColor="@color/ColorPrimaryText" />
                     </TableRow>
@@ -269,6 +276,7 @@
                             android:id="@+id/txtDetailTanggalArsipSuratKeluar"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:padding="@dimen/cellpadingdetailsuratmasuk"
                             android:textColor="@color/ColorPrimaryText" />
                     </TableRow>
@@ -296,6 +304,7 @@
                             android:id="@+id/txtDetailKetSuratKeluar"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:padding="@dimen/cellpadingdetailsuratmasuk"
                             android:textColor="@color/ColorPrimaryText" />
                     </TableRow>
