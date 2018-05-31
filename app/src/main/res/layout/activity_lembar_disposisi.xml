@@ -229,46 +229,25 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/cellpadingdetailsuratmasuk"
-                            android:text="Kepada :"
+                            android:text="Kepada"
                             android:textColor="@color/ColorPrimaryText"
                             android:textStyle="bold" />
 
-                        <android.support.v7.widget.RecyclerView
-                            android:id="@+id/recycleViewBagianLembarDisposisi"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-
-                        </android.support.v7.widget.RecyclerView>
-
-                        <LinearLayout
+                        <TextView
+                            android:id="@+id/textView6"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                            android:padding="@dimen/cellpadingdetailsuratmasuk"
+                            android:text=":"
+                            android:textColor="@color/ColorPrimaryText" />
 
-                            <CheckBox
-                                android:id="@+id/checkBox"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Kasi Perencanaan" />
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/recycleViewBagianLembarDisposisi"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1">
 
-                            <CheckBox
-                                android:id="@+id/checkBox6"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Kasi Keuangan" />
-
-                            <CheckBox
-                                android:id="@+id/checkBox7"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Kaur Pemerintahan" />
-
-                            <CheckBox
-                                android:id="@+id/checkBox8"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Kaur Pelayanan" />
-                        </LinearLayout>
+                        </android.support.v7.widget.RecyclerView>
 
                     </TableRow>
 

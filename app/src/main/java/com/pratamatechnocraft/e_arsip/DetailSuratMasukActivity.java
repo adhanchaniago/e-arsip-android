@@ -83,13 +83,12 @@ public class DetailSuratMasukActivity extends AppCompatActivity {
                         txtDetailTanggalSuratMasuk.setText( suratmasukdetail.getString( "tgl_surat" ) );
                         txtDetailTanggalArsipSuratMasuk.setText( suratmasukdetail.getString( "tgl_arsip" ) );
                         txtDetailKetSuratMasuk.setText( suratmasukdetail.getString( "keterangan" ) );
-                        txtStatusDisposisi.setText( suratmasukdetail.getString( "status_disposisi" ) );
 
 
                         if (suratmasukdetail.getString( "status_disposisi" )=="y"){
-                            /*DIDISPOSISIKAN*/
+                            txtStatusDisposisi.setText("DIDISPOSISIKAN");
                         }else {
-                            /*BELUM DIDISPOSISIKAN*/
+                            txtStatusDisposisi.setText("BELUM DIDISPOSISIKAN");
                         }
 
                         if (user.get( sessionManager.LEVEL_USER ).equals( "kepala desa" )){
