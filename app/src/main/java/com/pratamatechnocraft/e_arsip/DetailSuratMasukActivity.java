@@ -27,6 +27,14 @@ public class DetailSuratMasukActivity extends AppCompatActivity {
     SessionManager sessionManager;
     private Button btnDisposisikan;
     public TextView txtNoSurat;
+    public TextView txtDetailJenisSuratMasuk;
+    public TextView txtDetailAsalSuratMasuk;
+    public TextView txtDetailPerihalSuratMasuk;
+    public TextView txtDetailIsiSuratMasuk;
+    public TextView txtDetailTanggalSuratMasuk;
+    public TextView txtDetailTanggalArsipSuratMasuk;
+    public TextView txtDetailKetSuratMasuk;
+    public TextView txtStatusDisposisi;
     BaseUrlApiModel baseUrlApiModel = new BaseUrlApiModel();
     private String baseUrl=baseUrlApiModel.getBaseURL();
     private static final String API_URL = "api/surat_masuk?api=suratmasukdetail&id=";
@@ -43,6 +51,14 @@ public class DetailSuratMasukActivity extends AppCompatActivity {
         ToolBarAtas2.setLogoDescription(getResources().getString(R.string.app_name)+"Detail Surat Masuk");
         Intent i = getIntent();
         txtNoSurat = (TextView) findViewById( R.id.txtDetailNoSuratMasuk );
+        txtDetailJenisSuratMasuk = (TextView) findViewById( R.id.txtDetailJenisSuratMasuk );
+        txtDetailAsalSuratMasuk = (TextView) findViewById( R.id.txtDetailAsalSuratMasuk );
+        txtDetailPerihalSuratMasuk = (TextView) findViewById( R.id.txtDetailPerihalSuratMasuk );
+        txtDetailIsiSuratMasuk = (TextView) findViewById( R.id.txtDetailIsiSuratMasuk );
+        txtDetailTanggalSuratMasuk = (TextView) findViewById( R.id.txtDetailTanggalSuratMasuk );
+        txtDetailTanggalArsipSuratMasuk = (TextView) findViewById( R.id.txtDetailTanggalArsipSuratMasuk );
+        txtDetailKetSuratMasuk = (TextView) findViewById( R.id.txtDetailKetSuratMasuk );
+        txtStatusDisposisi = (TextView) findViewById( R.id.txtStatusDisposisi );
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -60,6 +76,15 @@ public class DetailSuratMasukActivity extends AppCompatActivity {
                     try {
                         JSONObject suratmasukdetail = new JSONObject(response);
                         txtNoSurat.setText( suratmasukdetail.getString( "no_surat" ) );
+                        txtDetailJenisSuratMasuk.setText( suratmasukdetail.getString( "jenis_surat" ) );
+                        txtDetailAsalSuratMasuk.setText( suratmasukdetail.getString( "asal_surat" ) );
+                        txtDetailPerihalSuratMasuk.setText( suratmasukdetail.getString( "perihal" ) );
+                        txtDetailIsiSuratMasuk.setText( suratmasukdetail.getString( "isi_singkat" ) );
+                        txtDetailTanggalSuratMasuk.setText( suratmasukdetail.getString( "tgl_surat" ) );
+                        txtDetailTanggalArsipSuratMasuk.setText( suratmasukdetail.getString( "tgl_arsip" ) );
+                        txtDetailKetSuratMasuk.setText( suratmasukdetail.getString( "keterangan" ) );
+                        txtStatusDisposisi.setText( suratmasukdetail.getString( "status_disposisi" ) );
+
 
                         if (suratmasukdetail.getString( "status_disposisi" )=="y"){
                             /*DIDISPOSISIKAN*/
