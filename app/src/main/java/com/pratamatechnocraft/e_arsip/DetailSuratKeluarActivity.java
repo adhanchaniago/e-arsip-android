@@ -47,7 +47,7 @@ public class DetailSuratKeluarActivity extends AppCompatActivity {
         txtNoSuratKeluar = (TextView) findViewById( R.id.txtDetailNoSuratKeluar );
         txtDetailBagianSuratKeluar = (TextView) findViewById( R.id.txtDetailBagianSuratKeluar );
         txtDetailJenisSuratKeluar = (TextView) findViewById( R.id.txtDetailJenisSuratKeluar );
-        txtDetailTujuanSuratKeluar = (TextView) findViewById( R.id.txtDetailJenisSuratKeluar );
+        txtDetailTujuanSuratKeluar = (TextView) findViewById( R.id.txtDetailTujuanSuratKeluar );
         txtDetailPerihalSuratKeluar = (TextView) findViewById( R.id.txtDetailPerihalSuratKeluar );
         txtDetailIsiSuratKeluar = (TextView) findViewById( R.id.txtDetailIsiSuratKeluar );
         txtDetailTanggalSuratKeluar = (TextView) findViewById( R.id.txtDetailTanggalSuratKeluar );
