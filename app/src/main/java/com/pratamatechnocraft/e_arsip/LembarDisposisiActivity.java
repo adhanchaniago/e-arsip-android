@@ -29,7 +29,8 @@ import java.util.List;
 public class LembarDisposisiActivity extends AppCompatActivity {
     private RecyclerView recyclerViewBagianLembarDisposisi;
     private RecyclerView.Adapter adapterBagianLembarDisposisi;
-    public TextView txtNoSuratDisposisi,txtIdBagianLembarDisposisi;
+    public TextView txtNoSuratDisposisi,txtIdBagianLembarDisposisi, txtAsalSuratDisposisi;
+    public TextView txtTglSuratDisposisi,txtTglArsipDisposisi,txtSifatDisposisi,txtIsiDisposisi,txtCatatanDisposisi;
     BaseUrlApiModel baseUrlApiModel = new BaseUrlApiModel();
     private String baseUrl=baseUrlApiModel.getBaseURL();
     private static final String API_URL = "api/disposisi?api=lembardisposisi&id=";
@@ -54,6 +55,12 @@ public class LembarDisposisiActivity extends AppCompatActivity {
         Intent i = getIntent();
         txtNoSuratDisposisi = (TextView) findViewById( R.id.txtNoSuratDisposisi );
         txtIdBagianLembarDisposisi = (TextView) findViewById( R.id.txtIdBagianLembarDisposisi );
+        txtAsalSuratDisposisi = (TextView) findViewById( R.id.txtAsalSuratDisposisi );
+        txtTglSuratDisposisi = (TextView) findViewById( R.id.txtTglSuratDisposisi );
+        txtTglArsipDisposisi = (TextView) findViewById( R.id.txtTglArsipDisposisi );
+        txtSifatDisposisi = (TextView) findViewById( R.id.txtSifatDisposisi );
+        txtIsiDisposisi = (TextView) findViewById( R.id.txtIsiDisposisi );
+        txtCatatanDisposisi = (TextView) findViewById( R.id.txtCatatanDisposisi );
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -70,6 +77,12 @@ public class LembarDisposisiActivity extends AppCompatActivity {
                             txtNoSuratDisposisi.setText( lembardisposisi.getString( "no_surat" ) );
                             txtIdBagianLembarDisposisi.setText( lembardisposisi.getString( "id_bagian" ) );
                             loadBagianLembarDisposisi(lembardisposisi.getString( "id_bagian" ));
+                            txtAsalSuratDisposisi.setText( lembardisposisi.getString( "asal_surat" ) );
+                            txtTglSuratDisposisi.setText( lembardisposisi.getString( "tgl_surat" ) );
+                            txtTglArsipDisposisi.setText( lembardisposisi.getString( "tgl_arsip" ) );
+                            txtSifatDisposisi.setText( lembardisposisi.getString( "sifat" ) );
+                            txtIsiDisposisi.setText( lembardisposisi.getString( "isi_disposisi" ) );
+                            txtCatatanDisposisi.setText( lembardisposisi.getString( "catatan" ) );
                         }catch (JSONException e){
                             e.printStackTrace();
                         }
