@@ -23,6 +23,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LembarDisposisiActivity extends AppCompatActivity {
@@ -43,6 +44,8 @@ public class LembarDisposisiActivity extends AppCompatActivity {
 
         recyclerViewBagianLembarDisposisi = (RecyclerView)findViewById(R.id.recycleViewBagianLembarDisposisi);
         recyclerViewBagianLembarDisposisi.setHasFixedSize(true);
+
+        listItemBagianLembarDisposisis = new ArrayList<>();
 
         Toolbar ToolBarAtas2 = (Toolbar)findViewById(R.id.toolbar_lembardisposisi);
         setSupportActionBar(ToolBarAtas2);
