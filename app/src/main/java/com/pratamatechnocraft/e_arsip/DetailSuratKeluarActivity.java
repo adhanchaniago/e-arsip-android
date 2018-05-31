@@ -21,6 +21,14 @@ import org.json.JSONObject;
 public class DetailSuratKeluarActivity extends AppCompatActivity {
 
     public TextView txtNoSuratKeluar;
+    public TextView txtDetailBagianSuratKeluar;
+    public TextView txtDetailJenisSuratKeluar;
+    public TextView txtDetailTujuanSuratKeluar;
+    public TextView txtDetailPerihalSuratKeluar;
+    public TextView txtDetailIsiSuratKeluar;
+    public TextView txtDetailTanggalSuratKeluar;
+    public TextView txtDetailTanggalArsipSuratKeluar;
+    public TextView txtDetailKetSuratKeluar;
     BaseUrlApiModel baseUrlApiModel = new BaseUrlApiModel();
     private String baseUrl=baseUrlApiModel.getBaseURL();
     private static final String API_URL = "api/surat_keluar?api=suratkeluardetail&id=";
@@ -37,6 +45,14 @@ public class DetailSuratKeluarActivity extends AppCompatActivity {
 
         Intent i = getIntent();
         txtNoSuratKeluar = (TextView) findViewById( R.id.txtDetailNoSuratKeluar );
+        txtDetailBagianSuratKeluar = (TextView) findViewById( R.id.txtDetailBagianSuratKeluar );
+        txtDetailJenisSuratKeluar = (TextView) findViewById( R.id.txtDetailJenisSuratKeluar );
+        txtDetailTujuanSuratKeluar = (TextView) findViewById( R.id.txtDetailJenisSuratKeluar );
+        txtDetailPerihalSuratKeluar = (TextView) findViewById( R.id.txtDetailPerihalSuratKeluar );
+        txtDetailIsiSuratKeluar = (TextView) findViewById( R.id.txtDetailIsiSuratKeluar );
+        txtDetailTanggalSuratKeluar = (TextView) findViewById( R.id.txtDetailTanggalSuratKeluar );
+        txtDetailTanggalArsipSuratKeluar = (TextView) findViewById( R.id.txtDetailTanggalArsipSuratKeluar );
+        txtDetailKetSuratKeluar = (TextView) findViewById( R.id.txtDetailKetSuratKeluar );
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -52,6 +68,15 @@ public class DetailSuratKeluarActivity extends AppCompatActivity {
                     try {
                         JSONObject suratkeluardetail = new JSONObject(response);
                         txtNoSuratKeluar.setText( suratkeluardetail.getString( "no_surat" ) );
+                        txtDetailBagianSuratKeluar.setText( suratkeluardetail.getString( "bagian" ) );
+                        txtDetailJenisSuratKeluar.setText( suratkeluardetail.getString( "jenis_surat" ) );
+                        txtDetailTujuanSuratKeluar.setText( suratkeluardetail.getString( "tujuan_surat" ) );
+                        txtDetailPerihalSuratKeluar.setText( suratkeluardetail.getString( "perihal" ) );
+                        txtDetailIsiSuratKeluar.setText( suratkeluardetail.getString( "isi_singkat" ) );
+                        txtDetailTanggalSuratKeluar.setText( suratkeluardetail.getString( "tgl_surat" ) );
+                        txtDetailTanggalArsipSuratKeluar.setText( suratkeluardetail.getString( "tgl_arsip" ) );
+                        txtDetailKetSuratKeluar.setText( suratkeluardetail.getString( "keterangan" ) );
+
 
                     }catch (JSONException e){
                         e.printStackTrace();
