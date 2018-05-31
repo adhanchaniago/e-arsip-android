@@ -21,10 +21,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.pratamatechnocraft.e_arsip.Adapter.AdapterRecycleViewSuratKeluar;
-import com.pratamatechnocraft.e_arsip.Adapter.AdapterRecycleViewSuratMasuk;
 import com.pratamatechnocraft.e_arsip.Model.BaseUrlApiModel;
 import com.pratamatechnocraft.e_arsip.Model.ListItemSuratKeluar;
-import com.pratamatechnocraft.e_arsip.Model.ListItemSuratMasuk;
 import com.pratamatechnocraft.e_arsip.R;
 import com.pratamatechnocraft.e_arsip.Service.SessionManager;
 
@@ -83,46 +81,46 @@ public class SuratKeluarFragment extends Fragment {
     private void loadSuratKeluar(){
         loadingkeluar.setVisibility(View.VISIBLE);
         StringRequest stringRequest = new StringRequest( Request.Method.GET, baseUrl+API_URL,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            if (jsonObject.getInt( "jml_data" )==0){
-                                noDataKeluar.setVisibility( View.VISIBLE );
-                            }else{
-                                JSONArray data = jsonObject.getJSONArray("data");
-                                for (int i = 0; i<data.length(); i++){
-                                    JSONObject suratkeluarobject = data.getJSONObject( i );
+            new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        if (jsonObject.getInt( "jml_data" )==0){
+                            noDataKeluar.setVisibility( View.VISIBLE );
+                        }else{
+                            JSONArray data = jsonObject.getJSONArray("data");
+                            for (int i = 0; i<data.length(); i++){
+                                JSONObject suratkeluarobject = data.getJSONObject( i );
 
-                                    ListItemSuratKeluar listItemSuratKeluar = new ListItemSuratKeluar(
-                                            suratkeluarobject.getString( "id_surat_keluar"),
-                                            suratkeluarobject.getString( "tujuan" ),
-                                            suratkeluarobject.getString( "perihal" ),
-                                            suratkeluarobject.getString( "tgl_arsip")
-                                    );
+                                ListItemSuratKeluar listItemSuratKeluar = new ListItemSuratKeluar(
+                                        suratkeluarobject.getString( "id_surat_keluar"),
+                                        suratkeluarobject.getString( "tujuan" ),
+                                        suratkeluarobject.getString( "perihal" ),
+                                        suratkeluarobject.getString( "tgl_arsip")
+                                );
 
-                                    listItemSuratKeluars.add(listItemSuratKeluar);
-                                }
-
-                                adapterSuratKeluar = new AdapterRecycleViewSuratKeluar(listItemSuratKeluars, getContext());
-                                recyclerViewSuratKeluar.setAdapter(adapterSuratKeluar);
+                                listItemSuratKeluars.add(listItemSuratKeluar);
                             }
 
-                            loadingkeluar.setVisibility(View.GONE);
-                        }catch (JSONException e){
-                            e.printStackTrace();
-                            loadingkeluar.setVisibility(View.GONE);
+                            adapterSuratKeluar = new AdapterRecycleViewSuratKeluar(listItemSuratKeluars, getContext());
+                            recyclerViewSuratKeluar.setAdapter(adapterSuratKeluar);
                         }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText( getContext(),"Error " +error.toString(), Toast.LENGTH_SHORT ).show();
+
+                        loadingkeluar.setVisibility(View.GONE);
+                    }catch (JSONException e){
+                        e.printStackTrace();
                         loadingkeluar.setVisibility(View.GONE);
                     }
                 }
+            },
+            new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText( getContext(),"Error " +error.toString(), Toast.LENGTH_SHORT ).show();
+                    loadingkeluar.setVisibility(View.GONE);
+                }
+            }
         );
 
         RequestQueue requestQueue = Volley.newRequestQueue( getContext() );

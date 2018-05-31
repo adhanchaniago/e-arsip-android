@@ -53,8 +53,35 @@
                 app:layout_constraintTop_toBottomOf="@+id/toolbar_detailsuratmasuk">
 
                 <TableLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/cellpadingdetailsuratmasuk"
+                            android:text="No. Surat"
+                            android:textColor="@color/ColorPrimaryText"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/cellpadingdetailsuratmasuk"
+                            android:text=":"
+                            android:textColor="@color/ColorPrimaryText" />
+
+                        <TextView
+                            android:id="@+id/txtNoSuratDisposisi"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/cellpadingdetailsuratmasuk"
+                            android:textColor="@color/ColorPrimaryText" />
+                    </TableRow>
 
                     <TableRow
                         android:layout_width="match_parent"
@@ -76,11 +103,10 @@
                             android:textColor="@color/ColorPrimaryText" />
 
                         <TextView
-                            android:id="@+id/txtDetailNoSuratMasuk"
+                            android:id="@+id/txtAsalSuratDisposisi"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/cellpadingdetailsuratmasuk"
-                            android:text="Value"
                             android:textColor="@color/ColorPrimaryText" />
                     </TableRow>
 
@@ -104,11 +130,10 @@
                             android:textColor="@color/ColorPrimaryText" />
 
                         <TextView
-                            android:id="@+id/txtDetailJenisSuratMasuk"
+                            android:id="@+id/txtTglSuratDisposisi"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/cellpadingdetailsuratmasuk"
-                            android:text="Value"
                             android:textColor="@color/ColorPrimaryText" />
                     </TableRow>
 
@@ -120,7 +145,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/cellpadingdetailsuratmasuk"
-                            android:text="No. Surat"
+                            android:text="Tanggal Arsip"
                             android:textColor="@color/ColorPrimaryText"
                             android:textStyle="bold" />
 
@@ -132,11 +157,10 @@
                             android:textColor="@color/ColorPrimaryText" />
 
                         <TextView
-                            android:id="@+id/txtDetailAsalSuratMasuk"
+                            android:id="@+id/txtTglArsipDisposisi"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/cellpadingdetailsuratmasuk"
-                            android:text="Value"
                             android:textColor="@color/ColorPrimaryText" />
                     </TableRow>
 
@@ -148,7 +172,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/cellpadingdetailsuratmasuk"
-                            android:text="Tanggal Terima"
+                            android:text="Sifat"
                             android:textColor="@color/ColorPrimaryText"
                             android:textStyle="bold" />
 
@@ -160,11 +184,10 @@
                             android:textColor="@color/ColorPrimaryText" />
 
                         <TextView
-                            android:id="@+id/txtDetailPerihalSuratMasuk"
+                            android:id="@+id/txtSifatDisposisi"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/cellpadingdetailsuratmasuk"
-                            android:text="Value"
                             android:textColor="@color/ColorPrimaryText" />
                     </TableRow>
 
@@ -188,8 +211,14 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/toolbar_detailsuratmasuk">
 
+                <TextView
+                    android:id="@+id/txtIdBagianLembarDisposisi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone" />
+
                 <TableLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
                     <TableRow
@@ -200,9 +229,16 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/cellpadingdetailsuratmasuk"
-                            android:text="Diteruskan Ke :"
+                            android:text="Kepada :"
                             android:textColor="@color/ColorPrimaryText"
                             android:textStyle="bold" />
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/recycleViewBagianLembarDisposisi"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                        </android.support.v7.widget.RecyclerView>
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -301,11 +337,11 @@
                         android:weightSum="2">
 
                         <TextView
+                            android:id="@+id/txtIsiDisposisi"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:padding="@dimen/cellpadingdetailsuratmasuk"
-                            android:text="divdvdvd dvdv dkvdvnkdv dvdv"
                             android:textColor="@color/ColorPrimaryText"
                             android:textSize="12sp" />
 
@@ -316,11 +352,11 @@
                             android:background="?android:attr/listDivider" />
 
                         <TextView
+                            android:id="@+id/txtCatatanDisposisi"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:padding="@dimen/cellpadingdetailsuratmasuk"
-                            android:text="divdvdvd dvdv dkvdvnkdv dvdv"
                             android:textColor="@color/ColorPrimaryText"
                             android:textSize="12sp" />
 

@@ -16,12 +16,15 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.pratamatechnocraft.e_arsip.Model.BaseUrlApiModel;
+import com.pratamatechnocraft.e_arsip.Service.SessionManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class DetailSuratMasukActivity extends AppCompatActivity {
+import java.util.HashMap;
 
+public class DetailSuratMasukActivity extends AppCompatActivity {
+    SessionManager sessionManager;
     private Button btnDisposisikan;
     public TextView txtNoSurat;
     BaseUrlApiModel baseUrlApiModel = new BaseUrlApiModel();
@@ -33,6 +36,7 @@ public class DetailSuratMasukActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_surat_masuk);
+        btnDisposisikan = (Button) findViewById(R.id.buttonDetailDisposisikan);
 
         Toolbar ToolBarAtas2 = (Toolbar)findViewById(R.id.toolbar_detailsuratmasuk);
         setSupportActionBar(ToolBarAtas2);
@@ -42,40 +46,57 @@ public class DetailSuratMasukActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        btnDisposisikan = (Button) findViewById(R.id.buttonDetailDisposisikan);
-
-        btnDisposisikan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(DetailSuratMasukActivity.this, MendisposisikanActivity.class);
-                startActivity(i);
-            }
-        });
-
         loadDetailSuratMasuk(i.getStringExtra( "idSuratMasuk" ));
 
     }
 
     private void loadDetailSuratMasuk(String idsurat){
+        sessionManager = new SessionManager( this );
+        final HashMap<String, String> user = sessionManager.getUserDetail();
         StringRequest stringRequest = new StringRequest( Request.Method.GET, baseUrl+API_URL+idsurat,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject suratmasukdetail = new JSONObject(response);
-                            txtNoSurat.setText( suratmasukdetail.getString( "no_surat" ) );
+            new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    try {
+                        JSONObject suratmasukdetail = new JSONObject(response);
+                        txtNoSurat.setText( suratmasukdetail.getString( "no_surat" ) );
 
-                        }catch (JSONException e){
-                            e.printStackTrace();
+                        if (suratmasukdetail.getString( "status_disposisi" )=="y"){
+                            /*DIDISPOSISIKAN*/
+                        }else {
+                            /*BELUM DIDISPOSISIKAN*/
                         }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText( getApplicationContext(),"Error " +error.toString(), Toast.LENGTH_SHORT ).show();
+
+                        if (user.get( sessionManager.LEVEL_USER ).equals( "kepala desa" )){
+                            if (suratmasukdetail.getString( "status_disposisi" )=="y"){
+                                btnDisposisikan.setVisibility( View.GONE );
+                            }
+                        }else{
+                            btnDisposisikan.setVisibility( View.GONE );
+                        }
+
+                        final String idSuratMasuk = suratmasukdetail.getString( "id_surat_masuk" );
+
+                        btnDisposisikan.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent i = new Intent(DetailSuratMasukActivity.this, MendisposisikanActivity.class);
+                                i.putExtra("idSuratMasuk", idSuratMasuk);
+                                startActivity(i);
+                            }
+                        });
+
+                    }catch (JSONException e){
+                        e.printStackTrace();
                     }
                 }
+            },
+            new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText( getApplicationContext(),"Error " +error.toString(), Toast.LENGTH_SHORT ).show();
+                }
+            }
         );
 
         RequestQueue requestQueue = Volley.newRequestQueue( this );

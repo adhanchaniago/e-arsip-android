@@ -46,24 +46,24 @@ public class DetailSuratKeluarActivity extends AppCompatActivity {
 
     private void loadDetailSuratMasuk(String idsurat){
         StringRequest stringRequest = new StringRequest( Request.Method.GET, baseUrl+API_URL+idsurat,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject suratkeluardetail = new JSONObject(response);
-                            txtNoSuratKeluar.setText( suratkeluardetail.getString( "no_surat" ) );
+            new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    try {
+                        JSONObject suratkeluardetail = new JSONObject(response);
+                        txtNoSuratKeluar.setText( suratkeluardetail.getString( "no_surat" ) );
 
-                        }catch (JSONException e){
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText( getApplicationContext(),"Error " +error.toString(), Toast.LENGTH_SHORT ).show();
+                    }catch (JSONException e){
+                        e.printStackTrace();
                     }
                 }
+            },
+            new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText( getApplicationContext(),"Error " +error.toString(), Toast.LENGTH_SHORT ).show();
+                }
+            }
         );
 
         RequestQueue requestQueue = Volley.newRequestQueue( this );
