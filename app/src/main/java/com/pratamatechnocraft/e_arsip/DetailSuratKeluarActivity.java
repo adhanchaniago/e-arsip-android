@@ -70,7 +70,7 @@ public class DetailSuratKeluarActivity extends AppCompatActivity {
                         txtNoSuratKeluar.setText( suratkeluardetail.getString( "no_surat" ) );
                         txtDetailBagianSuratKeluar.setText( suratkeluardetail.getString( "bagian" ) );
                         txtDetailJenisSuratKeluar.setText( suratkeluardetail.getString( "jenis_surat" ) );
-                        txtDetailTujuanSuratKeluar.setText( suratkeluardetail.getString( "tujuan_surat" ) );
+                        txtDetailTujuanSuratKeluar.setText( suratkeluardetail.getString( "tujuan" ) );
                         txtDetailPerihalSuratKeluar.setText( suratkeluardetail.getString( "perihal" ) );
                         txtDetailIsiSuratKeluar.setText( suratkeluardetail.getString( "isi_singkat" ) );
                         txtDetailTanggalSuratKeluar.setText( suratkeluardetail.getString( "tgl_surat" ) );
