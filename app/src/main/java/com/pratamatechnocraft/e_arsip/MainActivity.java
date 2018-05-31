@@ -1,6 +1,5 @@
 package com.pratamatechnocraft.e_arsip;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -15,9 +14,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.pratamatechnocraft.e_arsip.Fragment.DashboardFragment;
+import com.pratamatechnocraft.e_arsip.Fragment.DisposisiFragment;
+import com.pratamatechnocraft.e_arsip.Fragment.NotifikasiFragment;
+import com.pratamatechnocraft.e_arsip.Fragment.ProfileFragment;
+import com.pratamatechnocraft.e_arsip.Fragment.SuratKeluarFragment;
+import com.pratamatechnocraft.e_arsip.Fragment.SuratMasukFragment;
+import com.pratamatechnocraft.e_arsip.Model.BaseUrlApiModel;
+import com.pratamatechnocraft.e_arsip.Service.SessionManager;
 
 import java.util.HashMap;
 
@@ -39,7 +48,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         }
 
-        FirebaseMessaging.getInstance().subscribeToTopic( "perbagian" );
 
         Toolbar toolbar = (Toolbar) findViewById( R.id.toolbar );
         setSupportActionBar( toolbar );
@@ -130,4 +138,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer = (DrawerLayout) findViewById( R.id.drawer_layout );
         drawer.closeDrawer( GravityCompat.START );
     }
+
+
 }
