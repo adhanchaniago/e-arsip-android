@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -38,7 +39,7 @@ public class NotifikasiFragment extends Fragment {
     private RecyclerView recyclerViewNotifikasi;
     private RecyclerView.Adapter adapterNotifikasi;
     SessionManager sessionManager;
-    ProgressBar loadingnotif;
+    SwipeRefreshLayout refreshNotifikasi;
     TextView noDataNotif;
 
     private List<ListItemNotifikasi> listItemNotifikasis;
@@ -52,18 +53,31 @@ public class NotifikasiFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate( R.layout.activity_notifikasi_fragment, container, false);
-        loadingnotif = view.findViewById(R.id.progressBarnotif);
+        refreshNotifikasi = view.findViewById(R.id.refreshNotifikasi);
         noDataNotif = view.findViewById( R.id.noDatanotif );
 
         sessionManager = new SessionManager( getContext() );
-        HashMap<String, String> user = sessionManager.getUserDetail();
+        final HashMap<String, String> user = sessionManager.getUserDetail();
 
         recyclerViewNotifikasi = (RecyclerView) view.findViewById(R.id.recycleViewNotifikasi);
         recyclerViewNotifikasi.setHasFixedSize(true);
         recyclerViewNotifikasi.setLayoutManager(new LinearLayoutManager(getContext()));
 
         listItemNotifikasis = new ArrayList<>();
+        adapterNotifikasi = new AdapterRecycleViewNotifikasi(listItemNotifikasis, getContext());
+
         loadNotifikasi(user.get( sessionManager.ID_USER ));
+
+        refreshNotifikasi.setOnRefreshListener( new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                listItemNotifikasis.clear();
+                adapterNotifikasi.notifyDataSetChanged();
+                loadNotifikasi(user.get( sessionManager.ID_USER ));
+            }
+        } );
+
+        recyclerViewNotifikasi.setAdapter(adapterNotifikasi);
 
         return view;
     }
@@ -76,50 +90,48 @@ public class NotifikasiFragment extends Fragment {
     }
 
     private void loadNotifikasi(String idUser){
-        loadingnotif.setVisibility(View.VISIBLE);
+        refreshNotifikasi.setRefreshing( true );
         StringRequest stringRequest = new StringRequest( Request.Method.GET, baseUrl+API_URL+idUser,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            if (jsonObject.getInt( "jml_data" )==0){
-                                noDataNotif.setVisibility( View.VISIBLE );
-                            }else{
-                                JSONArray data = jsonObject.getJSONArray("data");
-                                for (int i = 0; i<data.length(); i++){
-                                    JSONObject notifikasiobject = data.getJSONObject( i );
+            new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        if (jsonObject.getInt( "jml_data" )==0){
+                            noDataNotif.setVisibility( View.VISIBLE );
+                        }else{
+                            JSONArray data = jsonObject.getJSONArray("data");
+                            for (int i = 0; i<data.length(); i++){
+                                JSONObject notifikasiobject = data.getJSONObject( i );
 
-                                    ListItemNotifikasi listItemNotifikasi = new ListItemNotifikasi(
-                                            notifikasiobject.getString( "id_notif"),
-                                            notifikasiobject.getString( "id" ),
-                                            notifikasiobject.getString( "jenis_notif" ),
-                                            notifikasiobject.getString( "judul_notif"),
-                                            notifikasiobject.getString( "isi_notif"),
-                                            notifikasiobject.getString( "create_on")
-                                    );
+                                ListItemNotifikasi listItemNotifikasi = new ListItemNotifikasi(
+                                        notifikasiobject.getString( "id_notif"),
+                                        notifikasiobject.getString( "id" ),
+                                        notifikasiobject.getString( "jenis_notif" ),
+                                        notifikasiobject.getString( "judul_notif"),
+                                        notifikasiobject.getString( "isi_notif"),
+                                        notifikasiobject.getString( "create_on")
+                                );
 
-                                    listItemNotifikasis.add(listItemNotifikasi);
-                                }
-
-                                adapterNotifikasi = new AdapterRecycleViewNotifikasi(listItemNotifikasis, getContext());
-                                recyclerViewNotifikasi.setAdapter(adapterNotifikasi);
+                                listItemNotifikasis.add(listItemNotifikasi);
+                                adapterNotifikasi.notifyDataSetChanged();
                             }
-
-                            loadingnotif.setVisibility(View.GONE);
-                        }catch (JSONException e){
-                            e.printStackTrace();
-                            loadingnotif.setVisibility(View.GONE);
                         }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText( getContext(),"Error " +error.toString(), Toast.LENGTH_SHORT ).show();
-                        loadingnotif.setVisibility(View.GONE);
+
+                        refreshNotifikasi.setRefreshing( false );
+                    }catch (JSONException e){
+                        e.printStackTrace();
+                        refreshNotifikasi.setRefreshing( false );
                     }
                 }
+            },
+            new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText( getContext(),"Error " +error.toString(), Toast.LENGTH_SHORT ).show();
+                    refreshNotifikasi.setRefreshing( false );
+                }
+            }
         );
 
         RequestQueue requestQueue = Volley.newRequestQueue( getContext() );

@@ -35,7 +35,6 @@ public class AdapterRecycleViewBagianLembarDisposisi extends RecyclerView.Adapte
     public void onBindViewHolder(ViewHolder holder, int position) {
         final ListItemBagianLembarDisposisi listItemBagianLembarDisposisi = listItemBagianLembarDisposisis.get(position);
 
-       // holder.txtNamaBagian.setText(listItemBagianLembarDisposisi.getNamaBagian());
         if (listItemBagianLembarDisposisi.getNamaBagian().equals( listItemBagianLembarDisposisi.getIdBagianTmp() )){
             holder.txtNamaBagian.setChecked( true );
             holder.txtNamaBagian.setText(listItemBagianLembarDisposisi.getNamaBagian());

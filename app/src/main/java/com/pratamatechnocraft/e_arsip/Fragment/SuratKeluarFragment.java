@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -37,7 +38,7 @@ import java.util.List;
 public class SuratKeluarFragment extends Fragment {
     private RecyclerView recyclerViewSuratKeluar;
     private RecyclerView.Adapter adapterSuratKeluar;
-    ProgressBar loadingkeluar;
+    SwipeRefreshLayout refreshSuratKeluar;
     TextView noDataKeluar;
 
     SessionManager sessionManager;
@@ -51,7 +52,7 @@ public class SuratKeluarFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate( R.layout.activity_surat_keluar_fragment, container, false);
-        loadingkeluar = view.findViewById(R.id.progressBarkeluar);
+        refreshSuratKeluar = view.findViewById(R.id.refreshSuratKeluar);
         noDataKeluar = view.findViewById( R.id.noDatakeluar );
 
         recyclerViewSuratKeluar = (RecyclerView) view.findViewById(R.id.recycleViewSuratKeluar);
@@ -60,12 +61,26 @@ public class SuratKeluarFragment extends Fragment {
         sessionManager = new SessionManager( getContext() );
         HashMap<String, String> user = sessionManager.getUserDetail();
         listItemSuratKeluars = new ArrayList<>();
+        adapterSuratKeluar = new AdapterRecycleViewSuratKeluar(listItemSuratKeluars, getContext());
+
         if (user.get( sessionManager.LEVEL_USER ).equals( "kepala desa" )){
             API_URL="api/surat_keluar?api=suratkeluarall";
         }else{
             API_URL="api/surat_keluar?api=suratkeluarperbagian&id_bagian="+user.get( sessionManager.ID_BAGIAN );
         }
+
         loadSuratKeluar();
+
+        refreshSuratKeluar.setOnRefreshListener( new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                listItemSuratKeluars.clear();
+                adapterSuratKeluar.notifyDataSetChanged();
+                loadSuratKeluar();
+            }
+        } );
+
+        recyclerViewSuratKeluar.setAdapter(adapterSuratKeluar);
 
         return view;
     }
@@ -79,7 +94,7 @@ public class SuratKeluarFragment extends Fragment {
     }
 
     private void loadSuratKeluar(){
-        loadingkeluar.setVisibility(View.VISIBLE);
+        refreshSuratKeluar.setRefreshing( true );
         StringRequest stringRequest = new StringRequest( Request.Method.GET, baseUrl+API_URL,
             new Response.Listener<String>() {
                 @Override
@@ -101,16 +116,14 @@ public class SuratKeluarFragment extends Fragment {
                                 );
 
                                 listItemSuratKeluars.add(listItemSuratKeluar);
+                                adapterSuratKeluar.notifyDataSetChanged();
                             }
-
-                            adapterSuratKeluar = new AdapterRecycleViewSuratKeluar(listItemSuratKeluars, getContext());
-                            recyclerViewSuratKeluar.setAdapter(adapterSuratKeluar);
                         }
 
-                        loadingkeluar.setVisibility(View.GONE);
+                        refreshSuratKeluar.setRefreshing( false );
                     }catch (JSONException e){
                         e.printStackTrace();
-                        loadingkeluar.setVisibility(View.GONE);
+                        refreshSuratKeluar.setRefreshing( false );
                     }
                 }
             },
@@ -118,7 +131,7 @@ public class SuratKeluarFragment extends Fragment {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Toast.makeText( getContext(),"Error " +error.toString(), Toast.LENGTH_SHORT ).show();
-                    loadingkeluar.setVisibility(View.GONE);
+                    refreshSuratKeluar.setRefreshing( false );
                 }
             }
         );

@@ -4,8 +4,10 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,9 +37,8 @@ public class SuratMasukFragment extends Fragment {
 
     private RecyclerView recyclerViewSuratMasuk;
     private RecyclerView.Adapter adapterSuratMasuk;
-    ProgressBar loadingmasuk;
     TextView noDataMasuk;
-
+    SwipeRefreshLayout refreshSuratMasuk;
     private List<ListItemSuratMasuk> listItemSuratMasuks;
 
     BaseUrlApiModel baseUrlApiModel = new BaseUrlApiModel();
@@ -49,16 +50,28 @@ public class SuratMasukFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate( R.layout.activity_surat_masuk_fragment, container, false);
-        loadingmasuk = view.findViewById(R.id.progressBarmasuk);
         noDataMasuk = view.findViewById( R.id.noDatamasuk );
+        refreshSuratMasuk = (SwipeRefreshLayout) view.findViewById(R.id.refreshSuratMasuk);
 
         recyclerViewSuratMasuk = (RecyclerView) view.findViewById(R.id.recycleViewSuratMasuk);
         recyclerViewSuratMasuk.setHasFixedSize(true);
         recyclerViewSuratMasuk.setLayoutManager(new LinearLayoutManager(getContext()));
 
         listItemSuratMasuks = new ArrayList<>();
+        adapterSuratMasuk = new AdapterRecycleViewSuratMasuk(listItemSuratMasuks, getContext());
 
         loadSuratMasuk();
+
+        refreshSuratMasuk.setOnRefreshListener( new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                listItemSuratMasuks.clear();
+                adapterSuratMasuk.notifyDataSetChanged();
+                loadSuratMasuk();
+            }
+        } );
+
+        recyclerViewSuratMasuk.setAdapter(adapterSuratMasuk);
 
         return view;
     }
@@ -71,7 +84,7 @@ public class SuratMasukFragment extends Fragment {
     }
 
     private void loadSuratMasuk(){
-        loadingmasuk.setVisibility(View.VISIBLE);
+        refreshSuratMasuk.setRefreshing(true);
         StringRequest stringRequest = new StringRequest( Request.Method.GET, baseUrl+API_URL,
             new Response.Listener<String>() {
                 @Override
@@ -93,17 +106,13 @@ public class SuratMasukFragment extends Fragment {
                                 );
 
                                 listItemSuratMasuks.add(listItemSuratMasuk);
+                                adapterSuratMasuk.notifyDataSetChanged();
                             }
-
-                            adapterSuratMasuk = new AdapterRecycleViewSuratMasuk(listItemSuratMasuks, getContext());
-
-                            recyclerViewSuratMasuk.setAdapter(adapterSuratMasuk);
                         }
-
-                        loadingmasuk.setVisibility(View.GONE);
+                        refreshSuratMasuk.setRefreshing( false );
                     }catch (JSONException e){
                         e.printStackTrace();
-                        loadingmasuk.setVisibility(View.GONE);
+                        refreshSuratMasuk.setRefreshing( false );
                     }
                 }
             },
@@ -111,7 +120,7 @@ public class SuratMasukFragment extends Fragment {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Toast.makeText( getContext(),"Error " +error.toString(), Toast.LENGTH_SHORT ).show();
-                    loadingmasuk.setVisibility(View.GONE);
+                    refreshSuratMasuk.setRefreshing( false );
                 }
             }
         );

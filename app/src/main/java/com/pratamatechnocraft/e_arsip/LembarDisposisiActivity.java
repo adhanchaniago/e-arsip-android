@@ -3,6 +3,7 @@ package com.pratamatechnocraft.e_arsip;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Rect;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -37,6 +38,8 @@ public class LembarDisposisiActivity extends AppCompatActivity {
     private RecyclerView.Adapter adapterBagianLembarDisposisi;
     public TextView txtNoSuratDisposisi,txtIdBagianLembarDisposisi, txtAsalSuratDisposisi;
     public TextView txtTglSuratDisposisi,txtTglArsipDisposisi,txtSifatDisposisi,txtIsiDisposisi,txtCatatanDisposisi;
+    SwipeRefreshLayout refreshLembarDisposisi;
+
     BaseUrlApiModel baseUrlApiModel = new BaseUrlApiModel();
     private String baseUrl=baseUrlApiModel.getBaseURL();
     private static final String API_URL = "api/disposisi?api=lembardisposisi&id=";
@@ -48,6 +51,7 @@ public class LembarDisposisiActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lembar_disposisi);
+        refreshLembarDisposisi = findViewById( R.id.refreshLembarDisposisi );
 
         recyclerViewBagianLembarDisposisi = (RecyclerView)findViewById(R.id.recycleViewBagianLembarDisposisi);
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
@@ -57,12 +61,13 @@ public class LembarDisposisiActivity extends AppCompatActivity {
         recyclerViewBagianLembarDisposisi.setHasFixedSize(true);
 
         listItemBagianLembarDisposisis = new ArrayList<>();
+        adapterBagianLembarDisposisi = new AdapterRecycleViewBagianLembarDisposisi(listItemBagianLembarDisposisis, getApplicationContext());
 
         Toolbar ToolBarAtas2 = (Toolbar)findViewById(R.id.toolbar_lembardisposisi);
         setSupportActionBar(ToolBarAtas2);
         ToolBarAtas2.setLogoDescription(getResources().getString(R.string.app_name)+"Lembar Disposisi");
 
-        Intent i = getIntent();
+        final Intent i = getIntent();
         txtNoSuratDisposisi = (TextView) findViewById( R.id.txtNoSuratDisposisi );
         txtIdBagianLembarDisposisi = (TextView) findViewById( R.id.txtIdBagianLembarDisposisi );
         txtAsalSuratDisposisi = (TextView) findViewById( R.id.txtAsalSuratDisposisi );
@@ -75,35 +80,50 @@ public class LembarDisposisiActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         loadLembarDisposisi(i.getStringExtra( "idDisposisi" ));
+
+        refreshLembarDisposisi.setOnRefreshListener( new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                listItemBagianLembarDisposisis.clear();
+                adapterBagianLembarDisposisi.notifyDataSetChanged();
+                clear();
+                loadLembarDisposisi(i.getStringExtra( "idDisposisi" ));
+            }
+        } );
+
+        recyclerViewBagianLembarDisposisi.setAdapter(adapterBagianLembarDisposisi);
     }
 
     private void loadLembarDisposisi(String idsurat){
+        refreshLembarDisposisi.setRefreshing( true );
         StringRequest stringRequest = new StringRequest( Request.Method.GET, baseUrl+API_URL+idsurat,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject lembardisposisi = new JSONObject(response);
-                            txtNoSuratDisposisi.setText( lembardisposisi.getString( "no_surat" ) );
-                            txtIdBagianLembarDisposisi.setText( lembardisposisi.getString( "id_bagian" ) );
-                            txtAsalSuratDisposisi.setText( lembardisposisi.getString( "asal_surat" ) );
-                            txtTglSuratDisposisi.setText( lembardisposisi.getString( "tgl_surat" ) );
-                            txtTglArsipDisposisi.setText( lembardisposisi.getString( "tgl_arsip" ) );
-                            txtSifatDisposisi.setText( lembardisposisi.getString( "sifat" ) );
-                            txtIsiDisposisi.setText( lembardisposisi.getString( "isi_disposisi" ) );
-                            txtCatatanDisposisi.setText( lembardisposisi.getString( "catatan" ) );
-                            loadBagianLembarDisposisi(lembardisposisi.getString( "bagian" ));
-                        }catch (JSONException e){
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText( getApplicationContext(),"Error " +error.toString(), Toast.LENGTH_SHORT ).show();
+            new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    try {
+                        JSONObject lembardisposisi = new JSONObject(response);
+                        txtNoSuratDisposisi.setText( lembardisposisi.getString( "no_surat" ) );
+                        txtIdBagianLembarDisposisi.setText( lembardisposisi.getString( "id_bagian" ) );
+                        txtAsalSuratDisposisi.setText( lembardisposisi.getString( "asal_surat" ) );
+                        txtTglSuratDisposisi.setText( lembardisposisi.getString( "tgl_surat" ) );
+                        txtTglArsipDisposisi.setText( lembardisposisi.getString( "tgl_arsip" ) );
+                        txtSifatDisposisi.setText( lembardisposisi.getString( "sifat" ) );
+                        txtIsiDisposisi.setText( lembardisposisi.getString( "isi_disposisi" ) );
+                        txtCatatanDisposisi.setText( lembardisposisi.getString( "catatan" ) );
+                        loadBagianLembarDisposisi(lembardisposisi.getString( "bagian" ));
+                    }catch (JSONException e){
+                        e.printStackTrace();
+                        refreshLembarDisposisi.setRefreshing( false );
                     }
                 }
+            },
+            new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText( getApplicationContext(),"Error " +error.toString(), Toast.LENGTH_SHORT ).show();
+                    refreshLembarDisposisi.setRefreshing( false );
+                }
+            }
         );
 
         RequestQueue requestQueue = Volley.newRequestQueue( this );
@@ -127,13 +147,12 @@ public class LembarDisposisiActivity extends AppCompatActivity {
                                 );
 
                                 listItemBagianLembarDisposisis.add(listItemBagianLembarDisposisi);
+                                adapterBagianLembarDisposisi.notifyDataSetChanged();
                             }
-
-                            adapterBagianLembarDisposisi = new AdapterRecycleViewBagianLembarDisposisi(listItemBagianLembarDisposisis, getApplicationContext());
-                            recyclerViewBagianLembarDisposisi.setAdapter(adapterBagianLembarDisposisi);
-
+                            refreshLembarDisposisi.setRefreshing( false );
                     }catch (JSONException e){
                         e.printStackTrace();
+                        refreshLembarDisposisi.setRefreshing( false );
                     }
                 }
             },
@@ -141,6 +160,7 @@ public class LembarDisposisiActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         error.printStackTrace();
+                        refreshLembarDisposisi.setRefreshing( false );
                     }
                 }
         );
@@ -190,6 +210,17 @@ public class LembarDisposisiActivity extends AppCompatActivity {
     private int dpToPx(int dp) {
         Resources r = getResources();
         return Math.round( TypedValue.applyDimension( TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics() ) );
+    }
+
+    private void clear(){
+        txtNoSuratDisposisi.setText( "" );
+        txtIdBagianLembarDisposisi.setText( "" );
+        txtAsalSuratDisposisi.setText( "" );
+        txtTglSuratDisposisi.setText( "" );
+        txtTglArsipDisposisi.setText( "" );
+        txtSifatDisposisi.setText( "" );
+        txtIsiDisposisi.setText( "" );
+        txtCatatanDisposisi.setText( "" );
     }
 
 }

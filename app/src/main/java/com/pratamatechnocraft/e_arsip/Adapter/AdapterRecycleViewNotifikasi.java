@@ -91,11 +91,11 @@ public class AdapterRecycleViewNotifikasi extends RecyclerView.Adapter<AdapterRe
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        if (listItemNotifikasi.getJenisNotif()=="surat masuk"){
+                        if (listItemNotifikasi.getJenisNotif().equals( "surat masuk" )){
                             Intent i = new Intent(context, DetailSuratMasukActivity.class);
                             i.putExtra("idSuratMasuk", listItemNotifikasi.getId());
                             context.startActivity(i);
-                        }else if(listItemNotifikasi.getJenisNotif()=="surat keluar"){
+                        }else if(listItemNotifikasi.getJenisNotif().equals( "surat keluar" )){
                             Intent i = new Intent(context, DetailSuratKeluarActivity.class);
                             i.putExtra("idSuratKeluar", listItemNotifikasi.getId());
                             context.startActivity(i);

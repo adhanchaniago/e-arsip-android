@@ -84,7 +84,6 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:padding="@dimen/cellpadingdetailsuratmasuk"
-                                android:text="Value"
                                 android:textColor="@color/ColorPrimaryText" />
                         </TableRow>
 
@@ -99,45 +98,58 @@
                         android:textColor="@color/ColorPrimaryText"
                         android:textStyle="bold" />
 
-                    <CheckBox
-                        android:id="@+id/checkBox2"
+                    <android.support.v7.widget.RecyclerView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Kasi Perencanaan" />
+                        android:layout_height="match_parent" />
 
-                    <CheckBox
-                        android:id="@+id/checkBox3"
+                    <TextView
+                        android:id="@+id/textView7"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Kasi Keuangan" />
+                        android:text="Sifat"
+                        android:textColor="@color/ColorPrimaryText"
+                        android:textStyle="bold" />
 
-                    <CheckBox
-                        android:id="@+id/checkBox4"
+                    <RadioGroup
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Kaur Pemerintahan" />
+                        android:layout_height="match_parent">
 
-                    <CheckBox
-                        android:id="@+id/checkBox5"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Kaur Pelayanan" />
+                        <RadioButton
+                            android:id="@+id/radioButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="RadioButton" />
+
+                        <RadioButton
+                            android:id="@+id/radioButton2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="RadioButton" />
+
+                        <RadioButton
+                            android:id="@+id/radioButton3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="RadioButton" />
+
+                        <RadioButton
+                            android:id="@+id/radioButton4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="RadioButton" />
+                    </RadioGroup>
 
                     <EditText
-                        android:id="@+id/editText8"
+                        android:id="@+id/editTextIsiDisposisi"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:hint="Isi Disposisi"
                         android:inputType="textMultiLine" />
-
-                    <EditText
-                        android:id="@+id/editText9"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:hint="Sifat"
-                        android:inputType="textPersonName" />
 
                     <EditText
                         android:id="@+id/editText11"
@@ -162,7 +174,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="15dp"
-                    android:text="Submit"
+                    android:text="Disposisikan"
                     android:textAllCaps="false" />
             </RelativeLayout>
         </LinearLayout>

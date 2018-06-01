@@ -1,6 +1,7 @@
 package com.pratamatechnocraft.e_arsip;
 
 import android.content.Intent;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -35,6 +36,8 @@ public class DetailSuratMasukActivity extends AppCompatActivity {
     public TextView txtDetailTanggalArsipSuratMasuk;
     public TextView txtDetailKetSuratMasuk;
     public TextView txtStatusDisposisi;
+    SwipeRefreshLayout refreshDetailSuratMasuk;
+
     BaseUrlApiModel baseUrlApiModel = new BaseUrlApiModel();
     private String baseUrl=baseUrlApiModel.getBaseURL();
     private static final String API_URL = "api/surat_masuk?api=suratmasukdetail&id=";
@@ -45,11 +48,12 @@ public class DetailSuratMasukActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_surat_masuk);
         btnDisposisikan = (Button) findViewById(R.id.buttonDetailDisposisikan);
+        refreshDetailSuratMasuk = (SwipeRefreshLayout) findViewById( R.id.refreshDetailSuratMasuk );
 
         Toolbar ToolBarAtas2 = (Toolbar)findViewById(R.id.toolbar_detailsuratmasuk);
         setSupportActionBar(ToolBarAtas2);
         ToolBarAtas2.setLogoDescription(getResources().getString(R.string.app_name)+"Detail Surat Masuk");
-        Intent i = getIntent();
+        final Intent i = getIntent();
         txtNoSurat = (TextView) findViewById( R.id.txtDetailNoSuratMasuk );
         txtDetailJenisSuratMasuk = (TextView) findViewById( R.id.txtDetailJenisSuratMasuk );
         txtDetailAsalSuratMasuk = (TextView) findViewById( R.id.txtDetailAsalSuratMasuk );
@@ -64,9 +68,18 @@ public class DetailSuratMasukActivity extends AppCompatActivity {
 
         loadDetailSuratMasuk(i.getStringExtra( "idSuratMasuk" ));
 
+        refreshDetailSuratMasuk.setOnRefreshListener( new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                clear();
+                loadDetailSuratMasuk(i.getStringExtra( "idSuratMasuk" ));
+            }
+        } );
+
     }
 
     private void loadDetailSuratMasuk(String idsurat){
+        refreshDetailSuratMasuk.setRefreshing( true );
         sessionManager = new SessionManager( this );
         final HashMap<String, String> user = sessionManager.getUserDetail();
         StringRequest stringRequest = new StringRequest( Request.Method.GET, baseUrl+API_URL+idsurat,
@@ -110,7 +123,10 @@ public class DetailSuratMasukActivity extends AppCompatActivity {
                             }
                         });
 
+                        refreshDetailSuratMasuk.setRefreshing( false );
+
                     }catch (JSONException e){
+                        refreshDetailSuratMasuk.setRefreshing( false );
                         e.printStackTrace();
                     }
                 }
@@ -118,6 +134,7 @@ public class DetailSuratMasukActivity extends AppCompatActivity {
             new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
+                    refreshDetailSuratMasuk.setRefreshing( false );
                     Toast.makeText( getApplicationContext(),"Error " +error.toString(), Toast.LENGTH_SHORT ).show();
                 }
             }
@@ -125,7 +142,17 @@ public class DetailSuratMasukActivity extends AppCompatActivity {
 
         RequestQueue requestQueue = Volley.newRequestQueue( this );
         requestQueue.add( stringRequest );
+    }
 
-
+    private void clear(){
+        txtNoSurat.setText("");
+        txtDetailJenisSuratMasuk.setText("");
+        txtDetailAsalSuratMasuk.setText("" );
+        txtDetailPerihalSuratMasuk.setText("");
+        txtDetailIsiSuratMasuk.setText("");
+        txtDetailTanggalSuratMasuk.setText("");
+        txtDetailTanggalArsipSuratMasuk.setText("");
+        txtDetailKetSuratMasuk.setText("");
+        txtStatusDisposisi.setText("");
     }
 }
