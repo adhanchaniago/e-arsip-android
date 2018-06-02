@@ -11,8 +11,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
-            android:minHeight="?attr/actionBarSize"
-            android:theme="@style/AppTheme.AppBarOverlay" />
+            android:minHeight="?attr/actionBarSize" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -40,11 +39,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:text="Edit USer"
-            android:textSize="25sp"
-            android:textStyle="bold"
+            android:text="Edit Profil"
             android:textAlignment="center"
-            android:textColor="@android:color/darker_gray" />
+            android:textColor="@android:color/darker_gray"
+            android:textSize="25sp"
+            android:textStyle="bold" />
 
         <!--Field Username-->
         <LinearLayout
@@ -198,7 +197,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:layout_gravity="center"
-                android:text="Edit User"
+                android:text="Simpan"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white" />
 
