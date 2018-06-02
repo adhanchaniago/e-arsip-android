@@ -71,4 +71,6 @@ public class AdapterRecycleViewSuratMasuk extends RecyclerView.Adapter<AdapterRe
         }
     }
 
+
+
 }

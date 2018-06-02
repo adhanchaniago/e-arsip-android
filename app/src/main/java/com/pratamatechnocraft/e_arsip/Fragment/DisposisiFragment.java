@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -39,7 +40,7 @@ public class DisposisiFragment extends Fragment {
     private RecyclerView.Adapter adapterDisposisi;
     SessionManager sessionManager;
 
-    ProgressBar loadingdispo;
+    SwipeRefreshLayout refreshDisposisi;
     TextView noDatadispo;
 
 
@@ -51,8 +52,8 @@ public class DisposisiFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate( R.layout.activity_disposisi_fragment, container, false);
-        loadingdispo = view.findViewById(R.id.progressBardsipo);
         noDatadispo = view.findViewById( R.id.noDatadispo );
+        refreshDisposisi = (SwipeRefreshLayout) view.findViewById(R.id.refreshDisposisi);
 
         recyclerViewDisposisi = (RecyclerView) view.findViewById(R.id.recycleViewDisposisi);
         recyclerViewDisposisi.setHasFixedSize(true);
@@ -62,6 +63,7 @@ public class DisposisiFragment extends Fragment {
         HashMap<String, String> user = sessionManager.getUserDetail();
 
         listItemDisposisis = new ArrayList<>();
+        adapterDisposisi = new AdapterRecycleViewDisposisi(listItemDisposisis, getContext());
 
         if (user.get( sessionManager.LEVEL_USER ).equals( "kepala desa" )){
             API_URL="api/disposisi?api=disposisiall";
@@ -70,6 +72,17 @@ public class DisposisiFragment extends Fragment {
         }
 
         loadDisposisi();
+
+        refreshDisposisi.setOnRefreshListener( new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                listItemDisposisis.clear();
+                adapterDisposisi.notifyDataSetChanged();
+                loadDisposisi();
+            }
+        } );
+
+        recyclerViewDisposisi.setAdapter(adapterDisposisi);
 
         return view;
     }
@@ -83,47 +96,44 @@ public class DisposisiFragment extends Fragment {
     }
 
     private void loadDisposisi(){
-        loadingdispo.setVisibility(View.VISIBLE);
+        refreshDisposisi.setRefreshing(true);
         StringRequest stringRequest = new StringRequest( Request.Method.GET, baseUrl+API_URL,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            if (jsonObject.getInt( "jml_data" )==0){
-                                noDatadispo.setVisibility( View.VISIBLE );
-                            }else{
-                                JSONArray data = jsonObject.getJSONArray("data");
-                                for (int i = 0;i<data.length(); i++){
-                                    JSONObject disposisiobject = data.getJSONObject( i );
-                                    ListItemDisposisi listItemDisposisi = new ListItemDisposisi(
-                                            disposisiobject.getString( "id_disposisi"),
-                                            disposisiobject.getString( "no_surat" ),
-                                            disposisiobject.getString( "isi_disposisi" )
-                                    );
+            new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        if (jsonObject.getInt( "jml_data" )==0){
+                            noDatadispo.setVisibility( View.VISIBLE );
+                        }else{
+                            JSONArray data = jsonObject.getJSONArray("data");
+                            for (int i = 0;i<data.length(); i++){
+                                JSONObject disposisiobject = data.getJSONObject( i );
+                                ListItemDisposisi listItemDisposisi = new ListItemDisposisi(
+                                        disposisiobject.getString( "id_disposisi"),
+                                        disposisiobject.getString( "no_surat" ),
+                                        disposisiobject.getString( "isi_disposisi" )
+                                );
 
-                                    listItemDisposisis.add(listItemDisposisi);
-                                }
-
-                                adapterDisposisi = new AdapterRecycleViewDisposisi(listItemDisposisis, getContext());
-
-                                recyclerViewDisposisi.setAdapter(adapterDisposisi);
+                                listItemDisposisis.add(listItemDisposisi);
+                                adapterDisposisi.notifyDataSetChanged();
                             }
-
-                            loadingdispo.setVisibility(View.GONE);
-                        }catch (JSONException e){
-                            e.printStackTrace();
-                            loadingdispo.setVisibility(View.GONE);
                         }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText( getContext(),"Error " +error.toString(), Toast.LENGTH_SHORT ).show();
-                        loadingdispo.setVisibility(View.GONE);
+
+                        refreshDisposisi.setRefreshing(false);
+                    }catch (JSONException e){
+                        e.printStackTrace();
+                        refreshDisposisi.setRefreshing(false);
                     }
                 }
+            },
+            new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText( getContext(),"Error " +error.toString(), Toast.LENGTH_SHORT ).show();
+                    refreshDisposisi.setRefreshing(false);
+                }
+            }
         );
 
         RequestQueue requestQueue = Volley.newRequestQueue( getContext() );

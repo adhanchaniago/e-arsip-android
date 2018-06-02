@@ -2,6 +2,7 @@ package com.pratamatechnocraft.e_arsip.Adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,9 +35,13 @@ public class AdapterRecycleViewBagianLembarDisposisi extends RecyclerView.Adapte
     public void onBindViewHolder(ViewHolder holder, int position) {
         final ListItemBagianLembarDisposisi listItemBagianLembarDisposisi = listItemBagianLembarDisposisis.get(position);
 
-        holder.txtNamaBagian.setText(listItemBagianLembarDisposisi.getNamaBagian());
-        if (listItemBagianLembarDisposisi.getIdBagian()==listItemBagianLembarDisposisi.getIdBagianTmp()){
-            holder.txtNamaBagian.isChecked();
+        if (listItemBagianLembarDisposisi.getNamaBagian().equals( listItemBagianLembarDisposisi.getIdBagianTmp() )){
+            holder.txtNamaBagian.setChecked( true );
+            holder.txtNamaBagian.setText(listItemBagianLembarDisposisi.getNamaBagian());
+
+        }else {
+            holder.txtNamaBagian.setChecked( false );
+            holder.txtNamaBagian.setText(listItemBagianLembarDisposisi.getNamaBagian());
         }
     }
 
