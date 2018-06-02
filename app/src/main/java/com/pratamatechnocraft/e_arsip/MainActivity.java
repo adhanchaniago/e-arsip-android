@@ -1,6 +1,7 @@
 package com.pratamatechnocraft.e_arsip;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -32,6 +33,7 @@ import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     public static String urlGambar = "";
+    public Fragment fragment= null;
     SessionManager sessionManager;
     BaseUrlApiModel baseUrlApiModel = new BaseUrlApiModel();
     private String baseUrl=baseUrlApiModel.getBaseURL();
@@ -64,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById( R.id.nav_view );
         navigationView.setNavigationItemSelectedListener( this );
+        navigationView.getMenu().getItem(0).setChecked(true);
 
         View headerView = navigationView.getHeaderView(0);
 
@@ -84,8 +87,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .load(urlGambar)
                 // LOAD GAMBAR AWAL SEBELUM GAMBAR UTAMA MUNCUL, BISA DARI LOKAL DAN INTERNET
                 .into(fotoUser);
-
-
     }
 
     @Override
@@ -101,7 +102,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         displaySelectedScreen( item.getItemId() );
@@ -109,8 +109,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void displaySelectedScreen(int itemId) {
-        Fragment fragment = null;
-
         int id = itemId;
 
         if (id == R.id.nav_dashboard) {
@@ -138,6 +136,4 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer = (DrawerLayout) findViewById( R.id.drawer_layout );
         drawer.closeDrawer( GravityCompat.START );
     }
-
-
 }
