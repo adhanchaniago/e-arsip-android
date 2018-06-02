@@ -63,21 +63,20 @@
                 android:value=".DetailSuratMasukActivity" />
         </activity>
         <!-- Firebase Notifications -->
-        <service
-            android:name=".Service.MyFirebaseMessagingService">
+        <service android:name=".Service.MyFirebaseMessagingService">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>"
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+                "
             </intent-filter>
         </service>
-
         <service android:name=".Service.MyFirebaseInstanceIDService">
             <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
         <!-- ./Firebase Notifications -->
 
-
+        <activity android:name=".EdituserActivity"></activity>
     </application>
 
 </manifest>
