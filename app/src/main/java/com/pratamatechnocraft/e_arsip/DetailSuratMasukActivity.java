@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -189,7 +190,8 @@ public class DetailSuratMasukActivity extends AppCompatActivity {
     }
 
     private void startDownload() {
-        new DownloadFileAsync().execute(urlFile);
+        new DownloadFileAsync().execute(urlFile.replace( "%20", " "));
+        Log.d( "TAG", "startDownload: "+urlFile.replace( "%20", " ") );
     }
     @Override
     protected Dialog onCreateDialog(int id) {
@@ -227,7 +229,9 @@ public class DetailSuratMasukActivity extends AppCompatActivity {
                 Log.d("ANDRO_ASYNC", "Lenght of file: " + lenghtOfFile);
 
                 InputStream input = new BufferedInputStream(url.openStream());
-                OutputStream output = new FileOutputStream("/sdcard/some_photo_from_gdansk_poland.jpg");
+                OutputStream output = new FileOutputStream(Environment
+                        .getExternalStoragePublicDirectory( Environment.DIRECTORY_DOWNLOADS)
+                        + "/Filename.jpg");
 
                 byte data[] = new byte[1024];
 
@@ -242,7 +246,9 @@ public class DetailSuratMasukActivity extends AppCompatActivity {
                 output.flush();
                 output.close();
                 input.close();
-            } catch (Exception e) {}
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             return null;
 
         }
