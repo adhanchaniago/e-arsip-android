@@ -2,6 +2,7 @@ package com.pratamatechnocraft.e_arsip.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,7 +41,7 @@ public class AdapterRecycleViewDisposisi extends RecyclerView.Adapter<AdapterRec
         holder.txtIsiDisposisi.setText(listItemDisposisi.getIsiDisposisi());
 
 
-        holder.linearLayoutDisposisi.setOnClickListener(new View.OnClickListener() {
+        holder.cardViewDisposisi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(context, LembarDisposisiActivity.class);
@@ -58,14 +59,14 @@ public class AdapterRecycleViewDisposisi extends RecyclerView.Adapter<AdapterRec
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         public TextView txtNoSurat, txtIsiDisposisi;
-        public LinearLayout linearLayoutDisposisi;
+        public CardView cardViewDisposisi;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             txtNoSurat= (TextView) itemView.findViewById(R.id.txtDisposisiNoSurat);
             txtIsiDisposisi= (TextView) itemView.findViewById(R.id.txtisiDisposisi);
-            linearLayoutDisposisi = (LinearLayout) itemView.findViewById(R.id.linearLayoutDisposisi);
+            cardViewDisposisi = (CardView) itemView.findViewById(R.id.cardViewDisposisi);
 
         }
     }

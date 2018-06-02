@@ -2,6 +2,7 @@ package com.pratamatechnocraft.e_arsip.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,7 +41,7 @@ public class AdapterRecycleViewSuratMasuk extends RecyclerView.Adapter<AdapterRe
         holder.txtPerihalSurat.setText(listItemSuratMasuk.getPerihalSurat());
         holder.txtTanggalArsip.setText(listItemSuratMasuk.getTanggalArsip());
 
-        holder.linearLayoutSuratMasuk.setOnClickListener(new View.OnClickListener() {
+        holder.cardViewSuratKeluar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(context, DetailSuratMasukActivity.class);
@@ -58,7 +59,7 @@ public class AdapterRecycleViewSuratMasuk extends RecyclerView.Adapter<AdapterRe
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         public TextView txtAsalSurat, txtPerihalSurat, txtTanggalArsip;
-        public LinearLayout linearLayoutSuratMasuk;
+        public CardView cardViewSuratKeluar;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -66,7 +67,7 @@ public class AdapterRecycleViewSuratMasuk extends RecyclerView.Adapter<AdapterRe
             txtAsalSurat= (TextView) itemView.findViewById(R.id.txtAsalSurat);
             txtPerihalSurat= (TextView) itemView.findViewById(R.id.txtPerihal);
             txtTanggalArsip= (TextView) itemView.findViewById(R.id.txtTanggalArsip);
-            linearLayoutSuratMasuk = (LinearLayout) itemView.findViewById(R.id.linearLayoutSuratMasuk);
+            cardViewSuratKeluar = (CardView) itemView.findViewById(R.id.cardViewSuratKeluar);
 
         }
     }

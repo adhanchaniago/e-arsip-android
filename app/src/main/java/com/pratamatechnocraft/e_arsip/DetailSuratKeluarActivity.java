@@ -1,10 +1,21 @@
 package com.pratamatechnocraft.e_arsip;
 
+import android.app.DownloadManager;
+import android.app.NotificationManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.Uri;
+import android.os.Environment;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +30,8 @@ import com.pratamatechnocraft.e_arsip.Model.BaseUrlApiModel;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 public class DetailSuratKeluarActivity extends AppCompatActivity {
 
     public TextView txtNoSuratKeluar;
@@ -31,6 +44,12 @@ public class DetailSuratKeluarActivity extends AppCompatActivity {
     public TextView txtDetailTanggalArsipSuratKeluar;
     public TextView txtDetailKetSuratKeluar;
     SwipeRefreshLayout refreshDetailSuratKeluar;
+    private Button download;
+    public String namaFile;
+    private DownloadManager downloadManager;
+    private long refid;
+    private Uri Download_Uri;
+    ArrayList<Long> list = new ArrayList<>();
 
     BaseUrlApiModel baseUrlApiModel = new BaseUrlApiModel();
     private String baseUrl=baseUrlApiModel.getBaseURL();
@@ -42,6 +61,7 @@ public class DetailSuratKeluarActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_surat_keluar);
         refreshDetailSuratKeluar = findViewById( R.id.refreshDetailSuratKeluar );
+        download = (Button) findViewById( R.id.buttonDownloadSuratMasuk );
 
         Toolbar ToolBarAtas2 = (Toolbar)findViewById(R.id.toolbar_detailsuratkeluar);
         setSupportActionBar(ToolBarAtas2);
@@ -70,6 +90,32 @@ public class DetailSuratKeluarActivity extends AppCompatActivity {
             }
         } );
 
+        downloadManager = (DownloadManager) getSystemService( Context.DOWNLOAD_SERVICE);
+
+        registerReceiver(onComplete,new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
+
+
+        download.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                list.clear();
+
+                DownloadManager.Request request = new DownloadManager.Request(Download_Uri);
+                request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE);
+                request.setAllowedOverRoaming(false);
+                request.setTitle("E-ARSIP Downloading ");
+                request.setDescription("Downloading " + namaFile);
+                request.setVisibleInDownloadsUi(true);
+                request.setDestinationInExternalPublicDir( Environment.DIRECTORY_DOWNLOADS, namaFile);
+
+                refid = downloadManager.enqueue(request);
+
+                Log.e("OUT", "" + refid);
+
+                list.add(refid);
+            }
+        } );
+
     }
 
     private void loadDetailSuratMasuk(String idsurat){
@@ -89,6 +135,8 @@ public class DetailSuratKeluarActivity extends AppCompatActivity {
                         txtDetailTanggalSuratKeluar.setText( suratkeluardetail.getString( "tgl_surat" ) );
                         txtDetailTanggalArsipSuratKeluar.setText( suratkeluardetail.getString( "tgl_arsip" ) );
                         txtDetailKetSuratKeluar.setText( suratkeluardetail.getString( "keterangan" ) );
+                        Download_Uri = Uri.parse(baseUrl+suratkeluardetail.getString( "file" ));
+                        namaFile=suratkeluardetail.getString( "nama_file" );
 
                         refreshDetailSuratKeluar.setRefreshing( false );
                     }catch (JSONException e){
@@ -120,5 +168,30 @@ public class DetailSuratKeluarActivity extends AppCompatActivity {
         txtDetailTanggalSuratKeluar.setText( "" );
         txtDetailTanggalArsipSuratKeluar.setText( "" );
         txtDetailKetSuratKeluar.setText( "" );
+    }
+    BroadcastReceiver onComplete = new BroadcastReceiver() {
+        public void onReceive(Context ctxt, Intent intent) {
+            long referenceId = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
+            Log.e("IN", "" + referenceId);
+            list.remove(referenceId);
+
+            if (list.isEmpty()){
+                Log.e("INSIDE", "" + referenceId);
+                @SuppressWarnings("deprecation") NotificationCompat.Builder mBuilder =
+                        new NotificationCompat.Builder(DetailSuratKeluarActivity.this)
+                                .setSmallIcon(R.mipmap.ic_launcer)
+                                .setContentTitle("E-ARSIP")
+                                .setContentText("Download completed");
+
+                NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                notificationManager.notify(455, mBuilder.build());
+            }
+        }
+    };
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(onComplete);
     }
 }

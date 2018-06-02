@@ -54,7 +54,7 @@ public class MendisposisikanActivity extends AppCompatActivity {
     private TextInputLayout inputLayoutIsiDisposisi, inputLayoutCatatan;
     private TextView txtNoSuratMendisposisikan;
     private ProgressDialog progress;
-    Button buttonSubmitdisposisi;
+    Button buttonSubmitdisposisi,buttonBatal;
     SwipeRefreshLayout refreshMendisposisikan;
 
     private List<ListItemBagianMendisposisikan> listItemBagianMendisposisikans;
@@ -86,6 +86,7 @@ public class MendisposisikanActivity extends AppCompatActivity {
         inputIsiDisposisi = (EditText) findViewById(R.id.inputIsiDisposisi);
         inputCatatan = (EditText) findViewById(R.id.inputCatatan);
         buttonSubmitdisposisi = (Button) findViewById( R.id.buttonSubmitdisposisi );
+        buttonBatal = (Button) findViewById( R.id.buttonBatalDisposisi );
         progress=new ProgressDialog(this);
 
         inputIsiDisposisi.addTextChangedListener( new MyTextWatcher( inputIsiDisposisi ) );
@@ -130,6 +131,13 @@ public class MendisposisikanActivity extends AppCompatActivity {
                     progress.setCanceledOnTouchOutside(false);
                     prosesMendisposisikan(idSuratMasukMendisposisikan,"9", inputIsiDisposisi.getText().toString().trim(),"segera",inputCatatan.getText().toString().trim());
                 }
+            }
+        } );
+
+        buttonBatal.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
             }
         } );
 
@@ -319,5 +327,10 @@ public class MendisposisikanActivity extends AppCompatActivity {
                     break;
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 }

@@ -1,10 +1,17 @@
 package com.pratamatechnocraft.e_arsip;
 
 import android.app.Dialog;
+import android.app.DownloadManager;
+import android.app.NotificationManager;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -33,6 +40,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class DetailSuratMasukActivity extends AppCompatActivity {
@@ -48,11 +56,12 @@ public class DetailSuratMasukActivity extends AppCompatActivity {
     public TextView txtDetailKetSuratMasuk;
     public TextView txtStatusDisposisi;
     SwipeRefreshLayout refreshDetailSuratMasuk;
-    public static final int DIALOG_DOWNLOAD_PROGRESS = 0;
     private Button download;
-    public String urlFile;
-    private ProgressDialog mProgressDialog;
-
+    public String namaFile;
+    private DownloadManager downloadManager;
+    private long refid;
+    private Uri Download_Uri;
+    ArrayList<Long> list = new ArrayList<>();
 
     BaseUrlApiModel baseUrlApiModel = new BaseUrlApiModel();
     private String baseUrl=baseUrlApiModel.getBaseURL(), idSuratMasuk;
@@ -66,6 +75,7 @@ public class DetailSuratMasukActivity extends AppCompatActivity {
         btnDisposisikan = (Button) findViewById(R.id.buttonDetailDisposisikan);
         refreshDetailSuratMasuk = (SwipeRefreshLayout) findViewById( R.id.refreshDetailSuratMasuk );
         download = (Button) findViewById( R.id.buttonDownloadSuratMasuk );
+
 
         Toolbar ToolBarAtas2 = (Toolbar)findViewById(R.id.toolbar_detailsuratmasuk);
         setSupportActionBar(ToolBarAtas2);
@@ -95,10 +105,29 @@ public class DetailSuratMasukActivity extends AppCompatActivity {
             }
         } );
 
+        downloadManager = (DownloadManager) getSystemService( Context.DOWNLOAD_SERVICE);
+
+        registerReceiver(onComplete,new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
+
+
         download.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startDownload();
+                list.clear();
+
+                DownloadManager.Request request = new DownloadManager.Request(Download_Uri);
+                request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE);
+                request.setAllowedOverRoaming(false);
+                request.setTitle("E-ARSIP Downloading ");
+                request.setDescription("Downloading " + namaFile);
+                request.setVisibleInDownloadsUi(true);
+                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, namaFile);
+
+                refid = downloadManager.enqueue(request);
+
+                Log.e("OUT", "" + refid);
+
+                list.add(refid);
             }
         } );
 
@@ -127,7 +156,8 @@ public class DetailSuratMasukActivity extends AppCompatActivity {
                         txtDetailTanggalSuratMasuk.setText( suratmasukdetail.getString( "tgl_surat" ) );
                         txtDetailTanggalArsipSuratMasuk.setText( suratmasukdetail.getString( "tgl_arsip" ) );
                         txtDetailKetSuratMasuk.setText( suratmasukdetail.getString( "keterangan" ) );
-                        urlFile=baseUrl+suratmasukdetail.getString( "file" );
+                        Download_Uri = Uri.parse(baseUrl+suratmasukdetail.getString( "file" ));
+                        namaFile=suratmasukdetail.getString( "nama_file" );
 
                         if (suratmasukdetail.getString( "status_disposisi" )=="y"){
                             txtStatusDisposisi.setText("DIDISPOSISIKAN");
@@ -189,77 +219,29 @@ public class DetailSuratMasukActivity extends AppCompatActivity {
         txtStatusDisposisi.setText("");
     }
 
-    private void startDownload() {
-        new DownloadFileAsync().execute(urlFile.replace( "%20", " "));
-        Log.d( "TAG", "startDownload: "+urlFile.replace( "%20", " ") );
-    }
-    @Override
-    protected Dialog onCreateDialog(int id) {
-        switch (id) {
-            case DIALOG_DOWNLOAD_PROGRESS:
-                mProgressDialog = new ProgressDialog(this);
-                mProgressDialog.setMessage("Downloading file..");
-                mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-                mProgressDialog.setCancelable(false);
-                mProgressDialog.show();
-                return mProgressDialog;
-            default:
-                return null;
-        }
-    }
+    BroadcastReceiver onComplete = new BroadcastReceiver() {
+        public void onReceive(Context ctxt, Intent intent) {
+            long referenceId = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
+            Log.e("IN", "" + referenceId);
+            list.remove(referenceId);
 
-    public class DownloadFileAsync extends AsyncTask<String, String, String> {
+            if (list.isEmpty()){
+                Log.e("INSIDE", "" + referenceId);
+                @SuppressWarnings("deprecation") NotificationCompat.Builder mBuilder =
+                        new NotificationCompat.Builder(DetailSuratMasukActivity.this)
+                                .setSmallIcon(R.mipmap.ic_launcer)
+                                .setContentTitle("E-ARSIP")
+                                .setContentText("Download completed");
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            showDialog(DIALOG_DOWNLOAD_PROGRESS);
-        }
-
-        @Override
-        protected String doInBackground(String... aurl) {
-            int count;
-
-            try {
-                URL url = new URL(aurl[0]);
-                URLConnection conexion = url.openConnection();
-                conexion.connect();
-
-                int lenghtOfFile = conexion.getContentLength();
-                Log.d("ANDRO_ASYNC", "Lenght of file: " + lenghtOfFile);
-
-                InputStream input = new BufferedInputStream(url.openStream());
-                OutputStream output = new FileOutputStream(Environment
-                        .getExternalStoragePublicDirectory( Environment.DIRECTORY_DOWNLOADS)
-                        + "/Filename.jpg");
-
-                byte data[] = new byte[1024];
-
-                long total = 0;
-
-                while ((count = input.read(data)) != -1) {
-                    total += count;
-                    publishProgress(""+(int)((total*100)/lenghtOfFile));
-                    output.write(data, 0, count);
-                }
-
-                output.flush();
-                output.close();
-                input.close();
-            } catch (Exception e) {
-                e.printStackTrace();
+                NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                notificationManager.notify(455, mBuilder.build());
             }
-            return null;
+        }
+    };
 
-        }
-        protected void onProgressUpdate(String... progress) {
-            Log.d("ANDRO_ASYNC",progress[0]);
-            mProgressDialog.setProgress(Integer.parseInt(progress[0]));
-        }
-
-        @Override
-        protected void onPostExecute(String unused) {
-            dismissDialog(DIALOG_DOWNLOAD_PROGRESS);
-        }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(onComplete);
     }
 }
