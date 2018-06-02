@@ -8,25 +8,18 @@
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_lembardisposisi"
-        android:minHeight="?attr/actionBarSize"
+        android:minHeight="?android:attr/actionBarSize"
         android:background="@color/colorPrimary"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay"/>
+        android:layout_height="wrap_content" />
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/refreshLembarDisposisi"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar_lembardisposisi"
         app:layout_constraintVertical_bias="0.0">
@@ -38,24 +31,18 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginBottom="20dp">
 
                 <android.support.v7.widget.CardView
                     android:id="@+id/cardView"
+                    android:layout_margin="@dimen/activity_horizontal_margin"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    app:cardCornerRadius="4dp"
-                    app:cardElevation="6dp"
-                    app:contentPadding="10dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/toolbar_detailsuratmasuk">
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="0dp"
+                    app:cardCornerRadius="@dimen/radiusCardView"
+                    app:cardElevation="@dimen/shadowCardView"
+                    app:contentPadding="10dp">
 
                     <TableLayout
                         android:layout_width="wrap_content"
@@ -202,19 +189,11 @@
 
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    app:cardCornerRadius="4dp"
-                    app:cardElevation="6dp"
-                    app:contentPadding="10dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/toolbar_detailsuratmasuk">
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="@dimen/radiusCardView"
+                    android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                    app:cardElevation="@dimen/shadowCardView"
+                    app:contentPadding="10dp">
 
                     <TextView
                         android:id="@+id/txtIdBagianLembarDisposisi"
@@ -222,59 +201,36 @@
                         android:layout_height="wrap_content"
                         android:visibility="gone" />
 
-                    <TableLayout
+                    <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
-                        <TableRow
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/cellpadingdetailsuratmasuk"
+                            android:text="Kepada :"
+                            android:textColor="@color/ColorPrimaryText"
+                            android:textStyle="bold" />
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/recycleViewBagianLembarDisposisi"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content">
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:padding="@dimen/cellpadingdetailsuratmasuk"
-                                android:text="Kepada"
-                                android:textColor="@color/ColorPrimaryText"
-                                android:textStyle="bold" />
+                        </android.support.v7.widget.RecyclerView>
+                    </LinearLayout>
 
-                            <TextView
-                                android:id="@+id/textView6"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:padding="@dimen/cellpadingdetailsuratmasuk"
-                                android:text=":"
-                                android:textColor="@color/ColorPrimaryText" />
-
-                            <android.support.v7.widget.RecyclerView
-                                android:id="@+id/recycleViewBagianLembarDisposisi"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1">
-
-                            </android.support.v7.widget.RecyclerView>
-
-                        </TableRow>
-
-
-                    </TableLayout>
                 </android.support.v7.widget.CardView>
 
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    app:cardCornerRadius="4dp"
-                    app:cardElevation="6dp"
-                    app:contentPadding="10dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/toolbar_detailsuratmasuk">
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/activity_horizontal_margin"
+                    app:cardCornerRadius="@dimen/radiusCardView"
+                    app:cardElevation="@dimen/shadowCardView"
+                    app:contentPadding="10dp">
 
                     <TableLayout
                         android:layout_width="match_parent"
@@ -350,21 +306,6 @@
                     </TableLayout>
                 </android.support.v7.widget.CardView>
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <Button
-                        android:id="@+id/buttonSelesai"
-                        style="@style/Widget.AppCompat.Button.Colored"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="15dp"
-                        android:text="Selesai"
-                        android:textAllCaps="false" />
-                </RelativeLayout>
             </LinearLayout>
         </ScrollView>
 

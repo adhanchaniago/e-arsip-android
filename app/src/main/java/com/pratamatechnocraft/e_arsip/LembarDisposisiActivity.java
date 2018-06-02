@@ -56,7 +56,7 @@ public class LembarDisposisiActivity extends AppCompatActivity {
         recyclerViewBagianLembarDisposisi = (RecyclerView)findViewById(R.id.recycleViewBagianLembarDisposisi);
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
         recyclerViewBagianLembarDisposisi.setLayoutManager(mLayoutManager);
-        recyclerViewBagianLembarDisposisi.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
+        recyclerViewBagianLembarDisposisi.addItemDecoration(new LembarDisposisiActivity.GridSpacingItemDecoration(2, dpToPx(0), true));
         recyclerViewBagianLembarDisposisi.setItemAnimator(new DefaultItemAnimator());
         recyclerViewBagianLembarDisposisi.setHasFixedSize(true);
 
@@ -169,13 +169,13 @@ public class LembarDisposisiActivity extends AppCompatActivity {
         requestQueue.add( stringRequest );
     }
 
-    public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
+    private class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
 
         private int spanCount;
         private int spacing;
         private boolean includeEdge;
 
-        public GridSpacingItemDecoration(int spanCount, int spacing, boolean includeEdge) {
+        private GridSpacingItemDecoration(int spanCount, int spacing, boolean includeEdge) {
             this.spanCount = spanCount;
             this.spacing = spacing;
             this.includeEdge = includeEdge;

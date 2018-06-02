@@ -69,6 +69,15 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (sessionManager.isLoggin()){
+            Intent i = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(i);
+        }
+    }
+
     private void prosesLogin(final String user, final String pass){
         loading.setVisibility(View.VISIBLE);
         btnLogin.setVisibility(View.GONE);

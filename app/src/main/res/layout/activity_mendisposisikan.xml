@@ -8,21 +8,15 @@
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_mendisposisikan"
-        android:minHeight="?attr/actionBarSize"
+        android:minHeight="?android:attr/actionBarSize"
         android:background="@color/colorPrimary"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay"/>
+        android:layout_height="wrap_content" />
 
-    <ScrollView
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/refreshMendisposisikan"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -30,156 +24,190 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar_mendisposisikan"
         app:layout_constraintVertical_bias="0.0">
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <android.support.v7.widget.CardView
-                android:id="@+id/cardView"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                app:cardCornerRadius="4dp"
-                app:cardElevation="6dp"
-                app:contentPadding="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/toolbar_detailsuratkeluar">
+                android:orientation="vertical">
 
-                <LinearLayout
+                <android.support.v7.widget.CardView
+                    android:layout_margin="@dimen/activity_horizontal_margin"
+                    android:id="@+id/cardView"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="@dimen/radiusCardView"
+                    app:cardElevation="@dimen/shadowCardView"
+                    app:contentPadding="10dp">
 
-                    <TableLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
-                        <TableRow
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:orientation="vertical">
 
                             <TextView
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="No. Surat"
                                 android:textColor="@color/ColorPrimaryText"
                                 android:textStyle="bold" />
 
                             <TextView
-                                android:layout_width="wrap_content"
+                                android:id="@+id/txtMendisposisikanlNoSuratMasuk"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_weight="1"
                                 android:padding="@dimen/cellpadingdetailsuratmasuk"
-                                android:text=":"
                                 android:textColor="@color/ColorPrimaryText" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/txtMendisposisikanlNoSuratMasuk"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Pilih Bagian"
+                                android:textColor="@color/ColorPrimaryText"
+                                android:textStyle="bold" />
+
+                            <android.support.v7.widget.RecyclerView
+                                android:id="@+id/recycleViewBagianMendisposisikan"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Sifat"
+                                android:textColor="@color/ColorPrimaryText"
+                                android:textStyle="bold" />
+
+                            <RadioGroup
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:padding="@dimen/cellpadingdetailsuratmasuk"
-                                android:textColor="@color/ColorPrimaryText" />
-                        </TableRow>
+                                android:layout_weight="1"
+                                android:checkedButton="@+id/rbSegera"
+                                android:orientation="vertical"
+                                android:weightSum="2">
 
+                                <RadioButton
+                                    android:id="@+id/rbSegera"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:duplicateParentState="false"
+                                    android:text="Segera" />
 
-                    </TableLayout>
+                                <RadioButton
+                                    android:id="@+id/rbBiasa"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Biasa" />
 
-                    <TextView
-                        android:id="@+id/textView4"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Pilih Bagian"
-                        android:textColor="@color/ColorPrimaryText"
-                        android:textStyle="bold" />
+                                <RadioButton
+                                    android:id="@+id/rbRahasia"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Rahasia" />
 
-                    <android.support.v7.widget.RecyclerView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                                <RadioButton
+                                    android:id="@+id/rbPenting"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Penting" />
 
-                    <TextView
-                        android:id="@+id/textView7"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Sifat"
-                        android:textColor="@color/ColorPrimaryText"
-                        android:textStyle="bold" />
+                            </RadioGroup>
 
-                    <RadioGroup
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        </LinearLayout>
 
-                        <RadioButton
-                            android:id="@+id/radioButton"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="RadioButton" />
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/inputLayoutIsiDisposisi"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
 
-                        <RadioButton
-                            android:id="@+id/radioButton2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="RadioButton" />
+                            <android.support.design.widget.TextInputEditText
+                                android:id="@+id/inputIsiDisposisi"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Isi Disposisi"
+                                android:inputType="textMultiLine" />
+                        </android.support.design.widget.TextInputLayout>
 
-                        <RadioButton
-                            android:id="@+id/radioButton3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="RadioButton" />
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/inputLayoutCatatan"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
 
-                        <RadioButton
-                            android:id="@+id/radioButton4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="RadioButton" />
-                    </RadioGroup>
+                            <android.support.design.widget.TextInputEditText
+                                android:id="@+id/inputCatatan"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="*Catatan"
+                                android:inputType="textMultiLine" />
+                        </android.support.design.widget.TextInputLayout>
 
-                    <EditText
-                        android:id="@+id/editTextIsiDisposisi"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:hint="Isi Disposisi"
-                        android:inputType="textMultiLine" />
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
 
-                    <EditText
-                        android:id="@+id/editText11"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:hint="*Catatan"
-                        android:inputType="textMultiLine" />
-
-                </LinearLayout>
-            </android.support.v7.widget.CardView>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <Button
-                    android:id="@+id/buttonSubmitdisposisi"
-                    style="@style/Widget.AppCompat.Button.Colored"
+                <LinearLayout
+                    android:layout_gravity="center"
+                    android:gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="15dp"
-                    android:text="Disposisikan"
-                    android:textAllCaps="false" />
-            </RelativeLayout>
-        </LinearLayout>
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:weightSum="2">
+
+                    <Button
+                        android:gravity="center"
+                        android:id="@+id/buttonSubmitdisposisi"
+                        style="@style/Widget.AppCompat.Button.Colored"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:text="Disposisikan"
+                        android:textAllCaps="false" />
+
+                    <Button
+                        android:layout_gravity="center"
+                        android:id="@+id/buttonBatalDisposisi"
+                        style="@style/Widget.AppCompat.Button.Colored"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:text="Batal"
+                        android:textAllCaps="false" />
+                </LinearLayout>
+            </LinearLayout>
 
 
-    </ScrollView>
+        </ScrollView>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </android.support.constraint.ConstraintLayout>

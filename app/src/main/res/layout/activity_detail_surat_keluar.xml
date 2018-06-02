@@ -8,325 +8,316 @@
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_detailsuratkeluar"
-        android:minHeight="?attr/actionBarSize"
-        android:background="@color/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay"/>
+        android:background="@color/colorPrimary"
+        android:minHeight="?android:attr/actionBarSize" />
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/refreshDetailSuratKeluar"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_detailsuratkeluar"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_detailsuratkeluar">
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <android.support.v7.widget.CardView
-                android:id="@+id/cardView"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                app:cardCornerRadius="4dp"
-                app:cardElevation="6dp"
-                app:contentPadding="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/toolbar_detailsuratkeluar">
+                android:orientation="vertical"
+                android:layout_marginBottom="20dp">
 
-                <LinearLayout
+                <android.support.v7.widget.CardView
+                    android:id="@+id/cardView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                    android:layout_margin="@dimen/activity_horizontal_margin"
+                    app:cardCornerRadius="@dimen/radiusCardView"
+                    app:cardElevation="@dimen/shadowCardView"
+                    app:contentPadding="10dp">
 
-                    <TableLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
 
-                        <TableRow
+                        <TableLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:padding="@dimen/cellpadingdetailsuratmasuk"
-                                android:text="No. Surat"
-                                android:textColor="@color/ColorPrimaryText"
-                                android:textStyle="bold" />
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:padding="@dimen/cellpadingdetailsuratmasuk"
-                                android:text=":"
-                                android:textColor="@color/ColorPrimaryText" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:padding="@dimen/cellpadingdetailsuratmasuk"
+                                    android:text="No. Surat"
+                                    android:textColor="@color/ColorPrimaryText"
+                                    android:textStyle="bold" />
 
-                            <TextView
-                                android:id="@+id/txtDetailNoSuratKeluar"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:padding="@dimen/cellpadingdetailsuratmasuk"
-                                android:textColor="@color/ColorPrimaryText" />
-                        </TableRow>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:padding="@dimen/cellpadingdetailsuratmasuk"
+                                    android:text=":"
+                                    android:textColor="@color/ColorPrimaryText" />
 
-                        <TableRow
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                                <TextView
+                                    android:id="@+id/txtDetailNoSuratKeluar"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:padding="@dimen/cellpadingdetailsuratmasuk"
+                                    android:textColor="@color/ColorPrimaryText" />
+                            </TableRow>
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:padding="@dimen/cellpadingdetailsuratmasuk"
-                                android:text="Bagian"
-                                android:textColor="@color/ColorPrimaryText"
-                                android:textStyle="bold" />
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:padding="@dimen/cellpadingdetailsuratmasuk"
-                                android:text=":"
-                                android:textColor="@color/ColorPrimaryText" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:padding="@dimen/cellpadingdetailsuratmasuk"
+                                    android:text="Bagian"
+                                    android:textColor="@color/ColorPrimaryText"
+                                    android:textStyle="bold" />
 
-                            <TextView
-                                android:id="@+id/txtDetailBagianSuratKeluar"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:padding="@dimen/cellpadingdetailsuratmasuk"
-                                android:textColor="@color/ColorPrimaryText" />
-                        </TableRow>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:padding="@dimen/cellpadingdetailsuratmasuk"
+                                    android:text=":"
+                                    android:textColor="@color/ColorPrimaryText" />
 
-                        <TableRow
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                                <TextView
+                                    android:id="@+id/txtDetailBagianSuratKeluar"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:padding="@dimen/cellpadingdetailsuratmasuk"
+                                    android:textColor="@color/ColorPrimaryText" />
+                            </TableRow>
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:padding="@dimen/cellpadingdetailsuratmasuk"
-                                android:text="Jenis Surat"
-                                android:textColor="@color/ColorPrimaryText"
-                                android:textStyle="bold" />
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:padding="@dimen/cellpadingdetailsuratmasuk"
-                                android:text=":"
-                                android:textColor="@color/ColorPrimaryText" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:padding="@dimen/cellpadingdetailsuratmasuk"
+                                    android:text="Jenis Surat"
+                                    android:textColor="@color/ColorPrimaryText"
+                                    android:textStyle="bold" />
 
-                            <TextView
-                                android:id="@+id/txtDetailJenisSuratKeluar"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:padding="@dimen/cellpadingdetailsuratmasuk"
-                                android:textColor="@color/ColorPrimaryText" />
-                        </TableRow>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:padding="@dimen/cellpadingdetailsuratmasuk"
+                                    android:text=":"
+                                    android:textColor="@color/ColorPrimaryText" />
 
-                        <TableRow
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                                <TextView
+                                    android:id="@+id/txtDetailJenisSuratKeluar"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:padding="@dimen/cellpadingdetailsuratmasuk"
+                                    android:textColor="@color/ColorPrimaryText" />
+                            </TableRow>
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:padding="@dimen/cellpadingdetailsuratmasuk"
-                                android:text="Tujuan Surat"
-                                android:textColor="@color/ColorPrimaryText"
-                                android:textStyle="bold" />
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:padding="@dimen/cellpadingdetailsuratmasuk"
-                                android:text=":"
-                                android:textColor="@color/ColorPrimaryText" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:padding="@dimen/cellpadingdetailsuratmasuk"
+                                    android:text="Tujuan Surat"
+                                    android:textColor="@color/ColorPrimaryText"
+                                    android:textStyle="bold" />
 
-                            <TextView
-                                android:id="@+id/txtDetailTujuanSuratKeluar"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:padding="@dimen/cellpadingdetailsuratmasuk"
-                                android:textColor="@color/ColorPrimaryText" />
-                        </TableRow>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:padding="@dimen/cellpadingdetailsuratmasuk"
+                                    android:text=":"
+                                    android:textColor="@color/ColorPrimaryText" />
 
-                        <TableRow
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                                <TextView
+                                    android:id="@+id/txtDetailTujuanSuratKeluar"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:padding="@dimen/cellpadingdetailsuratmasuk"
+                                    android:textColor="@color/ColorPrimaryText" />
+                            </TableRow>
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:padding="@dimen/cellpadingdetailsuratmasuk"
-                                android:text="Perihal"
-                                android:textColor="@color/ColorPrimaryText"
-                                android:textStyle="bold" />
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:padding="@dimen/cellpadingdetailsuratmasuk"
-                                android:text=":"
-                                android:textColor="@color/ColorPrimaryText" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:padding="@dimen/cellpadingdetailsuratmasuk"
+                                    android:text="Perihal"
+                                    android:textColor="@color/ColorPrimaryText"
+                                    android:textStyle="bold" />
 
-                            <TextView
-                                android:id="@+id/txtDetailPerihalSuratKeluar"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:padding="@dimen/cellpadingdetailsuratmasuk"
-                                android:textColor="@color/ColorPrimaryText" />
-                        </TableRow>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:padding="@dimen/cellpadingdetailsuratmasuk"
+                                    android:text=":"
+                                    android:textColor="@color/ColorPrimaryText" />
 
-                        <TableRow
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                                <TextView
+                                    android:id="@+id/txtDetailPerihalSuratKeluar"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:padding="@dimen/cellpadingdetailsuratmasuk"
+                                    android:textColor="@color/ColorPrimaryText" />
+                            </TableRow>
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:padding="@dimen/cellpadingdetailsuratmasuk"
-                                android:text="Isi Singkat"
-                                android:textColor="@color/ColorPrimaryText"
-                                android:textStyle="bold" />
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:padding="@dimen/cellpadingdetailsuratmasuk"
-                                android:text=":"
-                                android:textColor="@color/ColorPrimaryText" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:padding="@dimen/cellpadingdetailsuratmasuk"
+                                    android:text="Isi Singkat"
+                                    android:textColor="@color/ColorPrimaryText"
+                                    android:textStyle="bold" />
 
-                            <TextView
-                                android:id="@+id/txtDetailIsiSuratKeluar"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:padding="@dimen/cellpadingdetailsuratmasuk"
-                                android:textColor="@color/ColorPrimaryText" />
-                        </TableRow>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:padding="@dimen/cellpadingdetailsuratmasuk"
+                                    android:text=":"
+                                    android:textColor="@color/ColorPrimaryText" />
 
-                        <TableRow
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                                <TextView
+                                    android:id="@+id/txtDetailIsiSuratKeluar"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:padding="@dimen/cellpadingdetailsuratmasuk"
+                                    android:textColor="@color/ColorPrimaryText" />
+                            </TableRow>
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:padding="@dimen/cellpadingdetailsuratmasuk"
-                                android:text="Tanggal Surat"
-                                android:textColor="@color/ColorPrimaryText"
-                                android:textStyle="bold" />
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:padding="@dimen/cellpadingdetailsuratmasuk"
-                                android:text=":"
-                                android:textColor="@color/ColorPrimaryText" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:padding="@dimen/cellpadingdetailsuratmasuk"
+                                    android:text="Tanggal Surat"
+                                    android:textColor="@color/ColorPrimaryText"
+                                    android:textStyle="bold" />
 
-                            <TextView
-                                android:id="@+id/txtDetailTanggalSuratKeluar"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:padding="@dimen/cellpadingdetailsuratmasuk"
-                                android:textColor="@color/ColorPrimaryText" />
-                        </TableRow>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:padding="@dimen/cellpadingdetailsuratmasuk"
+                                    android:text=":"
+                                    android:textColor="@color/ColorPrimaryText" />
 
-                        <TableRow
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                                <TextView
+                                    android:id="@+id/txtDetailTanggalSuratKeluar"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:padding="@dimen/cellpadingdetailsuratmasuk"
+                                    android:textColor="@color/ColorPrimaryText" />
+                            </TableRow>
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:padding="@dimen/cellpadingdetailsuratmasuk"
-                                android:text="Tanggal Arsip"
-                                android:textColor="@color/ColorPrimaryText"
-                                android:textStyle="bold" />
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:padding="@dimen/cellpadingdetailsuratmasuk"
-                                android:text=":"
-                                android:textColor="@color/ColorPrimaryText" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:padding="@dimen/cellpadingdetailsuratmasuk"
+                                    android:text="Tanggal Arsip"
+                                    android:textColor="@color/ColorPrimaryText"
+                                    android:textStyle="bold" />
 
-                            <TextView
-                                android:id="@+id/txtDetailTanggalArsipSuratKeluar"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:padding="@dimen/cellpadingdetailsuratmasuk"
-                                android:textColor="@color/ColorPrimaryText" />
-                        </TableRow>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:padding="@dimen/cellpadingdetailsuratmasuk"
+                                    android:text=":"
+                                    android:textColor="@color/ColorPrimaryText" />
 
-                        <TableRow
-                            android:layout_width="match_parent"
-                            android:layout_height="82dp">
+                                <TextView
+                                    android:id="@+id/txtDetailTanggalArsipSuratKeluar"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:padding="@dimen/cellpadingdetailsuratmasuk"
+                                    android:textColor="@color/ColorPrimaryText" />
+                            </TableRow>
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:padding="@dimen/cellpadingdetailsuratmasuk"
-                                android:text="Keterangan"
-                                android:textColor="@color/ColorPrimaryText"
-                                android:textStyle="bold" />
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="82dp">
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:padding="@dimen/cellpadingdetailsuratmasuk"
-                                android:text=":"
-                                android:textColor="@color/ColorPrimaryText" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:padding="@dimen/cellpadingdetailsuratmasuk"
+                                    android:text="Keterangan"
+                                    android:textColor="@color/ColorPrimaryText"
+                                    android:textStyle="bold" />
 
-                            <TextView
-                                android:id="@+id/txtDetailKetSuratKeluar"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:padding="@dimen/cellpadingdetailsuratmasuk"
-                                android:textColor="@color/ColorPrimaryText" />
-                        </TableRow>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:padding="@dimen/cellpadingdetailsuratmasuk"
+                                    android:text=":"
+                                    android:textColor="@color/ColorPrimaryText" />
+
+                                <TextView
+                                    android:id="@+id/txtDetailKetSuratKeluar"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:padding="@dimen/cellpadingdetailsuratmasuk"
+                                    android:textColor="@color/ColorPrimaryText" />
+                            </TableRow>
 
 
-                    </TableLayout>
+                        </TableLayout>
 
-                    <Button
-                        android:id="@+id/buttonDownloadSuratMasuk"
-                        style="@style/Widget.AppCompat.Button.Colored"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Download"
-                        android:textAllCaps="false" />
-                </LinearLayout>
+                        <Button
+                            android:id="@+id/buttonDownloadSuratMasuk"
+                            style="@style/Widget.AppCompat.Button.Colored"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Download"
+                            android:textAllCaps="false" />
+                    </LinearLayout>
 
-            </android.support.v7.widget.CardView>
+                </android.support.v7.widget.CardView>
+            </LinearLayout>
         </ScrollView>
 
     </android.support.v4.widget.SwipeRefreshLayout>

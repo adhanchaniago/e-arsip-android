@@ -5,6 +5,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -38,8 +39,9 @@ public class DetailSuratMasukActivity extends AppCompatActivity {
     public TextView txtStatusDisposisi;
     SwipeRefreshLayout refreshDetailSuratMasuk;
 
+
     BaseUrlApiModel baseUrlApiModel = new BaseUrlApiModel();
-    private String baseUrl=baseUrlApiModel.getBaseURL();
+    private String baseUrl=baseUrlApiModel.getBaseURL(), idSuratMasuk;
     private static final String API_URL = "api/surat_masuk?api=suratmasukdetail&id=";
 
 
@@ -66,13 +68,15 @@ public class DetailSuratMasukActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        loadDetailSuratMasuk(i.getStringExtra( "idSuratMasuk" ));
+        idSuratMasuk=i.getStringExtra( "idSuratMasuk" );
+
+        loadDetailSuratMasuk(idSuratMasuk);
 
         refreshDetailSuratMasuk.setOnRefreshListener( new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 clear();
-                loadDetailSuratMasuk(i.getStringExtra( "idSuratMasuk" ));
+                loadDetailSuratMasuk(idSuratMasuk);
             }
         } );
 
@@ -97,7 +101,6 @@ public class DetailSuratMasukActivity extends AppCompatActivity {
                         txtDetailTanggalArsipSuratMasuk.setText( suratmasukdetail.getString( "tgl_arsip" ) );
                         txtDetailKetSuratMasuk.setText( suratmasukdetail.getString( "keterangan" ) );
 
-
                         if (suratmasukdetail.getString( "status_disposisi" )=="y"){
                             txtStatusDisposisi.setText("DIDISPOSISIKAN");
                         }else {
@@ -113,12 +116,14 @@ public class DetailSuratMasukActivity extends AppCompatActivity {
                         }
 
                         final String idSuratMasuk = suratmasukdetail.getString( "id_surat_masuk" );
+                        final String noSuratMasuk = suratmasukdetail.getString( "no_surat" );
 
                         btnDisposisikan.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
                                 Intent i = new Intent(DetailSuratMasukActivity.this, MendisposisikanActivity.class);
                                 i.putExtra("idSuratMasuk", idSuratMasuk);
+                                i.putExtra("noSuratMasuk", noSuratMasuk);
                                 startActivity(i);
                             }
                         });
