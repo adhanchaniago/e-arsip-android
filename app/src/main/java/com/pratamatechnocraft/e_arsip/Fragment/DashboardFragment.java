@@ -20,9 +20,8 @@ public class DashboardFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        navigationView = (NavigationView) container.findViewById( R.id.nav_view );
-        return inflater.inflate( R.layout.activity_dashboard_fragment, container, false);
-
+        View view = inflater.inflate( R.layout.activity_dashboard_fragment, container, false);
+        return view;
     }
 
 
@@ -35,17 +34,16 @@ public class DashboardFragment extends Fragment {
         kliksuratmasuk = view.findViewById(R.id.cardhomesuratmasuk);
         kliksuratkeluar = view.findViewById(R.id.cardhomesuratkeluar);
         klikdisposisi = view.findViewById(R.id.cardhomedisposisi);
-
+        navigationView = getActivity().findViewById( R.id.nav_view );
     }
 
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-
         kliknotifikasi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // navigationView.getMenu().getItem(1).setChecked(true);
+                navigationView.getMenu().getItem(1).setChecked(true);
                 NotifikasiFragment Notifikasi = new NotifikasiFragment();
 
                 getFragmentManager().beginTransaction()
@@ -59,7 +57,7 @@ public class DashboardFragment extends Fragment {
         kliksuratmasuk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //navigationView.getMenu().getItem(2).setChecked(true);
+                navigationView.getMenu().getItem(2).setChecked(true);
                 SuratMasukFragment SuratMasuk = new SuratMasukFragment();
 
                 getFragmentManager().beginTransaction()
@@ -73,7 +71,7 @@ public class DashboardFragment extends Fragment {
         kliksuratkeluar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // navigationView.getMenu().getItem(3).setChecked(true);
+                navigationView.getMenu().getItem(3).setChecked(true);
                 SuratKeluarFragment SuratKeluar = new SuratKeluarFragment();
 
                 getFragmentManager().beginTransaction()
@@ -87,7 +85,7 @@ public class DashboardFragment extends Fragment {
         klikdisposisi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // navigationView.getMenu().getItem(4).setChecked(true);
+                navigationView.getMenu().getItem(4).setChecked(true);
                 DisposisiFragment Disposisi = new DisposisiFragment();
 
                 getFragmentManager().beginTransaction()

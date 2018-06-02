@@ -33,7 +33,7 @@ import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     public static String urlGambar = "";
-    public Fragment fragment= null;
+    public Fragment fragment = null;
     SessionManager sessionManager;
     BaseUrlApiModel baseUrlApiModel = new BaseUrlApiModel();
     private String baseUrl=baseUrlApiModel.getBaseURL();
@@ -49,7 +49,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Log.d("TAG", "KEY : " + key + "Value : " + value);
             }
         }
-
 
         Toolbar toolbar = (Toolbar) findViewById( R.id.toolbar );
         setSupportActionBar( toolbar );

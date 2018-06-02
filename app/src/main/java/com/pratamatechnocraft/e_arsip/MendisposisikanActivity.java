@@ -1,5 +1,6 @@
 package com.pratamatechnocraft.e_arsip;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Rect;
@@ -52,6 +53,7 @@ public class MendisposisikanActivity extends AppCompatActivity {
     private EditText inputIsiDisposisi, inputCatatan;
     private TextInputLayout inputLayoutIsiDisposisi, inputLayoutCatatan;
     private TextView txtNoSuratMendisposisikan;
+    private ProgressDialog progress;
     Button buttonSubmitdisposisi;
     SwipeRefreshLayout refreshMendisposisikan;
 
@@ -84,10 +86,10 @@ public class MendisposisikanActivity extends AppCompatActivity {
         inputIsiDisposisi = (EditText) findViewById(R.id.inputIsiDisposisi);
         inputCatatan = (EditText) findViewById(R.id.inputCatatan);
         buttonSubmitdisposisi = (Button) findViewById( R.id.buttonSubmitdisposisi );
+        progress=new ProgressDialog(this);
 
         inputIsiDisposisi.addTextChangedListener( new MyTextWatcher( inputIsiDisposisi ) );
         inputCatatan.addTextChangedListener( new MyTextWatcher( inputCatatan ) );
-
 
         recyclerViewBagianMendisposisikan = (RecyclerView) findViewById(R.id.recycleViewBagianMendisposisikan);
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
@@ -119,14 +121,15 @@ public class MendisposisikanActivity extends AppCompatActivity {
         buttonSubmitdisposisi.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!validateIsiDisposisi()) {
+                if (!validateIsiDisposisi() || !validateCatatan()) {
                     return;
+                }else {
+                    progress.setMessage("Mohon Ditunggu, Sedang diProses.....");
+                    progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                    progress.setIndeterminate(false);
+                    progress.setCanceledOnTouchOutside(false);
+                    prosesMendisposisikan(idSuratMasukMendisposisikan,"9", inputIsiDisposisi.getText().toString().trim(),"segera",inputCatatan.getText().toString().trim());
                 }
-
-                if (!validateCatatan()) {
-                    return;
-                }
-
             }
         } );
 
@@ -172,13 +175,14 @@ public class MendisposisikanActivity extends AppCompatActivity {
         requestQueue.add( stringRequest );
     }
 
-    private void prosesMendisposisikan(final String idSuratMasuk, final String pass){
+    private void prosesMendisposisikan(final String idSuratMasuk, final String idBagian, final String isiDisposisi, final String sifat, final String catatan){
+        progress.show();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, baseUrl+API_URL_MENDISPOSISIKAN, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
-                    String success = jsonObject.getString("success");
+                    String success = jsonObject.getString("pesan");
                     if (success.equals("1")) {
                         JSONObject data = jsonObject.getJSONObject("data");
                         String id_disposisi = data.getString("id_disposisi").trim();
@@ -186,13 +190,14 @@ public class MendisposisikanActivity extends AppCompatActivity {
                         Intent i = new Intent(MendisposisikanActivity.this, LembarDisposisiActivity.class);
                         i.putExtra( "idDisposisi", id_disposisi );
                         startActivity(i);
-                    }else if(success.equals("2")){
+                    }else{
                         Toast.makeText(MendisposisikanActivity.this, "Gagal Mendisposisikan", Toast.LENGTH_SHORT).show();
                     }
-
+                    progress.dismiss();
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Toast.makeText(MendisposisikanActivity.this, "Error " +e.toString(), Toast.LENGTH_SHORT).show();
+                    progress.dismiss();
                 }
             }
         },new Response.ErrorListener() {
@@ -200,14 +205,18 @@ public class MendisposisikanActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
                 Toast.makeText(MendisposisikanActivity.this, "Error " +error.toString(), Toast.LENGTH_SHORT).show();
+                progress.dismiss();
             }
         }){
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("user", idSuratMasuk);
-                params.put("pass", pass);
-                params.put("api", "login");
+                params.put("id_surat_masuk", idSuratMasuk);
+                params.put("id_bagian", idBagian);
+                params.put("isi_disposisi", isiDisposisi);
+                params.put("sifat", sifat);
+                params.put("catatan", catatan);
+                params.put("api", "mendisposisikan");
                 return params;
             }
         };
