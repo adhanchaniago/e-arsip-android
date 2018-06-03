@@ -2,6 +2,7 @@ package com.pratamatechnocraft.e_arsip.Adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,6 +55,7 @@ public class AdapterRecycleViewBagianMendisposisikan extends RecyclerView.Adapte
                 public void onClick(View view) {
                     lastSelectedPosition = getAdapterPosition();
                     notifyDataSetChanged();
+                    Log.d( "TAG", "onClickRecycle: "+lastSelectedPosition );
                 }
             } );
         }

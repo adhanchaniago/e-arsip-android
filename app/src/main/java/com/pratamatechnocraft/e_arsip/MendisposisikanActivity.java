@@ -10,7 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -21,6 +20,8 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,7 +35,6 @@ import com.android.volley.toolbox.Volley;
 import com.pratamatechnocraft.e_arsip.Adapter.AdapterRecycleViewBagianMendisposisikan;
 import com.pratamatechnocraft.e_arsip.Model.BaseUrlApiModel;
 import com.pratamatechnocraft.e_arsip.Model.ListItemBagianMendisposisikan;
-import com.pratamatechnocraft.e_arsip.Service.SessionManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -49,11 +49,12 @@ public class MendisposisikanActivity extends AppCompatActivity {
 
     private RecyclerView recyclerViewBagianMendisposisikan;
     private RecyclerView.Adapter adapterBagianMendisposisikan;
-    private Integer positionDataBagian;
     private EditText inputIsiDisposisi, inputCatatan;
     private TextInputLayout inputLayoutIsiDisposisi, inputLayoutCatatan;
-    private TextView txtNoSuratMendisposisikan;
+    private TextView txtNoSuratMendisposisikan,txtIdBagianMendisposisikan;
     private ProgressDialog progress;
+    private RadioGroup rbgSifat;
+
     Button buttonSubmitdisposisi,buttonBatal;
     SwipeRefreshLayout refreshMendisposisikan;
 
@@ -81,13 +82,15 @@ public class MendisposisikanActivity extends AppCompatActivity {
         refreshMendisposisikan = findViewById( R.id.refreshMendisposisikan );
 
         txtNoSuratMendisposisikan = (TextView) findViewById( R.id.txtMendisposisikanlNoSuratMasuk );
+        txtIdBagianMendisposisikan = (TextView) findViewById( R.id.txtIdBagianMendisposisikan );
         inputLayoutIsiDisposisi = (TextInputLayout) findViewById(R.id.inputLayoutIsiDisposisi);
         inputLayoutCatatan = (TextInputLayout) findViewById(R.id.inputLayoutCatatan);
         inputIsiDisposisi = (EditText) findViewById(R.id.inputIsiDisposisi);
         inputCatatan = (EditText) findViewById(R.id.inputCatatan);
         buttonSubmitdisposisi = (Button) findViewById( R.id.buttonSubmitdisposisi );
         buttonBatal = (Button) findViewById( R.id.buttonBatalDisposisi );
-        progress=new ProgressDialog(this);
+        progress = new ProgressDialog(this);
+        rbgSifat =  (RadioGroup) findViewById(R.id.rbgSifat);
 
         inputIsiDisposisi.addTextChangedListener( new MyTextWatcher( inputIsiDisposisi ) );
         inputCatatan.addTextChangedListener( new MyTextWatcher( inputCatatan ) );
@@ -118,6 +121,7 @@ public class MendisposisikanActivity extends AppCompatActivity {
             }
         } );
 
+        recyclerViewBagianMendisposisikan.setAdapter(adapterBagianMendisposisikan);
 
         buttonSubmitdisposisi.setOnClickListener( new View.OnClickListener() {
             @Override
@@ -125,11 +129,16 @@ public class MendisposisikanActivity extends AppCompatActivity {
                 if (!validateIsiDisposisi() || !validateCatatan()) {
                     return;
                 }else {
+                    AdapterRecycleViewBagianMendisposisikan adapterRecycleViewBagianMendisposisikan = new AdapterRecycleViewBagianMendisposisikan(listItemBagianMendisposisikans, getApplicationContext());
+                    ListItemBagianMendisposisikan listItemBagianMendisposisikan = listItemBagianMendisposisikans.get(adapterRecycleViewBagianMendisposisikan.getLastSelectedPosition());
+                    Log.d( "TAG", "onClick: "+listItemBagianMendisposisikan.getIdBagian());
                     progress.setMessage("Mohon Ditunggu, Sedang diProses.....");
                     progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                     progress.setIndeterminate(false);
                     progress.setCanceledOnTouchOutside(false);
-                    prosesMendisposisikan(idSuratMasukMendisposisikan,"9", inputIsiDisposisi.getText().toString().trim(),"segera",inputCatatan.getText().toString().trim());
+                    int selectedId = rbgSifat .getCheckedRadioButtonId();
+                    RadioButton rbSifat = (RadioButton) findViewById(selectedId);
+                    //prosesMendisposisikan(idSuratMasukMendisposisikan,"9", inputIsiDisposisi.getText().toString().trim(),rbSifat.getText().toString().trim(),inputCatatan.getText().toString().trim());
                 }
             }
         } );
@@ -140,8 +149,6 @@ public class MendisposisikanActivity extends AppCompatActivity {
                 finish();
             }
         } );
-
-        recyclerViewBagianMendisposisikan.setAdapter(adapterBagianMendisposisikan);
     }
 
     private void loadBagianMendisposisikan(){

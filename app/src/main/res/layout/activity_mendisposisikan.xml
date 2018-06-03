@@ -58,6 +58,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="No. Surat"
                                 android:textColor="@color/ColorPrimaryText"
+                                android:textSize="18sp"
                                 android:textStyle="bold" />
 
                             <TextView
@@ -80,7 +81,15 @@
                                 android:layout_height="wrap_content"
                                 android:text="Pilih Bagian"
                                 android:textColor="@color/ColorPrimaryText"
+                                android:textSize="18sp"
                                 android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/txtIdBagianMendisposisikan"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="TextView"
+                                android:visibility="gone" />
 
                             <android.support.v7.widget.RecyclerView
                                 android:id="@+id/recycleViewBagianMendisposisikan"
@@ -99,9 +108,11 @@
                                 android:layout_height="wrap_content"
                                 android:text="Sifat"
                                 android:textColor="@color/ColorPrimaryText"
+                                android:textSize="18sp"
                                 android:textStyle="bold" />
 
                             <RadioGroup
+                                android:id="@+id/rbgSifat"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
