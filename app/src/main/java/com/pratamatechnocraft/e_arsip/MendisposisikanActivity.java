@@ -63,7 +63,7 @@ public class MendisposisikanActivity extends AppCompatActivity {
     private String baseUrl=baseUrlApiModel.getBaseURL();
     public String idSuratMasukMendisposisikan,noSuratMasukMendisposisikan;
     private static final String API_URL = "api/bagian?api=bagianall";
-    private static final String API_URL_MENDISPOSISIKAN = "api/disposisi?api=mendisposisikan";
+    private static final String API_URL_MENDISPOSISIKAN = "api/disposisi";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -190,8 +190,8 @@ public class MendisposisikanActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
-                    String success = jsonObject.getString("pesan");
-                    if (success.equals("1")) {
+                    String kode = jsonObject.getString("kode");
+                    if (kode.equals("1")) {
                         JSONObject data = jsonObject.getJSONObject("data");
                         String id_disposisi = data.getString("id_disposisi").trim();
 

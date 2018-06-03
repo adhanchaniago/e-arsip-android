@@ -41,7 +41,7 @@ public class AdapterRecycleViewSuratMasuk extends RecyclerView.Adapter<AdapterRe
         holder.txtPerihalSurat.setText(listItemSuratMasuk.getPerihalSurat());
         holder.txtTanggalArsip.setText(listItemSuratMasuk.getTanggalArsip());
 
-        holder.cardViewSuratKeluar.setOnClickListener(new View.OnClickListener() {
+        holder.cardViewSuratMasuk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(context, DetailSuratMasukActivity.class);
@@ -59,7 +59,7 @@ public class AdapterRecycleViewSuratMasuk extends RecyclerView.Adapter<AdapterRe
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         public TextView txtAsalSurat, txtPerihalSurat, txtTanggalArsip;
-        public CardView cardViewSuratKeluar;
+        public CardView cardViewSuratMasuk;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -67,7 +67,7 @@ public class AdapterRecycleViewSuratMasuk extends RecyclerView.Adapter<AdapterRe
             txtAsalSurat= (TextView) itemView.findViewById(R.id.txtAsalSurat);
             txtPerihalSurat= (TextView) itemView.findViewById(R.id.txtPerihal);
             txtTanggalArsip= (TextView) itemView.findViewById(R.id.txtTanggalArsip);
-            cardViewSuratKeluar = (CardView) itemView.findViewById(R.id.cardViewSuratKeluar);
+            cardViewSuratMasuk = (CardView) itemView.findViewById(R.id.cardViewSuratMasuk);
 
         }
     }
