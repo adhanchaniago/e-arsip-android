@@ -48,10 +48,10 @@ import java.util.Map;
 public class MendisposisikanActivity extends AppCompatActivity {
 
     private RecyclerView recyclerViewBagianMendisposisikan;
-    private RecyclerView.Adapter adapterBagianMendisposisikan;
+    private AdapterRecycleViewBagianMendisposisikan adapterBagianMendisposisikan;
     private EditText inputIsiDisposisi, inputCatatan;
     private TextInputLayout inputLayoutIsiDisposisi, inputLayoutCatatan;
-    private TextView txtNoSuratMendisposisikan,txtIdBagianMendisposisikan;
+    private TextView txtNoSuratMendisposisikan;
     private ProgressDialog progress;
     private RadioGroup rbgSifat;
 
@@ -82,7 +82,6 @@ public class MendisposisikanActivity extends AppCompatActivity {
         refreshMendisposisikan = findViewById( R.id.refreshMendisposisikan );
 
         txtNoSuratMendisposisikan = (TextView) findViewById( R.id.txtMendisposisikanlNoSuratMasuk );
-        txtIdBagianMendisposisikan = (TextView) findViewById( R.id.txtIdBagianMendisposisikan );
         inputLayoutIsiDisposisi = (TextInputLayout) findViewById(R.id.inputLayoutIsiDisposisi);
         inputLayoutCatatan = (TextInputLayout) findViewById(R.id.inputLayoutCatatan);
         inputIsiDisposisi = (EditText) findViewById(R.id.inputIsiDisposisi);
@@ -129,16 +128,14 @@ public class MendisposisikanActivity extends AppCompatActivity {
                 if (!validateIsiDisposisi() || !validateCatatan()) {
                     return;
                 }else {
-                    AdapterRecycleViewBagianMendisposisikan adapterRecycleViewBagianMendisposisikan = new AdapterRecycleViewBagianMendisposisikan(listItemBagianMendisposisikans, getApplicationContext());
-                    ListItemBagianMendisposisikan listItemBagianMendisposisikan = listItemBagianMendisposisikans.get(adapterRecycleViewBagianMendisposisikan.getLastSelectedPosition());
-                    Log.d( "TAG", "onClick: "+listItemBagianMendisposisikan.getIdBagian());
+                    ListItemBagianMendisposisikan listItemBagianMendisposisikan = listItemBagianMendisposisikans.get(adapterBagianMendisposisikan.getLastSelectedPosition());
                     progress.setMessage("Mohon Ditunggu, Sedang diProses.....");
                     progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                     progress.setIndeterminate(false);
                     progress.setCanceledOnTouchOutside(false);
                     int selectedId = rbgSifat .getCheckedRadioButtonId();
                     RadioButton rbSifat = (RadioButton) findViewById(selectedId);
-                    //prosesMendisposisikan(idSuratMasukMendisposisikan,"9", inputIsiDisposisi.getText().toString().trim(),rbSifat.getText().toString().trim(),inputCatatan.getText().toString().trim());
+                    prosesMendisposisikan(idSuratMasukMendisposisikan,listItemBagianMendisposisikan.getIdBagian(), inputIsiDisposisi.getText().toString().trim(),rbSifat.getText().toString().trim(),inputCatatan.getText().toString().trim());
                 }
             }
         } );

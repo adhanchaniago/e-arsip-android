@@ -159,14 +159,14 @@ public class DetailSuratMasukActivity extends AppCompatActivity {
                         Download_Uri = Uri.parse(baseUrl+suratmasukdetail.getString( "file" ));
                         namaFile=suratmasukdetail.getString( "nama_file" );
 
-                        if (suratmasukdetail.getString( "status_disposisi" )=="y"){
+                        if (suratmasukdetail.getString( "status_disposisi" ).equals( "y" )){
                             txtStatusDisposisi.setText("DIDISPOSISIKAN");
                         }else {
                             txtStatusDisposisi.setText("BELUM DIDISPOSISIKAN");
                         }
 
                         if (user.get( sessionManager.LEVEL_USER ).equals( "kepala desa" )){
-                            if (suratmasukdetail.getString( "status_disposisi" )=="y"){
+                            if (suratmasukdetail.getString( "status_disposisi" ).equals( "y" )){
                                 btnDisposisikan.setVisibility( View.GONE );
                             }
                         }else{
