@@ -127,7 +127,5 @@ public class SuratMasukFragment extends Fragment {
 
         RequestQueue requestQueue = Volley.newRequestQueue( getContext() );
         requestQueue.add( stringRequest );
-
-
     }
 }

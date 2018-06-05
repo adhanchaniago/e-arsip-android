@@ -7,16 +7,25 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.pratamatechnocraft.e_arsip.R;
+import com.pratamatechnocraft.e_arsip.Service.SessionManager;
 
 public class ProfileFragment extends Fragment {
-
+    SessionManager sessionManager;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate( R.layout.activity_profile_fragment, container, false);
-
+        View view = inflater.inflate( R.layout.activity_profile_fragment, container, false);
+        ImageView profile_image = view.findViewById( R.id.profile_image );
+        profile_image.setOnFocusChangeListener( new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                
+            }
+        } );
+        return view;
     }
 
 

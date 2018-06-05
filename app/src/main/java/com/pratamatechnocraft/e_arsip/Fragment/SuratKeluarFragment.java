@@ -139,4 +139,11 @@ public class SuratKeluarFragment extends Fragment {
         RequestQueue requestQueue = Volley.newRequestQueue( getContext() );
         requestQueue.add( stringRequest );
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadSuratKeluar();
+        recyclerViewSuratKeluar.setAdapter(adapterSuratKeluar);
+    }
 }

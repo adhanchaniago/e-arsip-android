@@ -25,9 +25,9 @@
             android:icon="@drawable/ic_send_black_24dp"
             android:title="Disposisi" />
         <item
-            android:id="@+id/nav_setting"
-            android:icon="@drawable/ic_settings_black_24dp"
-            android:title="Setting" />
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/foto2"
+            android:title="Profile" />
         <item
             android:id="@+id/nav_signout"
             android:icon="@drawable/ic_power_settings_new_black_24dp"

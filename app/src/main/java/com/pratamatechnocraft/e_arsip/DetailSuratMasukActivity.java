@@ -19,6 +19,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -90,6 +91,7 @@ public class DetailSuratMasukActivity extends AppCompatActivity {
         txtDetailTanggalArsipSuratMasuk = (TextView) findViewById( R.id.txtDetailTanggalArsipSuratMasuk );
         txtDetailKetSuratMasuk = (TextView) findViewById( R.id.txtDetailKetSuratMasuk );
         txtStatusDisposisi = (TextView) findViewById( R.id.txtStatusDisposisi );
+
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

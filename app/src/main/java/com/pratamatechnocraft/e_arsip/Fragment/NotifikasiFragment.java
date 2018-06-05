@@ -136,7 +136,5 @@ public class NotifikasiFragment extends Fragment {
 
         RequestQueue requestQueue = Volley.newRequestQueue( getContext() );
         requestQueue.add( stringRequest );
-
-
     }
 }

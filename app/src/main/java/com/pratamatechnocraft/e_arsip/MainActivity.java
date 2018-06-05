@@ -33,6 +33,7 @@ import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     public static String urlGambar = "";
+    public int fragmentLast;
     public Fragment fragment = null;
     SessionManager sessionManager;
     BaseUrlApiModel baseUrlApiModel = new BaseUrlApiModel();
@@ -62,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //add this line to display menu1 when the activity is loaded
         displaySelectedScreen( R.id.nav_dashboard );
+        fragmentLast=R.id.nav_dashboard;
 
         NavigationView navigationView = (NavigationView) findViewById( R.id.nav_view );
         navigationView.setNavigationItemSelectedListener( this );
@@ -75,10 +77,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         TextView namaUser = headerView.findViewById( R.id.textViewNamaUser );
         ImageView fotoUser =  headerView.findViewById( R.id.imageViewFotoUser );
+        TextView jabatanUser = headerView.findViewById( R.id.textViewJabatanUser );
 
         HashMap<String, String> user = sessionManager.getUserDetail();
-
         namaUser.setText( String.valueOf( user.get( sessionManager.NAMA )  ) );
+        jabatanUser.setText( "Kepala "+String.valueOf( user.get( sessionManager.NAMA_BAGIAN )  ) );
         urlGambar = baseUrl+String.valueOf( user.get( sessionManager.FOTO )  );
 
         Glide.with(MainActivity.this)
@@ -100,7 +103,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         displaySelectedScreen( item.getItemId() );
@@ -118,13 +120,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fragment = new SuratMasukFragment();
         } else if (id == R.id.nav_suratkeluar) {
             fragment = new SuratKeluarFragment();
-        } else if (id == R.id.nav_setting) {
+        } else if (id == R.id.nav_profile) {
             fragment = new ProfileFragment();
         } else if (id == R.id.nav_disposisi) {
             fragment = new DisposisiFragment();
         } else if (id == R.id.nav_signout) {
             sessionManager.logout();
         }
+
+        fragmentLast=id;
 
         if (fragment != null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -134,5 +138,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         DrawerLayout drawer = (DrawerLayout) findViewById( R.id.drawer_layout );
         drawer.closeDrawer( GravityCompat.START );
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        displaySelectedScreen( fragmentLast );
     }
 }

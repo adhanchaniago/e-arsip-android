@@ -36,9 +36,9 @@
 
                 <android.support.v7.widget.CardView
                     android:id="@+id/cardView"
-                    android:layout_margin="@dimen/activity_horizontal_margin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/activity_horizontal_margin"
                     android:layout_marginBottom="0dp"
                     app:cardCornerRadius="@dimen/radiusCardView"
                     app:cardElevation="@dimen/shadowCardView"
@@ -225,6 +225,7 @@
                 </android.support.v7.widget.CardView>
 
                 <android.support.v7.widget.CardView
+                    android:gravity="center"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/activity_horizontal_margin"
@@ -232,19 +233,20 @@
                     app:cardElevation="@dimen/shadowCardView"
                     app:contentPadding="10dp">
 
-                    <TableLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
 
-                        <TableRow
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:gravity="center"
+                            android:orientation="horizontal"
                             android:weightSum="2">
 
                             <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:padding="@dimen/cellpadingdetailsuratmasuk"
                                 android:text="Isi Disposisi"
@@ -259,8 +261,8 @@
                                 android:background="?android:attr/listDivider" />
 
                             <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:padding="@dimen/cellpadingdetailsuratmasuk"
                                 android:text="*Catatan"
@@ -268,17 +270,17 @@
                                 android:textColor="@color/ColorPrimaryText"
                                 android:textStyle="bold" />
 
-                        </TableRow>
+                        </LinearLayout>
 
-                        <TableRow
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
                             android:weightSum="2">
 
                             <TextView
                                 android:id="@+id/txtIsiDisposisi"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:padding="@dimen/cellpadingdetailsuratmasuk"
@@ -293,17 +295,15 @@
 
                             <TextView
                                 android:id="@+id/txtCatatanDisposisi"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:padding="@dimen/cellpadingdetailsuratmasuk"
                                 android:textColor="@color/ColorPrimaryText"
                                 android:textSize="12sp" />
+                        </LinearLayout>
+                    </LinearLayout>
 
-                        </TableRow>
-
-
-                    </TableLayout>
                 </android.support.v7.widget.CardView>
 
             </LinearLayout>

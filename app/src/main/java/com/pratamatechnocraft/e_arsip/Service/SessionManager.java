@@ -23,6 +23,7 @@ public class SessionManager {
     public static final String LEVEL_USER = "LEVEL_USER";
     public static final String ID_USER = "ID_USER";
     public static final String ID_BAGIAN = "ID_BAGIAN";
+    public static final String NAMA_BAGIAN = "NAMA_BAGIAN";
 
 
     public SessionManager(Context context) {
@@ -32,13 +33,14 @@ public class SessionManager {
 
     }
 
-    public void createSession(String id_user,String nama, String foto, String level_user, String id_bagian){
+    public void createSession(String id_user,String nama, String foto, String level_user, String id_bagian,String nama_bagian){
         editor.putBoolean(LOGIN, true);
         editor.putString( "ID_USER", id_user );
         editor.putString( "NAMA", nama );
         editor.putString( "FOTO", foto );
         editor.putString( "LEVEL_USER", level_user );
         editor.putString( "ID_BAGIAN", id_bagian );
+        editor.putString( "NAMA_BAGIAN", nama_bagian );
         editor.apply();
     }
 
@@ -61,6 +63,7 @@ public class SessionManager {
         user.put( FOTO, sharedPreferences.getString( FOTO, null ) );
         user.put( LEVEL_USER, sharedPreferences.getString( LEVEL_USER, null ) );
         user.put( ID_BAGIAN, sharedPreferences.getString( ID_BAGIAN, null ) );
+        user.put( NAMA_BAGIAN, sharedPreferences.getString( NAMA_BAGIAN, null ) );
         return user;
     }
 
