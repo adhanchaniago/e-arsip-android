@@ -90,13 +90,14 @@ public class LoginActivity extends AppCompatActivity {
                     if (success.equals("1")) {
                         JSONObject data_user = jsonObject.getJSONObject("data_user");
                         String id_user = data_user.getString("id_user").trim();
+                        String nip = data_user.getString("nip").trim();
                         String nama = data_user.getString("nama").trim();
                         String level_user = data_user.getString("level_user").trim();
                         String foto_user = data_user.getString("foto").trim();
                         String id_bagian = data_user.getString("id_bagian").trim();
                         String nama_bagian = data_user.getString("bagian").trim();
 
-                        sessionManager.createSession( id_user,nama, foto_user , level_user, id_bagian,nama_bagian);
+                        sessionManager.createSession( id_user,nip,nama, foto_user , level_user, id_bagian,nama_bagian);
 
                         Toast.makeText(LoginActivity.this, "Login Berhasil !", Toast.LENGTH_SHORT).show();
                         Intent i = new Intent(LoginActivity.this, MainActivity.class);

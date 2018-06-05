@@ -22,6 +22,7 @@ public class SessionManager {
     public static final String FOTO = "FOTO";
     public static final String LEVEL_USER = "LEVEL_USER";
     public static final String ID_USER = "ID_USER";
+    public static final String NIP_USER = "NIP_USER";
     public static final String ID_BAGIAN = "ID_BAGIAN";
     public static final String NAMA_BAGIAN = "NAMA_BAGIAN";
 
@@ -33,9 +34,10 @@ public class SessionManager {
 
     }
 
-    public void createSession(String id_user,String nama, String foto, String level_user, String id_bagian,String nama_bagian){
+    public void createSession(String id_user,String nip_user,String nama, String foto, String level_user, String id_bagian,String nama_bagian){
         editor.putBoolean(LOGIN, true);
         editor.putString( "ID_USER", id_user );
+        editor.putString( "NIP_USER", nip_user );
         editor.putString( "NAMA", nama );
         editor.putString( "FOTO", foto );
         editor.putString( "LEVEL_USER", level_user );
@@ -59,6 +61,7 @@ public class SessionManager {
     public HashMap<String, String> getUserDetail(){
         HashMap<String, String> user = new HashMap<>(  );
         user.put( ID_USER, sharedPreferences.getString( ID_USER, null ) );
+        user.put( NIP_USER, sharedPreferences.getString( NIP_USER, null ) );
         user.put( NAMA, sharedPreferences.getString( NAMA, null ) );
         user.put( FOTO, sharedPreferences.getString( FOTO, null ) );
         user.put( LEVEL_USER, sharedPreferences.getString( LEVEL_USER, null ) );
