@@ -1,5 +1,9 @@
 package com.pratamatechnocraft.e_arsip.Fragment;
 
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,6 +12,9 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,12 +32,22 @@ import com.pratamatechnocraft.e_arsip.Service.SessionManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 
 public class ProfileFragment extends Fragment {
     SessionManager sessionManager;
-    private TextView txtNamaUserProfile,txtJabatanaUserProfile,textnip,textnama,texttgllahir,textnotelp;
+    private TextView txtNamaUserProfile,txtJabatanaUserProfile,textnip,textnama,texttgllahir,textnotelp,texttempatlahir,textalamat,txtTanggalLahir;
+    private Button btnEdit;
+    ImageButton btnTgl;
+    private Calendar calendar=Calendar.getInstance();
+    private int year, month, day;
     SwipeRefreshLayout refreshProfile;
+    AlertDialog.Builder dialog;
+    LayoutInflater inflater;
+    View dialogView;
     BaseUrlApiModel baseUrlApiModel = new BaseUrlApiModel();
     private String baseUrl=baseUrlApiModel.getBaseURL();
     private static final String API_URL_LOAD = "api/user?api=profile&id=";
@@ -44,6 +61,14 @@ public class ProfileFragment extends Fragment {
         textnip = view.findViewById( R.id.textnip );
         textnama = view.findViewById( R.id.textnama );
         texttgllahir = view.findViewById( R.id.texttgllahir );
+        texttempatlahir = view.findViewById( R.id.texttempatlahir );
+        textalamat = view.findViewById( R.id.textalamat );
+        btnEdit = view.findViewById( R.id.buttonEdit );
+
+        day=calendar.get(Calendar.DAY_OF_MONTH);
+        year=calendar.get(Calendar.YEAR);
+        month=calendar.get(Calendar.MONTH);
+
         textnotelp = view.findViewById( R.id.textnotelp );
         ImageView profile_image = view.findViewById( R.id.profile_image );
         refreshProfile = view.findViewById( R.id.refreshProfile );
@@ -60,6 +85,14 @@ public class ProfileFragment extends Fragment {
                 refreshProfile.setRefreshing( false );
             }
         } );
+
+        btnEdit.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogForm();
+            }
+        } );
+
         return view;
     }
 
@@ -85,6 +118,8 @@ public class ProfileFragment extends Fragment {
                         textnama.setText( userprofile.getString("nama" ) );
                         texttgllahir.setText( userprofile.getString( "tgl_lahir" ) );
                         textnotelp.setText( userprofile.getString( "no_hp" ) );
+                        texttempatlahir.setText( userprofile.getString( "tempat_lahir" ) );
+                        textalamat.setText(  userprofile.getString( "alamat" )  );
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -106,5 +141,57 @@ public class ProfileFragment extends Fragment {
 
     private void clear(){
         txtNamaUserProfile.setText( "" );
+        txtJabatanaUserProfile.setText( "" );
+        textnip.setText( "" );
+        textnama.setText( "" );
+        texttgllahir.setText( "" );
+        textnotelp.setText( "" );
+        texttempatlahir.setText( "" );
+        textalamat.setText( "" );
     }
+
+    private void DialogForm() {
+        dialog = new AlertDialog.Builder(getContext());
+        inflater = getLayoutInflater();
+        dialogView = inflater.inflate(R.layout.activity_edituser, null);
+        dialog.setView(dialogView);
+        dialog.setCancelable(true);
+        dialog.setTitle("Edit Profile");
+
+        txtTanggalLahir = dialogView.findViewById( R.id.txtTanggalLahir );
+        btnTgl=dialogView.findViewById( R.id.btnTgl );
+        btnTgl.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DatePickerDialog.OnDateSetListener listener=new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear,int dayOfMonth)
+                    {
+                        txtTanggalLahir.setText(dayOfMonth + "/" + monthOfYear + "/" + year);
+                    }};
+                DatePickerDialog dpDialog=new DatePickerDialog(getActivity(), listener, year, month, day);
+                dpDialog.show();
+            }
+        } );
+
+
+        dialog.setPositiveButton("Simpan", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.setNegativeButton("Batal", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+    }
+
 }
