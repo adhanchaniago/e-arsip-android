@@ -45,7 +45,7 @@
                             android:layout_alignParentTop="true"
                             android:layout_centerHorizontal="true"
                             android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="15dp"
+                            android:layout_marginTop="20dp"
                             android:src="@drawable/user"
                             app:civ_border_color="#fff"
                             app:civ_border_width="2dp" />
@@ -56,7 +56,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginTop="5dp"
                             android:textColor="#fff"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -66,7 +66,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginTop="5dp"
                             android:textColor="#fff"
                             android:textSize="14sp"
                             android:textStyle="bold" />
@@ -95,8 +95,8 @@
                             <ImageView
                                 android:layout_width="20sp"
                                 android:layout_height="20sp"
-                                android:layout_marginLeft="40sp"
-                                android:src="@drawable/tanggal" />
+                                android:layout_marginLeft="15dp"
+                                android:src="@drawable/ic_nip_profile_24dp" />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -109,12 +109,9 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="20sp"
                                     android:layout_weight="1"
-                                    android:text="24 February 1974"
-                                    android:textSize="20sp"
-                                    tools:text="24.1974.777." />
+                                    android:textSize="20sp" />
 
                                 <View
-                                    android:id="@+id/divider12"
                                     android:layout_width="match_parent"
                                     android:layout_height="1dp"
                                     android:layout_weight="1"
@@ -130,8 +127,8 @@
                             <ImageView
                                 android:layout_width="20sp"
                                 android:layout_height="20sp"
-                                android:layout_marginLeft="40sp"
-                                android:src="@drawable/tanggal" />
+                                android:layout_marginLeft="15dp"
+                                android:src="@drawable/ic_nama_profile_24dp" />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -144,12 +141,9 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="20sp"
                                     android:layout_weight="1"
-                                    android:text="24 February 1974"
-                                    android:textSize="20sp"
-                                    tools:text="SAMSUL" />
+                                    android:textSize="20sp" />
 
                                 <View
-                                    android:id="@+id/divider12"
                                     android:layout_width="match_parent"
                                     android:layout_height="1dp"
                                     android:layout_weight="1"
@@ -165,8 +159,8 @@
                             <ImageView
                                 android:layout_width="20sp"
                                 android:layout_height="20sp"
-                                android:layout_marginLeft="40sp"
-                                android:src="@drawable/agama" />
+                                android:layout_marginLeft="15dp"
+                                android:src="@drawable/tanggal" />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -179,12 +173,9 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="20sp"
                                     android:layout_weight="1"
-                                    android:text="24 February 1974"
-                                    android:textSize="20sp"
-                                    tools:text="24 February 1974" />
+                                    android:textSize="20sp" />
 
                                 <View
-                                    android:id="@+id/divider12"
                                     android:layout_width="match_parent"
                                     android:layout_height="1dp"
                                     android:layout_weight="1"
@@ -200,8 +191,8 @@
                             <ImageView
                                 android:layout_width="20sp"
                                 android:layout_height="20sp"
-                                android:layout_marginLeft="40sp"
-                                android:src="@drawable/ttl" />
+                                android:layout_marginLeft="15dp"
+                                android:src="@drawable/ic_nohp_profile_24dp" />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -214,9 +205,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="20sp"
                                     android:layout_weight="1"
-                                    android:text="24 February 1974"
-                                    android:textSize="20sp"
-                                    tools:text="081xxxxx" />
+                                    android:textSize="20sp" />
 
                                 <View
                                     android:id="@+id/divider12"

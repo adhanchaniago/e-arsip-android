@@ -83,8 +83,8 @@ public class ProfileFragment extends Fragment {
                         txtJabatanaUserProfile.setText( "Kepala "+userprofile.getString( "bagian" ) );
                         textnip.setText( userprofile.getString( "nip" ) );
                         textnama.setText( userprofile.getString("nama" ) );
-                        texttgllahir.setText( userprofile.getString( "tgllahir" ) );
-                        textnotelp.setText( userprofile.getString( "notelp" ) );
+                        texttgllahir.setText( userprofile.getString( "tgl_lahir" ) );
+                        textnotelp.setText( userprofile.getString( "no_hp" ) );
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

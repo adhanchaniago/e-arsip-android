@@ -8,10 +8,10 @@
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_detailsuratkeluar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        app:titleTextColor="@android:color/white"
         android:background="@color/colorPrimary"
-        android:minHeight="?android:attr/actionBarSize" />
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize" />
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/refreshDetailSuratKeluar"
