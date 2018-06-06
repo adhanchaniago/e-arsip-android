@@ -6,7 +6,10 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
@@ -42,11 +45,16 @@ import com.pratamatechnocraft.e_arsip.Service.SessionManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+
+import static android.app.Activity.RESULT_OK;
 
 public class ProfileFragment extends Fragment {
     SessionManager sessionManager;
@@ -55,6 +63,8 @@ public class ProfileFragment extends Fragment {
     private EditText inputNama, inputTempatLahir,inputNoTelp,inputAlamat,inputPasswordLama,inputPasswordBaru,inputPasswordBaruLagi;
     private TextInputLayout inputLayoutNama, inputLayoutTempatLahir,inputLayoutNoTelp,inputLayoutAlamat, inputLayoutPasswordLama,inputLayoutPasswordBaru,inputLayoutPasswordBaruLagi;
     private ProgressDialog progress;
+    private Bitmap bitmap;
+    CircleImageView profile_image;
     ImageButton btnTgl;
     ImageView profile_image;
     private Calendar calendar=Calendar.getInstance();
@@ -87,6 +97,7 @@ public class ProfileFragment extends Fragment {
         btnUbahPass = view.findViewById( R.id.buttonUbahPassword );
         btnUbahFoto = view.findViewById(R.id.buttonUbahFoto);
         progress = new ProgressDialog(getContext());
+        profile_image = view.findViewById(R.id.profile_image);
 
         day=calendar.get(Calendar.DAY_OF_MONTH);
         year=calendar.get(Calendar.YEAR);
@@ -141,7 +152,19 @@ public class ProfileFragment extends Fragment {
         intent.setAction(intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent,"Pilih Foto"),1);
     }
-    
+    @Override
+    public void onActivityResult(int requestCode,int resultCode,Intent data){
+        super.onActivityResult(requestCode,resultCode,data);
+        if(requestCode == 1 && resultCode ==RESULT_OK && data ! = null&& data.getData()!=null){
+            Uri filePath = data.getData();
+            bitmap = MediaStore.Images.Media.getBitmap();
+            profile_image.setImageBitmap(bitmap);
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    UploadPicture();
 
     private void DialogFormEditProfile() {
         dialog = new AlertDialog.Builder(getContext()).create();
