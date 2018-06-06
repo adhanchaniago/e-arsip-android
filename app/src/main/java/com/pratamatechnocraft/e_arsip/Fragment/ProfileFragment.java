@@ -51,7 +51,7 @@ import java.util.Map;
 public class ProfileFragment extends Fragment {
     SessionManager sessionManager;
     private TextView txtNamaUserProfile,txtJabatanaUserProfile,textnip,textnama,texttgllahir,textnotelp,texttempatlahir,textalamat,txtTanggalLahir;
-    private Button btnEdit,btnUbahPass,buttonBatalEdit,buttonSimpanEdit,buttonBatalUbahPass,buttonSimpanUbahPass;
+    private Button btnEdit,btnUbahPass,buttonBatalEdit,buttonSimpanEdit,buttonBatalUbahPass,buttonSimpanUbahPass,btnUbahFoto;
     private EditText inputNama, inputTempatLahir,inputNoTelp,inputAlamat,inputPasswordLama,inputPasswordBaru,inputPasswordBaruLagi;
     private TextInputLayout inputLayoutNama, inputLayoutTempatLahir,inputLayoutNoTelp,inputLayoutAlamat, inputLayoutPasswordLama,inputLayoutPasswordBaru,inputLayoutPasswordBaruLagi;
     private ProgressDialog progress;
@@ -85,6 +85,7 @@ public class ProfileFragment extends Fragment {
         textalamat = view.findViewById( R.id.textalamat );
         btnEdit = view.findViewById( R.id.buttonEdit );
         btnUbahPass = view.findViewById( R.id.buttonUbahPassword );
+        btnUbahFoto = view.findViewById(R.id.buttonUbahFoto);
         progress = new ProgressDialog(getContext());
 
         day=calendar.get(Calendar.DAY_OF_MONTH);
@@ -115,6 +116,12 @@ public class ProfileFragment extends Fragment {
                 DialogFormEditProfile();
             }
         } );
+        btnUbahFoto.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogFormEditProfile();
+            }
+        } );
 
         return view;
     }
@@ -128,6 +135,13 @@ public class ProfileFragment extends Fragment {
     }
 
     /*KERJAKAN DISINI*/
+    private void ubahFoto(){
+        Intent intent = new intent();
+        intent.setType("foto/");
+        intent.setAction(intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent,"Pilih Foto"),1);
+    }
+    
 
     private void DialogFormEditProfile() {
         dialog = new AlertDialog.Builder(getContext()).create();
