@@ -127,6 +127,8 @@ public class ProfileFragment extends Fragment {
         getActivity().setTitle("E-Arsip | Profile");
     }
 
+    /*KERJAKAN DISINI*/
+
     private void DialogFormEditProfile() {
         dialog = new AlertDialog.Builder(getContext()).create();
         inflater = getLayoutInflater();
