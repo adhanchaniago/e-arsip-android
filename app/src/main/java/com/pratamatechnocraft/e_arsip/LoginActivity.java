@@ -45,6 +45,7 @@ public class LoginActivity extends AppCompatActivity {
         if (sessionManager.isLoggin()){
             Intent i = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(i);
+            finish();
         }
 
         btnLogin = findViewById(R.id.buttonLogin);
@@ -75,6 +76,7 @@ public class LoginActivity extends AppCompatActivity {
         if (sessionManager.isLoggin()){
             Intent i = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(i);
+            finish();
         }
     }
 

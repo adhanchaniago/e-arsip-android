@@ -2,9 +2,7 @@ package com.pratamatechnocraft.e_arsip.Fragment;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -17,6 +15,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,8 +24,6 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,11 +42,10 @@ import com.pratamatechnocraft.e_arsip.Service.SessionManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -66,7 +62,6 @@ public class ProfileFragment extends Fragment {
     private Bitmap bitmap;
     CircleImageView profile_image;
     ImageButton btnTgl;
-    ImageView profile_image;
     private Calendar calendar=Calendar.getInstance();
     private int year, month, day;
     SwipeRefreshLayout refreshProfile;
@@ -130,7 +125,7 @@ public class ProfileFragment extends Fragment {
         btnUbahFoto.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DialogFormEditProfile();
+                pilihFoto();
             }
         } );
 
@@ -146,25 +141,86 @@ public class ProfileFragment extends Fragment {
     }
 
     /*KERJAKAN DISINI*/
-    private void ubahFoto(){
-        Intent intent = new intent();
-        intent.setType("foto/");
+    private void pilihFoto(){
+        Intent intent = new Intent();
+        intent.setType("images/*");
         intent.setAction(intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent,"Pilih Foto"),1);
     }
+
     @Override
-    public void onActivityResult(int requestCode,int resultCode,Intent data){
-        super.onActivityResult(requestCode,resultCode,data);
-        if(requestCode == 1 && resultCode ==RESULT_OK && data ! = null&& data.getData()!=null){
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult( requestCode, resultCode, data );
+        if (requestCode==1 && resultCode==RESULT_OK && data!=null && data.getData() !=null){
             Uri filePath = data.getData();
-            bitmap = MediaStore.Images.Media.getBitmap();
-            profile_image.setImageBitmap(bitmap);
-        }catch(IOException e){
-            e.printStackTrace();
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap( getContext().getContentResolver(),filePath );
+                profile_image.setImageBitmap( bitmap );
+
+                uploadFoto(textnip.getText().toString().trim(), getStringImage( bitmap ));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    UploadPicture();
+    private String getStringImage(Bitmap bitmap) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(  );
+        bitmap.compress( Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream );
+        byte[] imageByteArray =  byteArrayOutputStream.toByteArray();
+        String encodedImage = Base64.encodeToString( imageByteArray, Base64.DEFAULT );
+
+        return encodedImage;
+    }
+
+    private void uploadFoto(final String nip, final String picture) {
+        final ProgressDialog progressDialog = new ProgressDialog( getContext() );
+        progressDialog.setMessage( "Uploading......" );
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setIndeterminate(false);
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, baseUrl+API_URL_EDITDANUBAH, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String kode = jsonObject.getString("kode");
+                    if (kode.equals("1")) {
+                        //Toast.makeText(getContext(), "Ubah Foto Berhasil", Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
+                    }else{
+                        //Toast.makeText(getContext(), "Ubah Foto Gagal, Coba Lagi!", Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    //Toast.makeText(getContext(), "Ubah Foto Gagal, Coba Lagi!", Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
+                }
+            }
+        },new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                //Toast.makeText(getContext(), "Ubah Foto Gagal, Coba Lagi!", Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("id", nip);
+                params.put("foto", picture);
+                params.put("api", "ubahfoto");
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.add(stringRequest);
+    }
 
     private void DialogFormEditProfile() {
         dialog = new AlertDialog.Builder(getContext()).create();
@@ -307,6 +363,7 @@ public class ProfileFragment extends Fragment {
                     JSONObject jsonObject = new JSONObject(response);
                     String kode = jsonObject.getString("kode");
                     if (kode.equals("1")) {
+                        loadProfile( sessionManager.NIP_USER );
                         Toast.makeText(getContext(), "Ubah Password Berhasil", Toast.LENGTH_SHORT).show();
                         progress.dismiss();
                         dialog1.dismiss();

@@ -33,7 +33,7 @@ import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     public static String urlGambar = "";
-    public int fragmentLast;
+    //public int fragmentLast=0;
     public Fragment fragment = null;
     SessionManager sessionManager;
     BaseUrlApiModel baseUrlApiModel = new BaseUrlApiModel();
@@ -62,8 +62,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
 
         //add this line to display menu1 when the activity is loaded
-        displaySelectedScreen( R.id.nav_dashboard );
-        fragmentLast=R.id.nav_dashboard;
+        //if (fragmentLast==R.id.nav_dashboard || fragmentLast==0){
+            displaySelectedScreen( R.id.nav_dashboard );
+        //    fragmentLast=R.id.nav_dashboard;
+        //}
 
         NavigationView navigationView = (NavigationView) findViewById( R.id.nav_view );
         navigationView.setNavigationItemSelectedListener( this );
@@ -128,11 +130,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             sessionManager.logout();
         }
 
-        fragmentLast=id;
+       // fragmentLast=id;
 
         if (fragment != null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace( R.id.screen_area, fragment );
+            ft.addToBackStack(null);
             ft.commit();
         }
 
@@ -143,6 +146,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onResume() {
         super.onResume();
-        displaySelectedScreen( fragmentLast );
     }
 }

@@ -21,24 +21,11 @@ public class DashboardFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate( R.layout.activity_dashboard_fragment, container, false);
-        return view;
-    }
-
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        //you can set the title for your toolbar here for different fragments different titles
-        getActivity().setTitle("E-Arsip | Dashboard");
         kliknotifikasi = view.findViewById(R.id.cardhomenotifikasi);
         kliksuratmasuk = view.findViewById(R.id.cardhomesuratmasuk);
         kliksuratkeluar = view.findViewById(R.id.cardhomesuratkeluar);
         klikdisposisi = view.findViewById(R.id.cardhomedisposisi);
         navigationView = getActivity().findViewById( R.id.nav_view );
-    }
-
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
 
         kliknotifikasi.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,6 +82,21 @@ public class DashboardFragment extends Fragment {
                         .commit();
             }
         });
+
+        return view;
+    }
+
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        //you can set the title for your toolbar here for different fragments different titles
+        getActivity().setTitle("E-Arsip | Dashboard");
+
+    }
+
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
     }
 }
