@@ -42,21 +42,30 @@
                             android:id="@+id/profile_image"
                             android:layout_width="80dp"
                             android:layout_height="80dp"
-                            android:layout_alignParentTop="true"
                             android:layout_centerHorizontal="true"
                             android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="20dp"
+                            android:layout_marginTop="10dp"
                             android:src="@drawable/user"
                             app:civ_border_color="#fff"
                             app:civ_border_width="2dp" />
 
+
+                        <Button
+                            android:id="@+id/buttonUbahFoto"
+                            style="@style/Widget.AppCompat.Button.Colored"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="Ubah Foto"
+                            android:textAllCaps="false"
+                            android:textSize="12sp" />
 
                         <TextView
                             android:id="@+id/txtNamaUserProfile"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="5dp"
+                            android:layout_marginTop="3dp"
                             android:textColor="#fff"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -66,7 +75,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="5dp"
                             android:textColor="#fff"
                             android:textSize="14sp"
                             android:textStyle="bold" />

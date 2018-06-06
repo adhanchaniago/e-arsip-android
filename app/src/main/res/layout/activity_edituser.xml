@@ -65,7 +65,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="TextView"
                     android:textSize="18sp" />
 
             </LinearLayout>
@@ -88,28 +87,59 @@
     </LinearLayout>
 
     <android.support.design.widget.TextInputLayout
-            android:id="@+id/inputLayoutCatatan"
+        android:id="@+id/inputLayoutNoTelp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/inputNoTelp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:hint="No Telepon"
+            android:inputType="text" />
+    </android.support.design.widget.TextInputLayout>
 
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/inputCatatan"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="*Catatan"
-                android:inputType="text" />
-        </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/inputLayoutAlamat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/inputLayoutCatatan"
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/inputAlamat"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:hint="Alamat"
+            android:inputType="textMultiLine" />
+    </android.support.design.widget.TextInputLayout>
 
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/inputCatatan"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="*Catatan"
-                android:inputType="text" />
-        </android.support.design.widget.TextInputLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+
+
+        <Button
+            android:id="@+id/buttonSimpanEdit"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Simpan"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/buttonBatalEdit"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:text="Batal"
+            android:textAllCaps="false" />
+    </LinearLayout>
 </LinearLayout>

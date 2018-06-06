@@ -73,8 +73,6 @@
             </intent-filter>
         </service>
         <!-- ./Firebase Notifications -->
-
-        <activity android:name=".EdituserActivity"></activity>
     </application>
 
 </manifest>
