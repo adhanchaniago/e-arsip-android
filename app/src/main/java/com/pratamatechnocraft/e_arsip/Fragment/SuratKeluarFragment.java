@@ -1,17 +1,17 @@
 package com.pratamatechnocraft.e_arsip.Fragment;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +26,8 @@ import com.pratamatechnocraft.e_arsip.Model.BaseUrlApiModel;
 import com.pratamatechnocraft.e_arsip.Model.ListItemSuratKeluar;
 import com.pratamatechnocraft.e_arsip.R;
 import com.pratamatechnocraft.e_arsip.Service.SessionManager;
+import com.pratamatechnocraft.e_arsip.TambahSuratKeluarActivity;
+import com.pratamatechnocraft.e_arsip.ZoomFotoProfile;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,6 +42,7 @@ public class SuratKeluarFragment extends Fragment {
     private RecyclerView.Adapter adapterSuratKeluar;
     SwipeRefreshLayout refreshSuratKeluar;
     TextView noDataKeluar;
+    FloatingActionButton floatingActionButton2;
 
     SessionManager sessionManager;
 
@@ -54,6 +57,7 @@ public class SuratKeluarFragment extends Fragment {
         View view = inflater.inflate( R.layout.activity_surat_keluar_fragment, container, false);
         refreshSuratKeluar = view.findViewById(R.id.refreshSuratKeluar);
         noDataKeluar = view.findViewById( R.id.noDatakeluar );
+        floatingActionButton2 = view.findViewById( R.id.floatingActionButton2 );
 
         recyclerViewSuratKeluar = (RecyclerView) view.findViewById(R.id.recycleViewSuratKeluar);
         recyclerViewSuratKeluar.setHasFixedSize(true);
@@ -81,6 +85,14 @@ public class SuratKeluarFragment extends Fragment {
         } );
 
         recyclerViewSuratKeluar.setAdapter(adapterSuratKeluar);
+
+        floatingActionButton2.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getContext(), ZoomFotoProfile.class);
+                getContext().startActivity(i);
+            }
+        } );
 
         return view;
     }
@@ -138,12 +150,5 @@ public class SuratKeluarFragment extends Fragment {
 
         RequestQueue requestQueue = Volley.newRequestQueue( getContext() );
         requestQueue.add( stringRequest );
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        loadSuratKeluar();
-        recyclerViewSuratKeluar.setAdapter(adapterSuratKeluar);
     }
 }

@@ -1,7 +1,9 @@
 package com.pratamatechnocraft.e_arsip.Fragment;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -25,6 +27,7 @@ import com.pratamatechnocraft.e_arsip.Adapter.AdapterRecycleViewSuratMasuk;
 import com.pratamatechnocraft.e_arsip.Model.BaseUrlApiModel;
 import com.pratamatechnocraft.e_arsip.Model.ListItemSuratMasuk;
 import com.pratamatechnocraft.e_arsip.R;
+import com.pratamatechnocraft.e_arsip.TambahSuratKeluarActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,6 +42,8 @@ public class SuratMasukFragment extends Fragment {
     private RecyclerView.Adapter adapterSuratMasuk;
     TextView noDataMasuk;
     SwipeRefreshLayout refreshSuratMasuk;
+    FloatingActionButton floatingActionButton1;
+
     private List<ListItemSuratMasuk> listItemSuratMasuks;
 
     BaseUrlApiModel baseUrlApiModel = new BaseUrlApiModel();
@@ -52,6 +57,7 @@ public class SuratMasukFragment extends Fragment {
         View view = inflater.inflate( R.layout.activity_surat_masuk_fragment, container, false);
         noDataMasuk = view.findViewById( R.id.noDatamasuk );
         refreshSuratMasuk = (SwipeRefreshLayout) view.findViewById(R.id.refreshSuratMasuk);
+        floatingActionButton1 = view.findViewById( R.id.floatingActionButton );
 
         recyclerViewSuratMasuk = (RecyclerView) view.findViewById(R.id.recycleViewSuratMasuk);
         recyclerViewSuratMasuk.setHasFixedSize(true);
@@ -72,6 +78,14 @@ public class SuratMasukFragment extends Fragment {
         } );
 
         recyclerViewSuratMasuk.setAdapter(adapterSuratMasuk);
+
+        floatingActionButton1.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getContext(), TambahSuratKeluarActivity.class);
+                getContext().startActivity(i);
+            }
+        } );
 
         return view;
     }

@@ -13,4 +13,5 @@
     <dimen name="text_margin">16dp</dimen>
     <dimen name="radiusCardView">2dp</dimen>
     <dimen name="shadowCardView">3dp</dimen>
+    <dimen name="activity_margin">10dp</dimen>
 </resources>

@@ -24,6 +24,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,9 +36,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.pratamatechnocraft.e_arsip.MainActivity;
 import com.pratamatechnocraft.e_arsip.Model.BaseUrlApiModel;
 import com.pratamatechnocraft.e_arsip.R;
 import com.pratamatechnocraft.e_arsip.Service.SessionManager;
+import com.pratamatechnocraft.e_arsip.ZoomFotoProfile;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -48,19 +51,17 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
 import static android.app.Activity.RESULT_OK;
 
 public class ProfileFragment extends Fragment {
     SessionManager sessionManager;
     private TextView txtNamaUserProfile,txtJabatanaUserProfile,textnip,textnama,texttgllahir,textnotelp,texttempatlahir,textalamat,txtTanggalLahir;
-    private Button btnEdit,btnUbahPass,buttonBatalEdit,buttonSimpanEdit,buttonBatalUbahPass,buttonSimpanUbahPass,btnUbahFoto;
+    private Button btnEdit,btnUbahPass,buttonBatalEdit,buttonSimpanEdit,buttonBatalUbahPass,buttonSimpanUbahPass;
     private EditText inputNama, inputTempatLahir,inputNoTelp,inputAlamat,inputPasswordLama,inputPasswordBaru,inputPasswordBaruLagi;
     private TextInputLayout inputLayoutNama, inputLayoutTempatLahir,inputLayoutNoTelp,inputLayoutAlamat, inputLayoutPasswordLama,inputLayoutPasswordBaru,inputLayoutPasswordBaruLagi;
     private ProgressDialog progress;
     private Bitmap bitmap;
-    CircleImageView profile_image;
+    public static ImageView profile_image;
     ImageButton btnTgl;
     private Calendar calendar=Calendar.getInstance();
     private int year, month, day;
@@ -90,7 +91,6 @@ public class ProfileFragment extends Fragment {
         textalamat = view.findViewById( R.id.textalamat );
         btnEdit = view.findViewById( R.id.buttonEdit );
         btnUbahPass = view.findViewById( R.id.buttonUbahPassword );
-        btnUbahFoto = view.findViewById(R.id.buttonUbahFoto);
         progress = new ProgressDialog(getContext());
         profile_image = view.findViewById(R.id.profile_image);
 
@@ -100,7 +100,6 @@ public class ProfileFragment extends Fragment {
 
         textnotelp = view.findViewById( R.id.textnotelp );
         profile_image = view.findViewById( R.id.profile_image );
-
 
         refreshProfile = view.findViewById( R.id.refreshProfile );
 
@@ -122,12 +121,6 @@ public class ProfileFragment extends Fragment {
                 DialogFormEditProfile();
             }
         } );
-        btnUbahFoto.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                pilihFoto();
-            }
-        } );
 
         return view;
     }
@@ -140,87 +133,6 @@ public class ProfileFragment extends Fragment {
         getActivity().setTitle("E-Arsip | Profile");
     }
 
-    /*KERJAKAN DISINI*/
-    private void pilihFoto(){
-        Intent intent = new Intent();
-        intent.setType("images/*");
-        intent.setAction(intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent,"Pilih Foto"),1);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult( requestCode, resultCode, data );
-        if (requestCode==1 && resultCode==RESULT_OK && data!=null && data.getData() !=null){
-            Uri filePath = data.getData();
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap( getContext().getContentResolver(),filePath );
-                profile_image.setImageBitmap( bitmap );
-
-                uploadFoto(textnip.getText().toString().trim(), getStringImage( bitmap ));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private String getStringImage(Bitmap bitmap) {
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(  );
-        bitmap.compress( Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream );
-        byte[] imageByteArray =  byteArrayOutputStream.toByteArray();
-        String encodedImage = Base64.encodeToString( imageByteArray, Base64.DEFAULT );
-
-        return encodedImage;
-    }
-
-    private void uploadFoto(final String nip, final String picture) {
-        final ProgressDialog progressDialog = new ProgressDialog( getContext() );
-        progressDialog.setMessage( "Uploading......" );
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setIndeterminate(false);
-        progressDialog.setCanceledOnTouchOutside(false);
-        progressDialog.show();
-
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, baseUrl+API_URL_EDITDANUBAH, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    String kode = jsonObject.getString("kode");
-                    if (kode.equals("1")) {
-                        //Toast.makeText(getContext(), "Ubah Foto Berhasil", Toast.LENGTH_SHORT).show();
-                        progressDialog.dismiss();
-                    }else{
-                        //Toast.makeText(getContext(), "Ubah Foto Gagal, Coba Lagi!", Toast.LENGTH_SHORT).show();
-                        progressDialog.dismiss();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    //Toast.makeText(getContext(), "Ubah Foto Gagal, Coba Lagi!", Toast.LENGTH_SHORT).show();
-                    progressDialog.dismiss();
-                }
-            }
-        },new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-                //Toast.makeText(getContext(), "Ubah Foto Gagal, Coba Lagi!", Toast.LENGTH_SHORT).show();
-                progressDialog.dismiss();
-            }
-        }){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("id", nip);
-                params.put("foto", picture);
-                params.put("api", "ubahfoto");
-                return params;
-            }
-        };
-
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-        requestQueue.add(stringRequest);
-    }
 
     private void DialogFormEditProfile() {
         dialog = new AlertDialog.Builder(getContext()).create();
@@ -279,6 +191,7 @@ public class ProfileFragment extends Fragment {
                     progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                     progress.setIndeterminate(false);
                     progress.setCanceledOnTouchOutside(false);
+                    MainActivity.namaUser.setText( inputNama.getText().toString() );
                     prosesEditProfile(
                             textnip.getText().toString(),
                             inputNama.getText().toString(),
@@ -475,6 +388,19 @@ public class ProfileFragment extends Fragment {
                             texttempatlahir.setText( userprofile.getString( "tempat_lahir" ) );
                             textalamat.setText(  userprofile.getString( "alamat" )  );
                             urlGambarProfile = baseUrl+String.valueOf( userprofile.getString( "foto" )  );
+                            profile_image.setOnClickListener( new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Intent i = new Intent(getContext(), ZoomFotoProfile.class);
+                                    i.putExtra("fotoProfil", urlGambarProfile);
+                                    try {
+                                        i.putExtra("nipUser", userprofile.getString( "nip" ));
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                    startActivity(i);
+                                }
+                            } );
                             btnUbahPass.setOnClickListener( new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {

@@ -1,7 +1,6 @@
 package com.pratamatechnocraft.e_arsip;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -15,11 +14,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.messaging.FirebaseMessaging;
 import com.pratamatechnocraft.e_arsip.Fragment.DashboardFragment;
 import com.pratamatechnocraft.e_arsip.Fragment.DisposisiFragment;
 import com.pratamatechnocraft.e_arsip.Fragment.NotifikasiFragment;
@@ -33,7 +29,8 @@ import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     public static String urlGambar = "";
-    //public int fragmentLast=0;
+    public static TextView namaUser;
+    public static ImageView fotoUser;
     public Fragment fragment = null;
     SessionManager sessionManager;
     BaseUrlApiModel baseUrlApiModel = new BaseUrlApiModel();
@@ -77,8 +74,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         sessionManager.checkLogin();
 
 
-        TextView namaUser = headerView.findViewById( R.id.textViewNamaUser );
-        ImageView fotoUser =  headerView.findViewById( R.id.imageViewFotoUser );
+        namaUser = headerView.findViewById( R.id.textViewNamaUser );
+        fotoUser =  headerView.findViewById( R.id.imageViewFotoUser );
         TextView jabatanUser = headerView.findViewById( R.id.textViewJabatanUser );
 
         HashMap<String, String> user = sessionManager.getUserDetail();
