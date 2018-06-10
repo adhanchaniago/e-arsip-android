@@ -34,7 +34,7 @@
         </activity>
         <activity
             android:name=".DetailSuratMasukActivity"
-            android:label="E-ARSIP | Detail Surat Masuk"
+            android:label="Detail Surat Masuk"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -42,7 +42,7 @@
         </activity>
         <activity
             android:name=".DetailSuratKeluarActivity"
-            android:label="E-ARSIP | Detail Surat Keluar"
+            android:label="Detail Surat Keluar"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -50,7 +50,7 @@
         </activity>
         <activity
             android:name=".LembarDisposisiActivity"
-            android:label="E-ARSIP | Lembar Disposisi"
+            android:label="Lembar Disposisi"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -58,7 +58,7 @@
         </activity>
         <activity
             android:name=".MendisposisikanActivity"
-            android:label="E-ARSIP | Mendisposisikan"
+            android:label="Mendisposisikan"
             android:parentActivityName=".DetailSuratMasukActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

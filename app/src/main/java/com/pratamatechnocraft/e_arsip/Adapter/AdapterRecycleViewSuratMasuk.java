@@ -16,6 +16,8 @@ import com.pratamatechnocraft.e_arsip.R;
 
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class AdapterRecycleViewSuratMasuk extends RecyclerView.Adapter<AdapterRecycleViewSuratMasuk.ViewHolder> {
 
     private List<ListItemSuratMasuk> listItemSuratMasuks;
@@ -49,6 +51,67 @@ public class AdapterRecycleViewSuratMasuk extends RecyclerView.Adapter<AdapterRe
                 context.startActivity(i);
             }
         });
+
+        String namaDepan=listItemSuratMasuk.getAsalSurat();
+        holder.hurufDepanSuratMasuk.setText(namaDepan.substring( 0,1 ));
+
+        int color=0;
+
+        if (holder.hurufDepanSuratMasuk.getText().equals( "A" )){
+            color=R.color.amber_500;
+        }else if(holder.hurufDepanSuratMasuk.getText().equals( "B" )){
+            color=R.color.blue_500;
+        }else if(holder.hurufDepanSuratMasuk.getText().equals( "C" )){
+            color=R.color.blue_grey_500;
+        }else if(holder.hurufDepanSuratMasuk.getText().equals( "D" )){
+            color=R.color.brown_500;
+        }else if(holder.hurufDepanSuratMasuk.getText().equals( "E" )){
+            color=R.color.cyan_500;
+        }else if(holder.hurufDepanSuratMasuk.getText().equals( "F" )){
+            color=R.color.deep_orange_500;
+        }else if(holder.hurufDepanSuratMasuk.getText().equals( "G" )){
+            color=R.color.deep_purple_500;
+        }else if(holder.hurufDepanSuratMasuk.getText().equals( "H" )){
+            color=R.color.green_500;
+        }else if(holder.hurufDepanSuratMasuk.getText().equals( "I" )){
+            color=R.color.grey_500;
+        }else if(holder.hurufDepanSuratMasuk.getText().equals( "J" )){
+            color=R.color.indigo_500;
+        }else if(holder.hurufDepanSuratMasuk.getText().equals( "K" )){
+            color=R.color.teal_500;
+        }else if(holder.hurufDepanSuratMasuk.getText().equals( "L" )){
+            color=R.color.lime_500;
+        }else if(holder.hurufDepanSuratMasuk.getText().equals( "M" )){
+            color=R.color.red_500;
+        }else if(holder.hurufDepanSuratMasuk.getText().equals( "N" )){
+            color=R.color.light_blue_500;
+        }else if(holder.hurufDepanSuratMasuk.getText().equals( "O" )){
+            color=R.color.light_green_500;
+        }else if(holder.hurufDepanSuratMasuk.getText().equals( "P" )){
+            color=R.color.orange_500;
+        }else if(holder.hurufDepanSuratMasuk.getText().equals( "Q" )){
+            color=R.color.pink_500;
+        }else if(holder.hurufDepanSuratMasuk.getText().equals( "R" )){
+            color=R.color.red_600;
+        }else if(holder.hurufDepanSuratMasuk.getText().equals( "S" )){
+            color=R.color.yellow_600;
+        }else if(holder.hurufDepanSuratMasuk.getText().equals( "T" )){
+            color=R.color.blue_600;
+        }else if(holder.hurufDepanSuratMasuk.getText().equals( "U" )){
+            color=R.color.cyan_600;
+        }else if(holder.hurufDepanSuratMasuk.getText().equals( "V" )){
+            color=R.color.green_600;
+        }else if(holder.hurufDepanSuratMasuk.getText().equals( "W" )){
+            color=R.color.purple_600;
+        }else if(holder.hurufDepanSuratMasuk.getText().equals( "X" )){
+            color=R.color.pink_600;
+        }else if(holder.hurufDepanSuratMasuk.getText().equals( "Y" )){
+            color=R.color.lime_600;
+        }else if(holder.hurufDepanSuratMasuk.getText().equals( "Z" )){
+            color=R.color.orange_600;
+        }
+
+        holder.fotoSuratMasuk.setImageResource(color);
     }
 
     @Override
@@ -58,8 +121,9 @@ public class AdapterRecycleViewSuratMasuk extends RecyclerView.Adapter<AdapterRe
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        public TextView txtAsalSurat, txtPerihalSurat, txtTanggalArsip;
+        public TextView txtAsalSurat, txtPerihalSurat, txtTanggalArsip,hurufDepanSuratMasuk;
         public CardView cardViewSuratMasuk;
+        public CircleImageView fotoSuratMasuk;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -68,6 +132,9 @@ public class AdapterRecycleViewSuratMasuk extends RecyclerView.Adapter<AdapterRe
             txtPerihalSurat= (TextView) itemView.findViewById(R.id.txtPerihal);
             txtTanggalArsip= (TextView) itemView.findViewById(R.id.txtTanggalArsip);
             cardViewSuratMasuk = (CardView) itemView.findViewById(R.id.cardViewSuratMasuk);
+            hurufDepanSuratMasuk= (TextView) itemView.findViewById(R.id.hurufDepanSuratMasuk);
+            fotoSuratMasuk = (CircleImageView) itemView.findViewById( R.id.fotoSuratMasuk );
+
 
         }
     }

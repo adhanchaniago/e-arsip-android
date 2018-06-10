@@ -65,7 +65,7 @@ public class LembarDisposisiActivity extends AppCompatActivity {
 
         Toolbar ToolBarAtas2 = (Toolbar)findViewById(R.id.toolbar_lembardisposisi);
         setSupportActionBar(ToolBarAtas2);
-        ToolBarAtas2.setLogoDescription(getResources().getString(R.string.app_name)+"Lembar Disposisi");
+        ToolBarAtas2.setLogoDescription("Lembar Disposisi");
 
         final Intent i = getIntent();
         txtNoSuratDisposisi = (TextView) findViewById( R.id.txtNoSuratDisposisi );

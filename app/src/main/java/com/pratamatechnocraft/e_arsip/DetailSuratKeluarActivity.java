@@ -65,7 +65,7 @@ public class DetailSuratKeluarActivity extends AppCompatActivity {
 
         Toolbar ToolBarAtas2 = (Toolbar)findViewById(R.id.toolbar_detailsuratkeluar);
         setSupportActionBar(ToolBarAtas2);
-        ToolBarAtas2.setLogoDescription(getResources().getString(R.string.app_name)+"Detail Surat Keluar");
+        ToolBarAtas2.setLogoDescription("Detail Surat Keluar");
 
         final Intent i = getIntent();
         txtNoSuratKeluar = (TextView) findViewById( R.id.txtDetailNoSuratKeluar );

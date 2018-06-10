@@ -76,7 +76,7 @@ public class MendisposisikanActivity extends AppCompatActivity {
 
         Toolbar ToolBarAtas2 = (Toolbar)findViewById(R.id.toolbar_mendisposisikan);
         setSupportActionBar(ToolBarAtas2);
-        ToolBarAtas2.setLogoDescription(getResources().getString(R.string.app_name)+"Mendisposisikan");
+        ToolBarAtas2.setLogoDescription("Mendisposisikan");
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         refreshMendisposisikan = findViewById( R.id.refreshMendisposisikan );

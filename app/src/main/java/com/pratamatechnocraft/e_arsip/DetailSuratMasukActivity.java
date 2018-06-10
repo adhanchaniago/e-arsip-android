@@ -80,7 +80,7 @@ public class DetailSuratMasukActivity extends AppCompatActivity {
 
         Toolbar ToolBarAtas2 = (Toolbar)findViewById(R.id.toolbar_detailsuratmasuk);
         setSupportActionBar(ToolBarAtas2);
-        ToolBarAtas2.setLogoDescription(getResources().getString(R.string.app_name)+"Detail Surat Masuk");
+        ToolBarAtas2.setLogoDescription("Detail Surat Masuk");
         final Intent i = getIntent();
         txtNoSurat = (TextView) findViewById( R.id.txtDetailNoSuratMasuk );
         txtDetailJenisSuratMasuk = (TextView) findViewById( R.id.txtDetailJenisSuratMasuk );
