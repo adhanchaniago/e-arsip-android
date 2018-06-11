@@ -114,13 +114,15 @@ public class LembarDisposisiActivity extends AppCompatActivity {
                     }catch (JSONException e){
                         e.printStackTrace();
                         refreshLembarDisposisi.setRefreshing( false );
+                        Toast.makeText(LembarDisposisiActivity.this, "Periksa koneksi & coba lagi", Toast.LENGTH_SHORT).show();
                     }
                 }
             },
             new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Toast.makeText( getApplicationContext(),"Error " +error.toString(), Toast.LENGTH_SHORT ).show();
+                    error.printStackTrace();
+                    Toast.makeText(LembarDisposisiActivity.this, "Periksa koneksi & coba lagi", Toast.LENGTH_SHORT).show();
                     refreshLembarDisposisi.setRefreshing( false );
                 }
             }

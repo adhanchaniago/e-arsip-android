@@ -142,13 +142,14 @@ public class DetailSuratKeluarActivity extends AppCompatActivity {
                     }catch (JSONException e){
                         e.printStackTrace();
                         refreshDetailSuratKeluar.setRefreshing( false );
+                        Toast.makeText(DetailSuratKeluarActivity.this, "Periksa koneksi & coba lagi", Toast.LENGTH_SHORT).show();
                     }
                 }
             },
             new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Toast.makeText( getApplicationContext(),"Error " +error.toString(), Toast.LENGTH_SHORT ).show();
+                    Toast.makeText(DetailSuratKeluarActivity.this, "Periksa koneksi & coba lagi", Toast.LENGTH_SHORT).show();
                     refreshDetailSuratKeluar.setRefreshing( false );
                 }
             }
@@ -178,10 +179,10 @@ public class DetailSuratKeluarActivity extends AppCompatActivity {
             if (list.isEmpty()){
                 Log.e("INSIDE", "" + referenceId);
                 @SuppressWarnings("deprecation") NotificationCompat.Builder mBuilder =
-                        new NotificationCompat.Builder(DetailSuratKeluarActivity.this)
-                                .setSmallIcon(R.mipmap.ic_launcer)
-                                .setContentTitle("E-ARSIP")
-                                .setContentText("Download completed");
+                    new NotificationCompat.Builder(DetailSuratKeluarActivity.this)
+                            .setSmallIcon(R.mipmap.ic_launcer)
+                            .setContentTitle("E-ARSIP")
+                            .setContentText("Download completed");
 
                 NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
                 notificationManager.notify(455, mBuilder.build());

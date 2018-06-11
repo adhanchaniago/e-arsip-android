@@ -193,14 +193,16 @@ public class DetailSuratMasukActivity extends AppCompatActivity {
                     }catch (JSONException e){
                         refreshDetailSuratMasuk.setRefreshing( false );
                         e.printStackTrace();
+                        Toast.makeText(DetailSuratMasukActivity.this, "Periksa koneksi & coba lagi", Toast.LENGTH_SHORT).show();
                     }
                 }
             },
             new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
+                    error.printStackTrace();
                     refreshDetailSuratMasuk.setRefreshing( false );
-                    Toast.makeText( getApplicationContext(),"Error " +error.toString(), Toast.LENGTH_SHORT ).show();
+                    Toast.makeText(DetailSuratMasukActivity.this, "Periksa koneksi & coba lagi", Toast.LENGTH_SHORT).show();
                 }
             }
         );

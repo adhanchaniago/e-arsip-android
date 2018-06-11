@@ -171,6 +171,7 @@ public class MendisposisikanActivity extends AppCompatActivity {
                     }catch (JSONException e){
                         e.printStackTrace();
                         refreshMendisposisikan.setRefreshing( false );
+                        Toast.makeText(MendisposisikanActivity.this, "Periksa koneksi & coba lagi", Toast.LENGTH_SHORT).show();
                     }
                 }
             },
@@ -179,6 +180,7 @@ public class MendisposisikanActivity extends AppCompatActivity {
                 public void onErrorResponse(VolleyError error) {
                     error.printStackTrace();
                     refreshMendisposisikan.setRefreshing( false );
+                    Toast.makeText(MendisposisikanActivity.this, "Periksa koneksi & coba lagi", Toast.LENGTH_SHORT).show();
                 }
             }
         );
@@ -208,7 +210,7 @@ public class MendisposisikanActivity extends AppCompatActivity {
                     progress.dismiss();
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    Toast.makeText(MendisposisikanActivity.this, "Error " +e.toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MendisposisikanActivity.this, "Periksa koneksi & coba lagi", Toast.LENGTH_SHORT).show();
                     progress.dismiss();
                 }
             }
@@ -216,7 +218,7 @@ public class MendisposisikanActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
-                Toast.makeText(MendisposisikanActivity.this, "Error " +error.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(MendisposisikanActivity.this, "Periksa koneksi & coba lagi", Toast.LENGTH_SHORT).show();
                 progress.dismiss();
             }
         }){

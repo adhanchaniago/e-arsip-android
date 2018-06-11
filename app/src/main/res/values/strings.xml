@@ -30,4 +30,5 @@
 
     <string name="action_share">Share</string>
     <string name="action_reply">Reply</string>
+    <string name="periksa_koneksi_coba_lagi"><![CDATA[Periksa Koneksi & Coba Lagi]]></string>
 </resources>

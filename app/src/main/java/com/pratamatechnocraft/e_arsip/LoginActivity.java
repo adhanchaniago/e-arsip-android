@@ -123,7 +123,7 @@ public class LoginActivity extends AppCompatActivity {
                     e.printStackTrace();
                     loading.setVisibility(View.GONE);
                     btnLogin.setVisibility(View.VISIBLE);
-                    Toast.makeText(LoginActivity.this, "Error " +e.toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Periksa koneksi & coba lagi", Toast.LENGTH_SHORT).show();
                 }
             }
         },
@@ -133,7 +133,7 @@ public class LoginActivity extends AppCompatActivity {
                     error.printStackTrace();
                     loading.setVisibility(View.GONE);
                     btnLogin.setVisibility(View.VISIBLE);
-                    Toast.makeText(LoginActivity.this, "Error " +error.toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Periksa koneksi & coba lagi", Toast.LENGTH_SHORT).show();
                 }
             }
         ){

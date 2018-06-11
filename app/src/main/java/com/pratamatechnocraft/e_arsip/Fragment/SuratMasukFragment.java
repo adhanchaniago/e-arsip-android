@@ -13,6 +13,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,9 +42,11 @@ public class SuratMasukFragment extends Fragment {
 
     private RecyclerView recyclerViewSuratMasuk;
     private RecyclerView.Adapter adapterSuratMasuk;
-    TextView noDataMasuk;
+    LinearLayout noDataMasuk,koneksiMasuk;
     SwipeRefreshLayout refreshSuratMasuk;
     FloatingActionButton floatingActionButton1;
+    ProgressBar progressBarmasuk;
+    Button cobaLagiMasuk;
 
     private List<ListItemSuratMasuk> listItemSuratMasuks;
 
@@ -58,6 +62,9 @@ public class SuratMasukFragment extends Fragment {
         noDataMasuk = view.findViewById( R.id.noDatamasuk );
         refreshSuratMasuk = (SwipeRefreshLayout) view.findViewById(R.id.refreshSuratMasuk);
         floatingActionButton1 = view.findViewById( R.id.floatingActionButton );
+        cobaLagiMasuk = view.findViewById( R.id.cobaLagiMasuk );
+        koneksiMasuk = view.findViewById( R.id.koneksiMasuk );
+
 
         recyclerViewSuratMasuk = (RecyclerView) view.findViewById(R.id.recycleViewSuratMasuk);
         recyclerViewSuratMasuk.setHasFixedSize(true);
@@ -66,13 +73,22 @@ public class SuratMasukFragment extends Fragment {
         listItemSuratMasuks = new ArrayList<>();
         adapterSuratMasuk = new AdapterRecycleViewSuratMasuk(listItemSuratMasuks, getContext());
 
+        progressBarmasuk = view.findViewById( R.id.progressBarmasuk );
+
         loadSuratMasuk();
 
         refreshSuratMasuk.setOnRefreshListener( new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                listItemSuratMasuks.clear();
-                adapterSuratMasuk.notifyDataSetChanged();
+                loadSuratMasuk();
+            }
+        } );
+
+        cobaLagiMasuk.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                koneksiMasuk.setVisibility( View.GONE );
+                progressBarmasuk.setVisibility( View.VISIBLE );
                 loadSuratMasuk();
             }
         } );
@@ -98,7 +114,6 @@ public class SuratMasukFragment extends Fragment {
     }
 
     private void loadSuratMasuk(){
-        refreshSuratMasuk.setRefreshing(true);
         StringRequest stringRequest = new StringRequest( Request.Method.GET, baseUrl+API_URL,
             new Response.Listener<String>() {
                 @Override
@@ -108,6 +123,7 @@ public class SuratMasukFragment extends Fragment {
                         if (jsonObject.getInt( "jml_data" )==0){
                             noDataMasuk.setVisibility( View.VISIBLE );
                         }else{
+                            noDataMasuk.setVisibility( View.GONE );
                             JSONArray data = jsonObject.getJSONArray("data");
                             for (int i = 0; i<data.length(); i++){
                                 JSONObject suratmasukobject = data.getJSONObject( i );
@@ -124,17 +140,25 @@ public class SuratMasukFragment extends Fragment {
                             }
                         }
                         refreshSuratMasuk.setRefreshing( false );
+                        progressBarmasuk.setVisibility( View.GONE );
+                        koneksiMasuk.setVisibility( View.GONE);
                     }catch (JSONException e){
                         e.printStackTrace();
                         refreshSuratMasuk.setRefreshing( false );
+                        progressBarmasuk.setVisibility( View.GONE );
+                        noDataMasuk.setVisibility( View.GONE );
+                        koneksiMasuk.setVisibility( View.VISIBLE );
                     }
                 }
             },
             new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Toast.makeText( getContext(),"Error " +error.toString(), Toast.LENGTH_SHORT ).show();
+                    error.printStackTrace();
                     refreshSuratMasuk.setRefreshing( false );
+                    progressBarmasuk.setVisibility( View.GONE );
+                    noDataMasuk.setVisibility( View.GONE );
+                    koneksiMasuk.setVisibility( View.VISIBLE );
                 }
             }
         );

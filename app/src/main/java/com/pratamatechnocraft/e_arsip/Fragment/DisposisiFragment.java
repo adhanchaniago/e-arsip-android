@@ -10,6 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,9 +41,11 @@ public class DisposisiFragment extends Fragment {
     private RecyclerView recyclerViewDisposisi;
     private RecyclerView.Adapter adapterDisposisi;
     SessionManager sessionManager;
+    Button cobaLagiDispo;
 
     SwipeRefreshLayout refreshDisposisi;
-    TextView noDatadispo;
+    LinearLayout noDatadispo,koneksiDispo;
+    ProgressBar progressBardsipo;
 
 
     BaseUrlApiModel baseUrlApiModel = new BaseUrlApiModel();
@@ -54,6 +58,11 @@ public class DisposisiFragment extends Fragment {
         View view = inflater.inflate( R.layout.activity_disposisi_fragment, container, false);
         noDatadispo = view.findViewById( R.id.noDatadispo );
         refreshDisposisi = (SwipeRefreshLayout) view.findViewById(R.id.refreshDisposisi);
+        progressBardsipo = view.findViewById( R.id.progressBardsipo );
+        koneksiDispo = view.findViewById( R.id.koneksiDispo);
+        cobaLagiDispo = view.findViewById( R.id.cobaLagiDispo);
+
+
 
         recyclerViewDisposisi = (RecyclerView) view.findViewById(R.id.recycleViewDisposisi);
         recyclerViewDisposisi.setHasFixedSize(true);
@@ -76,8 +85,15 @@ public class DisposisiFragment extends Fragment {
         refreshDisposisi.setOnRefreshListener( new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                listItemDisposisis.clear();
-                adapterDisposisi.notifyDataSetChanged();
+                loadDisposisi();
+            }
+        } );
+
+        cobaLagiDispo.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                koneksiDispo.setVisibility( View.GONE );
+                progressBardsipo.setVisibility( View.GONE );
                 loadDisposisi();
             }
         } );
@@ -96,7 +112,6 @@ public class DisposisiFragment extends Fragment {
     }
 
     private void loadDisposisi(){
-        refreshDisposisi.setRefreshing(true);
         StringRequest stringRequest = new StringRequest( Request.Method.GET, baseUrl+API_URL,
             new Response.Listener<String>() {
                 @Override
@@ -106,6 +121,7 @@ public class DisposisiFragment extends Fragment {
                         if (jsonObject.getInt( "jml_data" )==0){
                             noDatadispo.setVisibility( View.VISIBLE );
                         }else{
+                            noDatadispo.setVisibility( View.GONE );
                             JSONArray data = jsonObject.getJSONArray("data");
                             for (int i = 0;i<data.length(); i++){
                                 JSONObject disposisiobject = data.getJSONObject( i );
@@ -119,19 +135,26 @@ public class DisposisiFragment extends Fragment {
                                 adapterDisposisi.notifyDataSetChanged();
                             }
                         }
-
+                        progressBardsipo.setVisibility( View.GONE );
                         refreshDisposisi.setRefreshing(false);
+                        koneksiDispo.setVisibility( View.GONE );
                     }catch (JSONException e){
                         e.printStackTrace();
                         refreshDisposisi.setRefreshing(false);
+                        progressBardsipo.setVisibility( View.GONE );
+                        noDatadispo.setVisibility( View.GONE );
+                        koneksiDispo.setVisibility( View.VISIBLE );
                     }
                 }
             },
             new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Toast.makeText( getContext(),"Error " +error.toString(), Toast.LENGTH_SHORT ).show();
+                    error.printStackTrace();
                     refreshDisposisi.setRefreshing(false);
+                    progressBardsipo.setVisibility( View.GONE );
+                    noDatadispo.setVisibility( View.GONE );
+                    koneksiDispo.setVisibility( View.VISIBLE );
                 }
             }
         );

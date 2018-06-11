@@ -10,6 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,7 +42,9 @@ public class NotifikasiFragment extends Fragment {
     private RecyclerView.Adapter adapterNotifikasi;
     SessionManager sessionManager;
     SwipeRefreshLayout refreshNotifikasi;
-    TextView noDataNotif;
+    LinearLayout noDataNotif,koneksiNotif;
+    ProgressBar progressBarnotif;
+    Button cobaLagiNotif;
 
     private List<ListItemNotifikasi> listItemNotifikasis;
 
@@ -55,6 +59,10 @@ public class NotifikasiFragment extends Fragment {
         View view = inflater.inflate( R.layout.activity_notifikasi_fragment, container, false);
         refreshNotifikasi = view.findViewById(R.id.refreshNotifikasi);
         noDataNotif = view.findViewById( R.id.noDatanotif );
+        progressBarnotif = view.findViewById( R.id.progressBarnotif );
+        koneksiNotif = view.findViewById( R.id.koneksiNotif );
+        cobaLagiNotif = view.findViewById( R.id.cobaLagiNotif );
+
 
         sessionManager = new SessionManager( getContext() );
         final HashMap<String, String> user = sessionManager.getUserDetail();
@@ -71,8 +79,15 @@ public class NotifikasiFragment extends Fragment {
         refreshNotifikasi.setOnRefreshListener( new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                listItemNotifikasis.clear();
-                adapterNotifikasi.notifyDataSetChanged();
+                loadNotifikasi(user.get( sessionManager.ID_USER ));
+            }
+        } );
+
+        cobaLagiNotif.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                progressBarnotif.setVisibility( View.VISIBLE );
+                koneksiNotif.setVisibility( View.GONE );
                 loadNotifikasi(user.get( sessionManager.ID_USER ));
             }
         } );
@@ -90,7 +105,6 @@ public class NotifikasiFragment extends Fragment {
     }
 
     private void loadNotifikasi(String idUser){
-        refreshNotifikasi.setRefreshing( true );
         StringRequest stringRequest = new StringRequest( Request.Method.GET, baseUrl+API_URL+idUser,
             new Response.Listener<String>() {
                 @Override
@@ -100,6 +114,7 @@ public class NotifikasiFragment extends Fragment {
                         if (jsonObject.getInt( "jml_data" )==0){
                             noDataNotif.setVisibility( View.VISIBLE );
                         }else{
+                            noDataNotif.setVisibility( View.GONE );
                             JSONArray data = jsonObject.getJSONArray("data");
                             for (int i = 0; i<data.length(); i++){
                                 JSONObject notifikasiobject = data.getJSONObject( i );
@@ -117,19 +132,26 @@ public class NotifikasiFragment extends Fragment {
                                 adapterNotifikasi.notifyDataSetChanged();
                             }
                         }
-
+                        progressBarnotif.setVisibility( View.GONE );
                         refreshNotifikasi.setRefreshing( false );
+                        koneksiNotif.setVisibility( View.GONE );
                     }catch (JSONException e){
                         e.printStackTrace();
                         refreshNotifikasi.setRefreshing( false );
+                        progressBarnotif.setVisibility( View.GONE );
+                        noDataNotif.setVisibility( View.GONE );
+                        koneksiNotif.setVisibility( View.VISIBLE );
                     }
                 }
             },
             new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Toast.makeText( getContext(),"Error " +error.toString(), Toast.LENGTH_SHORT ).show();
+                    error.printStackTrace();
                     refreshNotifikasi.setRefreshing( false );
+                    progressBarnotif.setVisibility( View.GONE );
+                    noDataNotif.setVisibility( View.GONE );
+                    koneksiNotif.setVisibility( View.VISIBLE );
                 }
             }
         );

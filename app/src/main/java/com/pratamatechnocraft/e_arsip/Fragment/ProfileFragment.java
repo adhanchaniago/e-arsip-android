@@ -286,7 +286,7 @@ public class ProfileFragment extends Fragment {
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    Toast.makeText(getContext(), "Ubah Password Gagal, Coba Lagi!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Periksa koneksi & coba lagi", Toast.LENGTH_SHORT).show();
                     progress.dismiss();
                 }
             }
@@ -294,7 +294,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
-                Toast.makeText(getContext(), "Ubah Password Gagal, Coba Lagi!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Periksa koneksi & coba lagi", Toast.LENGTH_SHORT).show();
                 progress.dismiss();
             }
         }){
@@ -341,7 +341,7 @@ public class ProfileFragment extends Fragment {
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    Toast.makeText(getContext(), "Edit Profile Gagal, Coba Lagi!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Periksa koneksi & coba lagi", Toast.LENGTH_SHORT).show();
                     progress.dismiss();
                 }
             }
@@ -349,7 +349,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
-                Toast.makeText(getContext(), "Edit Profile Gagal, Coba Lagi!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Periksa koneksi & coba lagi", Toast.LENGTH_SHORT).show();
                 progress.dismiss();
             }
         }){
@@ -374,61 +374,62 @@ public class ProfileFragment extends Fragment {
     private void loadProfile(String id){
         refreshProfile.setRefreshing(true);
         StringRequest stringRequest = new StringRequest( Request.Method.GET, baseUrl+API_URL_LOAD+id,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            final JSONObject userprofile = new JSONObject(response);
-                            txtNamaUserProfile.setText( userprofile.getString( "nama" ) );
-                            txtJabatanaUserProfile.setText( "Kepala "+userprofile.getString( "bagian" ) );
-                            textnip.setText( userprofile.getString( "nip" ) );
-                            textnama.setText( userprofile.getString("nama" ) );
-                            texttgllahir.setText( userprofile.getString( "tgl_lahir" ) );
-                            textnotelp.setText( userprofile.getString( "no_hp" ) );
-                            texttempatlahir.setText( userprofile.getString( "tempat_lahir" ) );
-                            textalamat.setText(  userprofile.getString( "alamat" )  );
-                            urlGambarProfile = baseUrl+String.valueOf( userprofile.getString( "foto" )  );
-                            profile_image.setOnClickListener( new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    Intent i = new Intent(getContext(), ZoomFotoProfile.class);
-                                    i.putExtra("fotoProfil", urlGambarProfile);
-                                    try {
-                                        i.putExtra("nipUser", userprofile.getString( "nip" ));
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
-                                    startActivity(i);
+            new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    try {
+                        final JSONObject userprofile = new JSONObject(response);
+                        txtNamaUserProfile.setText( userprofile.getString( "nama" ) );
+                        txtJabatanaUserProfile.setText( "Kepala "+userprofile.getString( "bagian" ) );
+                        textnip.setText( userprofile.getString( "nip" ) );
+                        textnama.setText( userprofile.getString("nama" ) );
+                        texttgllahir.setText( userprofile.getString( "tgl_lahir" ) );
+                        textnotelp.setText( userprofile.getString( "no_hp" ) );
+                        texttempatlahir.setText( userprofile.getString( "tempat_lahir" ) );
+                        textalamat.setText(  userprofile.getString( "alamat" )  );
+                        urlGambarProfile = baseUrl+String.valueOf( userprofile.getString( "foto" )  );
+                        profile_image.setOnClickListener( new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent i = new Intent(getContext(), ZoomFotoProfile.class);
+                                i.putExtra("fotoProfil", urlGambarProfile);
+                                try {
+                                    i.putExtra("nipUser", userprofile.getString( "nip" ));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
                                 }
-                            } );
-                            btnUbahPass.setOnClickListener( new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    try {
-                                        DialogFormUbahPass(String.valueOf( userprofile.getString( "password" )  ));
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
+                                startActivity(i);
+                            }
+                        } );
+                        btnUbahPass.setOnClickListener( new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                try {
+                                    DialogFormUbahPass(String.valueOf( userprofile.getString( "password" )  ));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
                                 }
-                            } );
-                            Glide.with(getContext())
-                                    // LOAD URL DARI INTERNET
-                                    .load(urlGambarProfile)
-                                    // LOAD GAMBAR AWAL SEBELUM GAMBAR UTAMA MUNCUL, BISA DARI LOKAL DAN INTERNET
-                                    .into(profile_image);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        refreshProfile.setRefreshing( false );
+                            }
+                        } );
+                        Glide.with(getContext())
+                                // LOAD URL DARI INTERNET
+                                .load(urlGambarProfile)
+                                // LOAD GAMBAR AWAL SEBELUM GAMBAR UTAMA MUNCUL, BISA DARI LOKAL DAN INTERNET
+                                .into(profile_image);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Toast.makeText(getContext(), "Periksa koneksi & coba lagi", Toast.LENGTH_SHORT).show();
                     }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText( getContext(),"Error " +error.toString(), Toast.LENGTH_SHORT ).show();
-                        refreshProfile.setRefreshing( false );
-                    }
+                    refreshProfile.setRefreshing( false );
                 }
+            },
+            new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(getContext(), "Periksa koneksi & coba lagi", Toast.LENGTH_SHORT).show();
+                    refreshProfile.setRefreshing( false );
+                }
+            }
         );
 
         RequestQueue requestQueue = Volley.newRequestQueue( getContext() );

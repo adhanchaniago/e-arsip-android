@@ -12,6 +12,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,8 +44,10 @@ public class SuratKeluarFragment extends Fragment {
     private RecyclerView recyclerViewSuratKeluar;
     private RecyclerView.Adapter adapterSuratKeluar;
     SwipeRefreshLayout refreshSuratKeluar;
-    TextView noDataKeluar;
+    LinearLayout noDataKeluar,koneksiKeluar;
     FloatingActionButton floatingActionButton2;
+    ProgressBar progressBarkeluar;
+    Button cobaLagiKeluar;
 
     SessionManager sessionManager;
 
@@ -58,6 +63,10 @@ public class SuratKeluarFragment extends Fragment {
         refreshSuratKeluar = view.findViewById(R.id.refreshSuratKeluar);
         noDataKeluar = view.findViewById( R.id.noDatakeluar );
         floatingActionButton2 = view.findViewById( R.id.floatingActionButton2 );
+        progressBarkeluar = view.findViewById( R.id.progressBarkeluar );
+        koneksiKeluar = view.findViewById( R.id.koneksiKeluar );
+        cobaLagiKeluar = view.findViewById( R.id.cobaLagiKeluar );
+
 
         recyclerViewSuratKeluar = (RecyclerView) view.findViewById(R.id.recycleViewSuratKeluar);
         recyclerViewSuratKeluar.setHasFixedSize(true);
@@ -78,8 +87,15 @@ public class SuratKeluarFragment extends Fragment {
         refreshSuratKeluar.setOnRefreshListener( new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                listItemSuratKeluars.clear();
-                adapterSuratKeluar.notifyDataSetChanged();
+                loadSuratKeluar();
+            }
+        } );
+
+        cobaLagiKeluar.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                progressBarkeluar.setVisibility( View.VISIBLE );
+                koneksiKeluar.setVisibility( View.GONE );
                 loadSuratKeluar();
             }
         } );
@@ -89,7 +105,7 @@ public class SuratKeluarFragment extends Fragment {
         floatingActionButton2.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getContext(), ZoomFotoProfile.class);
+                Intent i = new Intent(getContext(), TambahSuratKeluarActivity.class);
                 getContext().startActivity(i);
             }
         } );
@@ -106,7 +122,6 @@ public class SuratKeluarFragment extends Fragment {
     }
 
     private void loadSuratKeluar(){
-        refreshSuratKeluar.setRefreshing( true );
         StringRequest stringRequest = new StringRequest( Request.Method.GET, baseUrl+API_URL,
             new Response.Listener<String>() {
                 @Override
@@ -116,6 +131,7 @@ public class SuratKeluarFragment extends Fragment {
                         if (jsonObject.getInt( "jml_data" )==0){
                             noDataKeluar.setVisibility( View.VISIBLE );
                         }else{
+                            noDataKeluar.setVisibility( View.GONE );
                             JSONArray data = jsonObject.getJSONArray("data");
                             for (int i = 0; i<data.length(); i++){
                                 JSONObject suratkeluarobject = data.getJSONObject( i );
@@ -133,17 +149,25 @@ public class SuratKeluarFragment extends Fragment {
                         }
 
                         refreshSuratKeluar.setRefreshing( false );
+                        progressBarkeluar.setVisibility( View.GONE );
+                        koneksiKeluar.setVisibility( View.GONE );
                     }catch (JSONException e){
                         e.printStackTrace();
                         refreshSuratKeluar.setRefreshing( false );
+                        progressBarkeluar.setVisibility( View.GONE );
+                        noDataKeluar.setVisibility( View.GONE );
+                        koneksiKeluar.setVisibility( View.VISIBLE );
                     }
                 }
             },
             new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Toast.makeText( getContext(),"Error " +error.toString(), Toast.LENGTH_SHORT ).show();
+                    error.printStackTrace();
                     refreshSuratKeluar.setRefreshing( false );
+                    progressBarkeluar.setVisibility( View.GONE );
+                    noDataKeluar.setVisibility( View.GONE );
+                    koneksiKeluar.setVisibility( View.VISIBLE );
                 }
             }
         );

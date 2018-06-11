@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //}
 
         NavigationView navigationView = (NavigationView) findViewById( R.id.nav_view );
+        navigationView.inflateMenu( R.menu.activity_main_drawer );
         navigationView.setNavigationItemSelectedListener( this );
         navigationView.getMenu().getItem(0).setChecked(true);
 
@@ -88,6 +89,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .load(urlGambar)
                 // LOAD GAMBAR AWAL SEBELUM GAMBAR UTAMA MUNCUL, BISA DARI LOKAL DAN INTERNET
                 .into(fotoUser);
+
+
+        namaUser.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        } );
     }
 
     @Override
