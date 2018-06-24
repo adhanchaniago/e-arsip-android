@@ -143,6 +143,7 @@ public class DisposisiFragment extends Fragment {
                         refreshDisposisi.setRefreshing(false);
                         progressBardsipo.setVisibility( View.GONE );
                         noDatadispo.setVisibility( View.GONE );
+                        listItemDisposisis.clear();
                         koneksiDispo.setVisibility( View.VISIBLE );
                     }
                 }
@@ -154,6 +155,7 @@ public class DisposisiFragment extends Fragment {
                     refreshDisposisi.setRefreshing(false);
                     progressBardsipo.setVisibility( View.GONE );
                     noDatadispo.setVisibility( View.GONE );
+                    listItemDisposisis.clear();
                     koneksiDispo.setVisibility( View.VISIBLE );
                 }
             }

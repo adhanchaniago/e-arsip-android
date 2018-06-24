@@ -12,11 +12,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.pratamatechnocraft.e_arsip.R;
+import com.pratamatechnocraft.e_arsip.Service.SessionManager;
+
+import java.util.HashMap;
 
 public class DashboardFragment extends Fragment {
 
     private CardView kliknotifikasi, kliksuratmasuk, kliksuratkeluar, klikdisposisi;
     NavigationView navigationView;
+    SessionManager sessionManager;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -26,6 +30,19 @@ public class DashboardFragment extends Fragment {
         kliksuratkeluar = view.findViewById(R.id.cardhomesuratkeluar);
         klikdisposisi = view.findViewById(R.id.cardhomedisposisi);
         navigationView = getActivity().findViewById( R.id.nav_view );
+
+        sessionManager = new SessionManager( getContext() );
+        HashMap<String, String> user = sessionManager.getUserDetail();
+
+        if(String.valueOf(user.get( sessionManager.LEVEL_USER )).equals( "kepala bagian" )){
+            kliksuratmasuk.setVisibility( View.GONE );
+        }else if(String.valueOf(user.get( sessionManager.LEVEL_USER )).equals( "sekertaris" )){
+            kliksuratkeluar.setVisibility( View.GONE );
+            klikdisposisi.setVisibility( View.GONE );
+        }else if(String.valueOf(user.get( sessionManager.LEVEL_USER )).equals( "staf" )){
+            kliksuratmasuk.setVisibility( View.GONE );
+            kliksuratkeluar.setVisibility( View.GONE );
+        }
 
         kliknotifikasi.setOnClickListener(new View.OnClickListener() {
             @Override

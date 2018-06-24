@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Environment;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -44,7 +45,7 @@ public class DetailSuratKeluarActivity extends AppCompatActivity {
     public TextView txtDetailTanggalArsipSuratKeluar;
     public TextView txtDetailKetSuratKeluar;
     SwipeRefreshLayout refreshDetailSuratKeluar;
-    private Button download;
+    private FloatingActionButton download;
     public String namaFile;
     private DownloadManager downloadManager;
     private long refid;
@@ -61,7 +62,7 @@ public class DetailSuratKeluarActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_surat_keluar);
         refreshDetailSuratKeluar = findViewById( R.id.refreshDetailSuratKeluar );
-        download = (Button) findViewById( R.id.buttonDownloadSuratMasuk );
+        download = (FloatingActionButton) findViewById( R.id.buttonDownloadSuratMasuk );
 
         Toolbar ToolBarAtas2 = (Toolbar)findViewById(R.id.toolbar_detailsuratkeluar);
         setSupportActionBar(ToolBarAtas2);

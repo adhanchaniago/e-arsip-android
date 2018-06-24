@@ -102,6 +102,10 @@ public class SuratKeluarFragment extends Fragment {
 
         recyclerViewSuratKeluar.setAdapter(adapterSuratKeluar);
 
+        if(!String.valueOf(user.get( sessionManager.LEVEL_USER )).equals( "kepala bagian" )){
+            floatingActionButton2.setVisibility( View.GONE );
+        }
+
         floatingActionButton2.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -156,6 +160,7 @@ public class SuratKeluarFragment extends Fragment {
                         refreshSuratKeluar.setRefreshing( false );
                         progressBarkeluar.setVisibility( View.GONE );
                         noDataKeluar.setVisibility( View.GONE );
+                        listItemSuratKeluars.clear();
                         koneksiKeluar.setVisibility( View.VISIBLE );
                     }
                 }
@@ -167,6 +172,7 @@ public class SuratKeluarFragment extends Fragment {
                     refreshSuratKeluar.setRefreshing( false );
                     progressBarkeluar.setVisibility( View.GONE );
                     noDataKeluar.setVisibility( View.GONE );
+                    listItemSuratKeluars.clear();
                     koneksiKeluar.setVisibility( View.VISIBLE );
                 }
             }

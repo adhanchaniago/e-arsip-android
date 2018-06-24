@@ -140,6 +140,7 @@ public class NotifikasiFragment extends Fragment {
                         refreshNotifikasi.setRefreshing( false );
                         progressBarnotif.setVisibility( View.GONE );
                         noDataNotif.setVisibility( View.GONE );
+                        listItemNotifikasis.clear();
                         koneksiNotif.setVisibility( View.VISIBLE );
                     }
                 }
@@ -151,6 +152,7 @@ public class NotifikasiFragment extends Fragment {
                     refreshNotifikasi.setRefreshing( false );
                     progressBarnotif.setVisibility( View.GONE );
                     noDataNotif.setVisibility( View.GONE );
+                    listItemNotifikasis.clear();
                     koneksiNotif.setVisibility( View.VISIBLE );
                 }
             }

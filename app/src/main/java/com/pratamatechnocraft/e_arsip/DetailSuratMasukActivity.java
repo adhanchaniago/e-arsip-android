@@ -1,16 +1,14 @@
 package com.pratamatechnocraft.e_arsip;
 
-import android.app.Dialog;
 import android.app.DownloadManager;
 import android.app.NotificationManager;
-import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Environment;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -18,8 +16,6 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,18 +31,12 @@ import com.pratamatechnocraft.e_arsip.Service.SessionManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class DetailSuratMasukActivity extends AppCompatActivity {
     SessionManager sessionManager;
-    private Button btnDisposisikan;
+    private FloatingActionButton btnDisposisikan;
     public TextView txtNoSurat;
     public TextView txtDetailJenisSuratMasuk;
     public TextView txtDetailAsalSuratMasuk;
@@ -57,7 +47,7 @@ public class DetailSuratMasukActivity extends AppCompatActivity {
     public TextView txtDetailKetSuratMasuk;
     public TextView txtStatusDisposisi;
     SwipeRefreshLayout refreshDetailSuratMasuk;
-    private Button download;
+    private FloatingActionButton download;
     public String namaFile;
     private DownloadManager downloadManager;
     private long refid;
@@ -73,9 +63,9 @@ public class DetailSuratMasukActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_surat_masuk);
-        btnDisposisikan = (Button) findViewById(R.id.buttonDetailDisposisikan);
+        btnDisposisikan =  findViewById(R.id.buttonDetailDisposisikan);
         refreshDetailSuratMasuk = (SwipeRefreshLayout) findViewById( R.id.refreshDetailSuratMasuk );
-        download = (Button) findViewById( R.id.buttonDownloadSuratMasuk );
+        download = findViewById( R.id.buttonDownloadSuratMasuk );
 
 
         Toolbar ToolBarAtas2 = (Toolbar)findViewById(R.id.toolbar_detailsuratmasuk);

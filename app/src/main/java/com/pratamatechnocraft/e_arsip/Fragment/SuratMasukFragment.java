@@ -29,13 +29,16 @@ import com.pratamatechnocraft.e_arsip.Adapter.AdapterRecycleViewSuratMasuk;
 import com.pratamatechnocraft.e_arsip.Model.BaseUrlApiModel;
 import com.pratamatechnocraft.e_arsip.Model.ListItemSuratMasuk;
 import com.pratamatechnocraft.e_arsip.R;
+import com.pratamatechnocraft.e_arsip.Service.SessionManager;
 import com.pratamatechnocraft.e_arsip.TambahSuratKeluarActivity;
+import com.pratamatechnocraft.e_arsip.TambahSuratMasukActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class SuratMasukFragment extends Fragment {
@@ -47,6 +50,7 @@ public class SuratMasukFragment extends Fragment {
     FloatingActionButton floatingActionButton1;
     ProgressBar progressBarmasuk;
     Button cobaLagiMasuk;
+    SessionManager sessionManager;
 
     private List<ListItemSuratMasuk> listItemSuratMasuks;
 
@@ -65,6 +69,8 @@ public class SuratMasukFragment extends Fragment {
         cobaLagiMasuk = view.findViewById( R.id.cobaLagiMasuk );
         koneksiMasuk = view.findViewById( R.id.koneksiMasuk );
 
+        sessionManager = new SessionManager( getContext() );
+        HashMap<String, String> user = sessionManager.getUserDetail();
 
         recyclerViewSuratMasuk = (RecyclerView) view.findViewById(R.id.recycleViewSuratMasuk);
         recyclerViewSuratMasuk.setHasFixedSize(true);
@@ -95,10 +101,14 @@ public class SuratMasukFragment extends Fragment {
 
         recyclerViewSuratMasuk.setAdapter(adapterSuratMasuk);
 
+        if(!String.valueOf(user.get( sessionManager.LEVEL_USER )).equals( "sekertaris" )){
+            floatingActionButton1.setVisibility( View.GONE );
+        }
+
         floatingActionButton1.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getContext(), TambahSuratKeluarActivity.class);
+                Intent i = new Intent(getContext(), TambahSuratMasukActivity.class);
                 getContext().startActivity(i);
             }
         } );
@@ -147,6 +157,7 @@ public class SuratMasukFragment extends Fragment {
                         refreshSuratMasuk.setRefreshing( false );
                         progressBarmasuk.setVisibility( View.GONE );
                         noDataMasuk.setVisibility( View.GONE );
+                        listItemSuratMasuks.clear();
                         koneksiMasuk.setVisibility( View.VISIBLE );
                     }
                 }
@@ -158,6 +169,7 @@ public class SuratMasukFragment extends Fragment {
                     refreshSuratMasuk.setRefreshing( false );
                     progressBarmasuk.setVisibility( View.GONE );
                     noDataMasuk.setVisibility( View.GONE );
+                    listItemSuratMasuks.clear();
                     koneksiMasuk.setVisibility( View.VISIBLE );
                 }
             }

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_dashboard"
+            android:icon="@drawable/ic_dashboard_black_24dp"
+            android:title="Dashboard" />
+        <item
+            android:id="@+id/nav_notifikasi"
+            android:icon="@drawable/ic_notifications_black_24dp"
+            android:title="Notifikasi" />
+        <item
+            android:id="@+id/nav_disposisi"
+            android:icon="@drawable/ic_send_black_24dp"
+            android:title="Disposisi" />
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/foto2"
+            android:title="Profile" />
+        <item
+            android:id="@+id/nav_signout"
+            android:icon="@drawable/ic_power_settings_new_black_24dp"
+            android:title="Sign Out" />
+    </group>
+
+</menu>
