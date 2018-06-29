@@ -98,8 +98,9 @@ public class LoginActivity extends AppCompatActivity {
                         String foto_user = data_user.getString("foto").trim();
                         String id_bagian = data_user.getString("id_bagian").trim();
                         String nama_bagian = data_user.getString("bagian").trim();
+                        String token = data_user.getString( "token" ).trim();
 
-                        sessionManager.createSession( id_user,nip,nama, foto_user , level_user, id_bagian,nama_bagian);
+                        sessionManager.createSession( id_user,nip,nama, foto_user , level_user, id_bagian,nama_bagian,token);
 
                         Toast.makeText(LoginActivity.this, "Login Berhasil !", Toast.LENGTH_SHORT).show();
                         Intent i = new Intent(LoginActivity.this, MainActivity.class);

@@ -12,6 +12,9 @@ import com.google.firebase.messaging.RemoteMessage;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.pratamatechnocraft.e_arsip.DetailSuratKeluarActivity;
+import com.pratamatechnocraft.e_arsip.DetailSuratMasukActivity;
+import com.pratamatechnocraft.e_arsip.LembarDisposisiActivity;
 import com.pratamatechnocraft.e_arsip.MainActivity;
 import com.pratamatechnocraft.e_arsip.Config;
 import com.pratamatechnocraft.e_arsip.Model.NotificationUtils;
@@ -74,6 +77,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             boolean isBackground = data.getBoolean("is_background");
             String imageUrl = data.getString("image");
             String timestamp = data.getString("timestamp");
+            String jenis_notif = data.getString( "jenis_notif" );
+            String id = data.getString( "id" );
             JSONObject payload = data.getJSONObject("payload");
 
             Log.e(TAG, "title: " + title);
@@ -90,21 +95,21 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 pushNotification.putExtra("message", message);
                 LocalBroadcastManager.getInstance(this).sendBroadcast(pushNotification);
 
-                // play notification sound
-                NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext());
-                notificationUtils.playNotificationSound();
-
-                // check for image attachment
-                if (TextUtils.isEmpty(imageUrl)) {
-                    showNotificationMessage(getApplicationContext(), title, message, timestamp, pushNotification);
-                } else {
-                    // image is present, show notification with image
-                    showNotificationMessageWithBigImage(getApplicationContext(), title, message, timestamp, pushNotification, imageUrl);
-                }
             } else {
                 // app is in background, show the notification in notification tray
-                Intent resultIntent = new Intent(getApplicationContext(), MainActivity.class);
-                resultIntent.putExtra("message", message);
+                Intent resultIntent;
+
+                if (jenis_notif.equals( "surat masuk" )){
+                    resultIntent = new Intent(this, DetailSuratMasukActivity.class);
+                    resultIntent.putExtra("idSuratMasuk", id);
+                }else if(jenis_notif.equals( "surat keluar" )){
+                    resultIntent = new Intent(this, DetailSuratKeluarActivity.class);
+                    resultIntent.putExtra("idSuratKeluar", id);
+                }else{
+                    resultIntent = new Intent(this, LembarDisposisiActivity.class);
+                    resultIntent.putExtra("idDisposisi", id);
+                }
+
 
                 // play notification sound
                 NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext());

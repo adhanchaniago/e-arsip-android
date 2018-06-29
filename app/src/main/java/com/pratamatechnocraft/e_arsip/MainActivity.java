@@ -23,6 +23,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.pratamatechnocraft.e_arsip.Fragment.DashboardFragment;
@@ -41,14 +48,20 @@ import com.pratamatechnocraft.e_arsip.R;
 import com.pratamatechnocraft.e_arsip.Config;
 import com.pratamatechnocraft.e_arsip.Model.NotificationUtils;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     public static String urlGambar = "";
     public static TextView namaUser;
     public static ImageView fotoUser;
     public Fragment fragment = null;
+    private static String URL_TOKEN = "api/user";
     SessionManager sessionManager;
+    HashMap<String, String> user=null;
     BaseUrlApiModel baseUrlApiModel = new BaseUrlApiModel();
     private String baseUrl=baseUrlApiModel.getBaseURL();
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -68,14 +81,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.setDrawerListener( toggle );
         toggle.syncState();
 
-        //add this line to display menu1 when the activity is loaded
-        //if (fragmentLast==R.id.nav_dashboard || fragmentLast==0){
-            displaySelectedScreen( R.id.nav_dashboard );
-        //    fragmentLast=R.id.nav_dashboard;
-        //}
+        displaySelectedScreen( R.id.nav_dashboard );
+
         sessionManager = new SessionManager( this );
         sessionManager.checkLogin();
-        HashMap<String, String> user = sessionManager.getUserDetail();
+        user = sessionManager.getUserDetail();
 
         NavigationView navigationView = (NavigationView) findViewById( R.id.nav_view );
         if (String.valueOf(user.get( sessionManager.LEVEL_USER )).equals( "kepala desa" )){
@@ -172,10 +182,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_disposisi) {
             fragment = new DisposisiFragment();
         } else if (id == R.id.nav_signout) {
-            SharedPreferences pref = getApplicationContext().getSharedPreferences(Config.SHARED_PREF, 0);
-            SharedPreferences.Editor editor = pref.edit();
-            editor.clear();
-            editor.commit();
             sessionManager.logout();
         }
 
@@ -195,15 +201,56 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // Fetches reg id from shared preferences
     // and displays on the screen
     private void displayFirebaseRegId() {
-        SharedPreferences pref = getApplicationContext().getSharedPreferences(Config.SHARED_PREF, 0);
-        String regId = pref.getString("regId", null);
+        SharedPreferences pref = getApplicationContext().getSharedPreferences( Config.SHARED_PREF, 0 );
+        String regId = pref.getString( "regId", null );
 
-        Log.e(TAG, "Firebase reg id: " + regId);
 
-        if (!TextUtils.isEmpty(regId))
-            Log.e(TAG, "Firebase reg id: " + regId);
-        else
-            Log.e(TAG, "Firebase Reg Id is not received yet!");
+        if (!TextUtils.isEmpty( regId )){
+            if (!user.get( sessionManager.TOKEN ).equals( regId )){
+                sendRegistrationToServer( regId );
+            }
+        }else {
+            Log.e( TAG, "Firebase Reg Id is not received yet!" );
+        }
+    }
+
+    private void sendRegistrationToServer(final String token) {
+        // sending gcm token to server
+        StringRequest stringRequest = new StringRequest( Request.Method.POST, baseUrl+URL_TOKEN, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String kode = jsonObject.getString("kode");
+                    if (kode.equals("1")) {
+                        Log.e( TAG, "sendRegistrationToServer: " + token );
+                    }else {
+                        Log.e( TAG, "sendRegistrationToServer: GAGAL" );
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                    }
+                }
+        ){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("token", token);
+                params.put("id", user.get( sessionManager.NIP_USER ));
+                params.put("api", "retoken");
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
     }
 
     @Override

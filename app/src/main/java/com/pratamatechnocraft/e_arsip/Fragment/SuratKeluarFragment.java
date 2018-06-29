@@ -87,6 +87,8 @@ public class SuratKeluarFragment extends Fragment {
         refreshSuratKeluar.setOnRefreshListener( new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                listItemSuratKeluars.clear();
+                adapterSuratKeluar.notifyDataSetChanged();
                 loadSuratKeluar();
             }
         } );

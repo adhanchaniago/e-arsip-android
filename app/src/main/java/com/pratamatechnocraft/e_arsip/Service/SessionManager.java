@@ -25,6 +25,7 @@ public class SessionManager {
     public static final String NIP_USER = "NIP_USER";
     public static final String ID_BAGIAN = "ID_BAGIAN";
     public static final String NAMA_BAGIAN = "NAMA_BAGIAN";
+    public static final String TOKEN = "TOKEN";
 
 
     public SessionManager(Context context) {
@@ -34,7 +35,7 @@ public class SessionManager {
 
     }
 
-    public void createSession(String id_user,String nip_user,String nama, String foto, String level_user, String id_bagian,String nama_bagian){
+    public void createSession(String id_user,String nip_user,String nama, String foto, String level_user, String id_bagian,String nama_bagian,String token){
         editor.putBoolean(LOGIN, true);
         editor.putString( "ID_USER", id_user );
         editor.putString( "NIP_USER", nip_user );
@@ -43,6 +44,7 @@ public class SessionManager {
         editor.putString( "LEVEL_USER", level_user );
         editor.putString( "ID_BAGIAN", id_bagian );
         editor.putString( "NAMA_BAGIAN", nama_bagian );
+        editor.putString( "TOKEN", token);
         editor.apply();
     }
 
@@ -67,6 +69,7 @@ public class SessionManager {
         user.put( LEVEL_USER, sharedPreferences.getString( LEVEL_USER, null ) );
         user.put( ID_BAGIAN, sharedPreferences.getString( ID_BAGIAN, null ) );
         user.put( NAMA_BAGIAN, sharedPreferences.getString( NAMA_BAGIAN, null ) );
+        user.put( TOKEN, sharedPreferences.getString( TOKEN, null ) );
         return user;
     }
 

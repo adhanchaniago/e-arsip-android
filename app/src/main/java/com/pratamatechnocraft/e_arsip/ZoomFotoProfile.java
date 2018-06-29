@@ -226,7 +226,8 @@ public class ZoomFotoProfile extends AppCompatActivity {
                                 jsonObject.getString( "urlFoto" ),
                                 user.get( sessionManager.LEVEL_USER ),
                                 user.get( sessionManager.ID_BAGIAN ),
-                                user.get( sessionManager.NAMA_BAGIAN )
+                                user.get( sessionManager.NAMA_BAGIAN ),
+                                user.get( sessionManager.TOKEN )
                         );
                         Toast.makeText(ZoomFotoProfile.this, "Ubah Foto Profil Berhasil!", Toast.LENGTH_SHORT).show();
                         progressDialog.dismiss();

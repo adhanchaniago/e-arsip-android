@@ -85,6 +85,8 @@ public class DisposisiFragment extends Fragment {
         refreshDisposisi.setOnRefreshListener( new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                listItemDisposisis.clear();
+                adapterDisposisi.notifyDataSetChanged();
                 loadDisposisi();
             }
         } );

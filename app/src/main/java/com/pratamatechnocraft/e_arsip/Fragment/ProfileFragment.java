@@ -325,13 +325,14 @@ public class ProfileFragment extends Fragment {
                         loadProfile(user.get( sessionManager.NIP_USER ));
                         Toast.makeText(getContext(), "Edit Profile Berhasil", Toast.LENGTH_SHORT).show();
                         sessionManager.createSession(
-                                user.get( sessionManager.ID_USER ),
-                                user.get( sessionManager.NIP_USER ),
-                                nama,
-                                user.get( sessionManager.FOTO ),
-                                user.get( sessionManager.LEVEL_USER ),
-                                user.get( sessionManager.ID_BAGIAN ),
-                                user.get( sessionManager.NAMA_BAGIAN )
+                            user.get( sessionManager.ID_USER ),
+                            user.get( sessionManager.NIP_USER ),
+                            nama,
+                            user.get( sessionManager.FOTO ),
+                            user.get( sessionManager.LEVEL_USER ),
+                            user.get( sessionManager.ID_BAGIAN ),
+                            user.get( sessionManager.NAMA_BAGIAN ),
+                            user.get( sessionManager.TOKEN )
                         );
                         progress.dismiss();
                         dialog.dismiss();

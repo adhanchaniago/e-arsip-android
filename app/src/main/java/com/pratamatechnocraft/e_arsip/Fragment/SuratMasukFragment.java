@@ -86,6 +86,8 @@ public class SuratMasukFragment extends Fragment {
         refreshSuratMasuk.setOnRefreshListener( new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                listItemSuratMasuks.clear();
+                adapterSuratMasuk.notifyDataSetChanged();
                 loadSuratMasuk();
             }
         } );

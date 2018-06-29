@@ -79,6 +79,8 @@ public class NotifikasiFragment extends Fragment {
         refreshNotifikasi.setOnRefreshListener( new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                listItemNotifikasis.clear();
+                adapterNotifikasi.notifyDataSetChanged();
                 loadNotifikasi(user.get( sessionManager.ID_USER ));
             }
         } );
