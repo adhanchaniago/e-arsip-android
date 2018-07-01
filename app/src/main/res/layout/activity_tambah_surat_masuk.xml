@@ -34,152 +34,161 @@
                 android:orientation="vertical">
 
                 <android.support.v7.widget.CardView
-                    android:layout_margin="@dimen/activity_horizontal_margin"
                     android:id="@+id/cardView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/activity_horizontal_margin"
                     app:cardCornerRadius="@dimen/radiusCardView"
                     app:cardElevation="@dimen/shadowCardView"
                     app:contentPadding="10dp">
 
-                    <android.support.design.widget.TextInputLayout
-                        android:id="@+id/inputLayoutNoSurat"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <android.support.design.widget.TextInputEditText
-                            android:id="@+id/inputNoSrt"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="Nomer Surat"
-                            android:inputType="text" />
-                    </android.support.design.widget.TextInputLayout>
-
-                    <android.support.design.widget.TextInputLayout
-                        android:id="@+id/inputLayoutAsal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <android.support.design.widget.TextInputEditText
-                            android:id="@+id/inputAsal"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="Asal Surat Surat"
-                            android:inputType="text" />
-                    </android.support.design.widget.TextInputLayout>
-                    <android.support.design.widget.TextInputLayout
-                        android:id="@+id/inputLayoutIsi"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <android.support.design.widget.TextInputEditText
-                            android:id="@+id/inputIsi"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="Isi Singkat"
-                            android:inputType="text" />
-                    </android.support.design.widget.TextInputLayout>
-
-                    <android.support.design.widget.TextInputLayout
-                        android:id="@+id/inputLayoutJenisSrt"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <android.support.design.widget.TextInputEditText
-                            android:id="@+id/inputJenis"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="Jenis Surat"
-                            android:inputType="text" />
-                    </android.support.design.widget.TextInputLayout>
-                    <android.support.design.widget.TextInputLayout
-                        android:id="@+id/inputLayoutPerihal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <android.support.design.widget.TextInputEditText
-                            android:id="@+id/inputPerihal"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="Perihal"
-                            android:inputType="text" />
-                    </android.support.design.widget.TextInputLayout>
-
-
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:orientation="vertical">
+
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/inputLayoutNoSurat"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <android.support.design.widget.TextInputEditText
+                                android:id="@+id/inputNoSrt"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Nomer Surat"
+                                android:inputType="text" />
+                        </android.support.design.widget.TextInputLayout>
+
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/inputLayoutAsal"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <android.support.design.widget.TextInputEditText
+                                android:id="@+id/inputAsal"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Asal Surat Surat"
+                                android:inputType="text" />
+                        </android.support.design.widget.TextInputLayout>
+
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/inputLayoutPerihal"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <android.support.design.widget.TextInputEditText
+                                android:id="@+id/inputPerihal"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Perihal"
+                                android:inputType="text" />
+                        </android.support.design.widget.TextInputLayout>
+
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/inputLayoutJenisSrt"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <android.support.design.widget.TextInputEditText
+                                android:id="@+id/inputJenis"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Jenis Surat"
+                                android:inputType="text" />
+                        </android.support.design.widget.TextInputLayout>
+
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/inputLayoutIsi"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <android.support.design.widget.TextInputEditText
+                                android:id="@+id/inputIsi"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Isi Singkat"
+                                android:inputType="text" />
+                        </android.support.design.widget.TextInputLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
 
                             <LinearLayout
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:orientation="vertical">
+                                android:orientation="horizontal">
 
-                                <TextView
-                                    android:id="@+id/textView99"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:text="Tanggal Surat"
-                                    android:textColor="@color/ColorPrimaryText"
-                                    android:textStyle="bold" />
-
-                                <TextView
-                                    android:id="@+id/txtTanggalSurat"
+                                <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:textSize="18sp" />
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/textView99"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:text="Tanggal Surat"
+                                        android:textColor="@color/ColorPrimaryText"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:id="@+id/txtTanggalSurat"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:textSize="18sp" />
+
+                                </LinearLayout>
+
+                                <ImageButton
+                                    android:id="@+id/btnTgl"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/ic_detail_tglsurat_24dp" />
 
                             </LinearLayout>
 
-                            <ImageButton
-                                android:id="@+id/btnTgl"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/ic_detail_tglsurat_24dp" />
+                            <View
+                                android:id="@+id/divider13"
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_weight="1"
+                                android:background="?android:attr/listDivider" />
 
                         </LinearLayout>
 
-                        <View
-                            android:id="@+id/divider13"
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/inputLayoutKeterangan"
                             android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_weight="1"
-                            android:background="?android:attr/listDivider" />
+                            android:layout_height="match_parent">
+
+                            <android.support.design.widget.TextInputEditText
+                                android:id="@+id/inputKeterangan"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Keterangan"
+                                android:inputType="text" />
+                        </android.support.design.widget.TextInputLayout>
 
                     </LinearLayout>
 
-                    <android.support.design.widget.TextInputLayout
-                        android:id="@+id/inputLayoutKeterangan"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <android.support.design.widget.TextInputEditText
-                            android:id="@+id/inputKeterangan"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="Keterangan"
-                            android:inputType="text" />
-                    </android.support.design.widget.TextInputLayout>
 
                 </android.support.v7.widget.CardView>
 
                 <LinearLayout
-                    android:layout_gravity="center"
-                    android:gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
+                    android:layout_gravity="center"
                     android:layout_marginBottom="20dp"
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
+                    android:gravity="center"
                     android:weightSum="2">
 
                     <Button
