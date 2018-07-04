@@ -214,6 +214,14 @@
                                     android:text="*Klik pada gambar untuk menambahkan foto / scan surat"
                                     android:textAlignment="center" />
 
+                                <TextView
+                                    android:id="@+id/txtFotoSurat"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:textAlignment="center"
+                                    android:visibility="gone" />
+
                             </LinearLayout>
 
                         </LinearLayout>

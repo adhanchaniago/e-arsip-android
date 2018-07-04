@@ -200,10 +200,18 @@
                                 android:layout_height="match_parent"
                                 android:orientation="horizontal">
 
+                                <TextView
+                                    android:id="@+id/txtFotoSurat2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:textAlignment="center"
+                                    android:visibility="gone" />
+
                                 <ImageView
                                     android:id="@+id/fotoSuratKeluar"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_width="100dp"
+                                    android:layout_height="100dp"
                                     app:srcCompat="@drawable/example_picture" />
 
                                 <TextView

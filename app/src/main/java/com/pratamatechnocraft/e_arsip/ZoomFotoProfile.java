@@ -130,21 +130,9 @@ public class ZoomFotoProfile extends AppCompatActivity {
     }
 
     private void takePicture() {
-        Intent cameraIntent = new Intent( MediaStore.ACTION_IMAGE_CAPTURE);
-        if (cameraIntent.resolveActivity(getPackageManager()) != null) {
-            // Create the File where the photo should go
-            File photoFile = null;
-            try {
-                photoFile = createImageFile();
-            } catch (IOException ex) {
-                // Error occurred while creating the File
-                Log.i("TAG", "IOException");
-            }
-            // Continue only if the File was successfully created
-            if (photoFile != null) {
-                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
-                startActivityForResult(cameraIntent, REQUEST_IMAGE_CAPTURE);
-            }
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         }
     }
 
@@ -164,34 +152,14 @@ public class ZoomFotoProfile extends AppCompatActivity {
                 e.printStackTrace();
             }
         }else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            try {
-                mImageBitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), Uri.parse(mCurrentPhotoPath));
-                ZoomFotoProfile.fotoUser.setImageBitmap( mImageBitmap );
-                MainActivity.fotoUser.setImageBitmap( mImageBitmap );
-                ProfileFragment.profile_image.setImageBitmap( mImageBitmap );
+            Bundle extras = data.getExtras();
+            mImageBitmap = (Bitmap) extras.get("data");
+            ZoomFotoProfile.fotoUser.setImageBitmap( mImageBitmap );
+            MainActivity.fotoUser.setImageBitmap( mImageBitmap );
+            ProfileFragment.profile_image.setImageBitmap( mImageBitmap );
 
-                uploadFoto(i.getStringExtra( "nipUser" ), getStringImage( mImageBitmap ));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            uploadFoto(i.getStringExtra( "nipUser" ), getStringImage( mImageBitmap ));
         }
-    }
-
-    private File createImageFile() throws IOException {
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "E-ARSIP_" + timeStamp + "_";
-        File storageDir = Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,  // prefix
-                ".jpeg",         // suffix
-                storageDir      // directory
-        );
-
-        // Save a file: path for use with ACTION_VIEW intents
-        mCurrentPhotoPath = "file:" + image.getAbsolutePath();
-        return image;
     }
 
     private String getStringImage(Bitmap bitmap) {

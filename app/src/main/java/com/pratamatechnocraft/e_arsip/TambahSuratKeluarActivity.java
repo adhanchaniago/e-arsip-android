@@ -1,9 +1,16 @@
 package com.pratamatechnocraft.e_arsip;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.graphics.Rect;
+import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -12,6 +19,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Base64;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.WindowManager;
@@ -38,8 +47,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class TambahSuratKeluarActivity extends AppCompatActivity {
@@ -56,6 +70,13 @@ public class TambahSuratKeluarActivity extends AppCompatActivity {
     ImageView fotoSuratKeluar;
     private Calendar calendar=Calendar.getInstance();
     private int year, month, day;
+    BottomSheetDialog bottomSheetDialog;
+    private Bitmap bitmap;
+    static final int REQUEST_IMAGE_CAPTURE = 1;
+    private Bitmap mImageBitmap;
+    private String mCurrentPhotoPath;
+    private Button galeri,kamera;
+    private TextView txtFotoSurat;
 
     BaseUrlApiModel baseUrlApiModel = new BaseUrlApiModel();
     private String baseUrl=baseUrlApiModel.getBaseURL();
@@ -94,6 +115,7 @@ public class TambahSuratKeluarActivity extends AppCompatActivity {
 
         /*IMAGE*/
         fotoSuratKeluar = (ImageView) findViewById( R.id.fotoSuratKeluar );
+        txtFotoSurat = (TextView) findViewById( R.id.txtFotoSurat2 );
 
         /*TGL SURAT*/
         txtTanggalSuratKeluarTambah = findViewById( R.id.txtTanggalSuratKeluarTambah );
@@ -128,7 +150,7 @@ public class TambahSuratKeluarActivity extends AppCompatActivity {
         fotoSuratKeluar.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                klikfoto();
             }
         } );
 
@@ -152,37 +174,105 @@ public class TambahSuratKeluarActivity extends AppCompatActivity {
         recyclerViewJenisSurat.setAdapter(adapterRecycleViewJenisSurat);
     }
 
+    private void klikfoto(){
+        View view = getLayoutInflater().inflate(R.layout.fragment_bottom_sheet_dialog_tambah_foto_surat, null);
+        bottomSheetDialog = new BottomSheetDialog(this);
+        bottomSheetDialog.setContentView(view);
+
+        galeri = view.findViewById( R.id.galeri1 );
+        kamera = view.findViewById( R.id.kamera1 );
+        galeri.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bottomSheetDialog.dismiss();
+                pilihFoto();
+            }
+        } );
+        kamera.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bottomSheetDialog.dismiss();
+                takePicture();
+            }
+        } );
+
+        bottomSheetDialog.show();
+    }
+
+    private void pilihFoto(){
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(intent.ACTION_PICK);
+        startActivityForResult(Intent.createChooser(intent,"Pilih Foto"),1);
+    }
+
+    private void takePicture() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult( requestCode, resultCode, data );
+        if (requestCode==1 && resultCode==RESULT_OK && data!=null && data.getData() !=null){
+            Uri filePath = data.getData();
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap( getContentResolver(),filePath );
+                fotoSuratKeluar.setImageBitmap( bitmap );
+                txtFotoSurat.setText( getStringImage( bitmap ) );
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            mImageBitmap = (Bitmap) extras.get("data");
+            fotoSuratKeluar.setImageBitmap(mImageBitmap);
+            txtFotoSurat.setText( getStringImage( mImageBitmap ) );
+        }
+    }
+
+    private String getStringImage(Bitmap bitmap) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(  );
+        bitmap.compress( Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream );
+        byte[] imageByteArray =  byteArrayOutputStream.toByteArray();
+        String encodedImage = Base64.encodeToString( imageByteArray, Base64.DEFAULT );
+
+        return encodedImage;
+    }
+
     private void loadJenisSurat(){
         StringRequest stringRequest = new StringRequest( Request.Method.GET, baseUrl+API_URL_JENIS_SURAT,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            JSONArray data = jsonObject.getJSONArray("data");
-                            for (int i = 0; i<data.length(); i++){
-                                JSONObject jenisSuratObject = data.getJSONObject( i );
-                                ListItemJenisSurat listItemJenisSurat = new ListItemJenisSurat(
-                                        jenisSuratObject.getString( "id_jenis_surat"),
-                                        jenisSuratObject.getString( "jenis_surat" )
-                                );
+            new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        JSONArray data = jsonObject.getJSONArray("data");
+                        for (int i = 0; i<data.length(); i++){
+                            JSONObject jenisSuratObject = data.getJSONObject( i );
+                            ListItemJenisSurat listItemJenisSurat = new ListItemJenisSurat(
+                                    jenisSuratObject.getString( "id_jenis_surat"),
+                                    jenisSuratObject.getString( "jenis_surat" )
+                            );
 
-                                listItemJenisSurats.add(listItemJenisSurat);
-                                adapterRecycleViewJenisSurat.notifyDataSetChanged();
-                            }
-                        }catch (JSONException e){
-                            e.printStackTrace();
-                            Toast.makeText(TambahSuratKeluarActivity.this, "Periksa koneksi & coba lagi", Toast.LENGTH_SHORT).show();
+                            listItemJenisSurats.add(listItemJenisSurat);
+                            adapterRecycleViewJenisSurat.notifyDataSetChanged();
                         }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        error.printStackTrace();
+                    }catch (JSONException e){
+                        e.printStackTrace();
                         Toast.makeText(TambahSuratKeluarActivity.this, "Periksa koneksi & coba lagi", Toast.LENGTH_SHORT).show();
                     }
                 }
+            },
+            new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    error.printStackTrace();
+                    Toast.makeText(TambahSuratKeluarActivity.this, "Periksa koneksi & coba lagi", Toast.LENGTH_SHORT).show();
+                }
+            }
         );
 
         RequestQueue requestQueue = Volley.newRequestQueue( this );
