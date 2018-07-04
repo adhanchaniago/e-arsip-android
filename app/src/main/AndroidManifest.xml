@@ -68,6 +68,7 @@
         </activity>
         <activity
             android:name=".TambahSuratMasukActivity"
+            android:label="Tambah Surat Masuk"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -75,6 +76,7 @@
         </activity>
         <activity
             android:name=".TambahSuratKeluarActivity"
+            android:label="Tambah Surat Keluar"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

@@ -1,32 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".TambahSuratKeluarActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_tambahSuratKeluar"
-        app:titleTextColor="@android:color/white"
-        android:background="@color/colorPrimary"
         android:layout_width="match_parent"
-        android:layout_height="?android:attr/actionBarSize" />
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        app:titleTextColor="@android:color/white" />
 
     <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/refreshMendisposisikan"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_tambahSuratKeluar"
-        app:layout_constraintVertical_bias="0.0">
+        android:id="@+id/refreshTambahSuratKeluar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteY="56dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -152,7 +149,7 @@
                                 android:textStyle="bold" />
 
                             <android.support.v7.widget.RecyclerView
-                                android:id="@+id/recycleViewJenisSurat"
+                                android:id="@+id/recycleViewJenisSuratKeluar"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content" />
                         </LinearLayout>
@@ -262,7 +259,6 @@
 
 
         </ScrollView>
-
     </android.support.v4.widget.SwipeRefreshLayout>
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>
