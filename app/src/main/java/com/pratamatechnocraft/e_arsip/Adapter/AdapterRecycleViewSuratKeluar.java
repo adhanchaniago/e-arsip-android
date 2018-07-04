@@ -60,57 +60,57 @@ public class AdapterRecycleViewSuratKeluar extends RecyclerView.Adapter<AdapterR
 
         int color=0;
 
-        if (holder.hurufDepanSuratKeluar.getText().equals( "A" )){
+        if (holder.hurufDepanSuratKeluar.getText().equals( "A" ) || holder.hurufDepanSuratKeluar.getText().equals( "a" )){
             color=R.color.amber_500;
-        }else if(holder.hurufDepanSuratKeluar.getText().equals( "B" )){
+        }else if(holder.hurufDepanSuratKeluar.getText().equals( "B" ) || holder.hurufDepanSuratKeluar.getText().equals( "b" )){
             color=R.color.blue_500;
-        }else if(holder.hurufDepanSuratKeluar.getText().equals( "C" )){
+        }else if(holder.hurufDepanSuratKeluar.getText().equals( "C" ) || holder.hurufDepanSuratKeluar.getText().equals( "c" )){
             color=R.color.blue_grey_500;
-        }else if(holder.hurufDepanSuratKeluar.getText().equals( "D" )){
+        }else if(holder.hurufDepanSuratKeluar.getText().equals( "D" ) || holder.hurufDepanSuratKeluar.getText().equals( "d" )){
             color=R.color.brown_500;
-        }else if(holder.hurufDepanSuratKeluar.getText().equals( "E" )){
+        }else if(holder.hurufDepanSuratKeluar.getText().equals( "E" ) || holder.hurufDepanSuratKeluar.getText().equals( "e" )){
             color=R.color.cyan_500;
-        }else if(holder.hurufDepanSuratKeluar.getText().equals( "F" )){
+        }else if(holder.hurufDepanSuratKeluar.getText().equals( "F" ) || holder.hurufDepanSuratKeluar.getText().equals( "f" )){
             color=R.color.deep_orange_500;
-        }else if(holder.hurufDepanSuratKeluar.getText().equals( "G" )){
+        }else if(holder.hurufDepanSuratKeluar.getText().equals( "G" ) || holder.hurufDepanSuratKeluar.getText().equals( "g" )){
             color=R.color.deep_purple_500;
-        }else if(holder.hurufDepanSuratKeluar.getText().equals( "H" )){
+        }else if(holder.hurufDepanSuratKeluar.getText().equals( "H" ) || holder.hurufDepanSuratKeluar.getText().equals( "h" )){
             color=R.color.green_500;
-        }else if(holder.hurufDepanSuratKeluar.getText().equals( "I" )){
+        }else if(holder.hurufDepanSuratKeluar.getText().equals( "I" ) || holder.hurufDepanSuratKeluar.getText().equals( "i" )){
             color=R.color.grey_500;
-        }else if(holder.hurufDepanSuratKeluar.getText().equals( "J" )){
+        }else if(holder.hurufDepanSuratKeluar.getText().equals( "J" ) || holder.hurufDepanSuratKeluar.getText().equals( "j" )){
             color=R.color.indigo_500;
-        }else if(holder.hurufDepanSuratKeluar.getText().equals( "K" )){
+        }else if(holder.hurufDepanSuratKeluar.getText().equals( "K" ) || holder.hurufDepanSuratKeluar.getText().equals( "k" )){
             color=R.color.teal_500;
-        }else if(holder.hurufDepanSuratKeluar.getText().equals( "L" )){
+        }else if(holder.hurufDepanSuratKeluar.getText().equals( "L" ) || holder.hurufDepanSuratKeluar.getText().equals( "l" )){
             color=R.color.lime_500;
-        }else if(holder.hurufDepanSuratKeluar.getText().equals( "M" )){
+        }else if(holder.hurufDepanSuratKeluar.getText().equals( "M" ) || holder.hurufDepanSuratKeluar.getText().equals( "m" )){
             color=R.color.red_500;
-        }else if(holder.hurufDepanSuratKeluar.getText().equals( "N" )){
+        }else if(holder.hurufDepanSuratKeluar.getText().equals( "N" ) || holder.hurufDepanSuratKeluar.getText().equals( "n" )){
             color=R.color.light_blue_500;
-        }else if(holder.hurufDepanSuratKeluar.getText().equals( "O" )){
+        }else if(holder.hurufDepanSuratKeluar.getText().equals( "O" ) || holder.hurufDepanSuratKeluar.getText().equals( "o" )){
             color=R.color.light_green_500;
-        }else if(holder.hurufDepanSuratKeluar.getText().equals( "P" )){
+        }else if(holder.hurufDepanSuratKeluar.getText().equals( "P" ) || holder.hurufDepanSuratKeluar.getText().equals( "p" )){
             color=R.color.orange_500;
-        }else if(holder.hurufDepanSuratKeluar.getText().equals( "Q" )){
+        }else if(holder.hurufDepanSuratKeluar.getText().equals( "Q" ) || holder.hurufDepanSuratKeluar.getText().equals( "q" )){
             color=R.color.pink_500;
-        }else if(holder.hurufDepanSuratKeluar.getText().equals( "R" )){
+        }else if(holder.hurufDepanSuratKeluar.getText().equals( "R" ) || holder.hurufDepanSuratKeluar.getText().equals( "r" )){
             color=R.color.red_600;
-        }else if(holder.hurufDepanSuratKeluar.getText().equals( "S" )){
+        }else if(holder.hurufDepanSuratKeluar.getText().equals( "S" ) || holder.hurufDepanSuratKeluar.getText().equals( "s" )){
             color=R.color.yellow_600;
-        }else if(holder.hurufDepanSuratKeluar.getText().equals( "T" )){
+        }else if(holder.hurufDepanSuratKeluar.getText().equals( "T" ) || holder.hurufDepanSuratKeluar.getText().equals( "t" )){
             color=R.color.blue_600;
-        }else if(holder.hurufDepanSuratKeluar.getText().equals( "U" )){
+        }else if(holder.hurufDepanSuratKeluar.getText().equals( "U" ) || holder.hurufDepanSuratKeluar.getText().equals( "u" )){
             color=R.color.cyan_600;
-        }else if(holder.hurufDepanSuratKeluar.getText().equals( "V" )){
+        }else if(holder.hurufDepanSuratKeluar.getText().equals( "V" ) || holder.hurufDepanSuratKeluar.getText().equals( "v" )){
             color=R.color.green_600;
-        }else if(holder.hurufDepanSuratKeluar.getText().equals( "W" )){
+        }else if(holder.hurufDepanSuratKeluar.getText().equals( "W" ) || holder.hurufDepanSuratKeluar.getText().equals( "w" )){
             color=R.color.purple_600;
-        }else if(holder.hurufDepanSuratKeluar.getText().equals( "X" )){
+        }else if(holder.hurufDepanSuratKeluar.getText().equals( "X" ) || holder.hurufDepanSuratKeluar.getText().equals( "x" )){
             color=R.color.pink_600;
-        }else if(holder.hurufDepanSuratKeluar.getText().equals( "Y" )){
+        }else if(holder.hurufDepanSuratKeluar.getText().equals( "Y" ) || holder.hurufDepanSuratKeluar.getText().equals( "y" )){
             color=R.color.lime_600;
-        }else if(holder.hurufDepanSuratKeluar.getText().equals( "Z" )){
+        }else if(holder.hurufDepanSuratKeluar.getText().equals( "Z" ) || holder.hurufDepanSuratKeluar.getText().equals( "z" )){
             color=R.color.orange_600;
         }
 

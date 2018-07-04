@@ -106,6 +106,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         TextView jabatanUser = headerView.findViewById( R.id.textViewJabatanUser );
 
         namaUser.setText( String.valueOf( user.get( sessionManager.NAMA )  ) );
+        if (String.valueOf(user.get( sessionManager.LEVEL_USER )).equals( "kepala desa" )){
+            jabatanUser.setText( "Kepala "+String.valueOf( user.get( sessionManager.NAMA_BAGIAN )  ) );
+        }else if(String.valueOf(user.get( sessionManager.LEVEL_USER )).equals( "kepala bagian" )){
+            jabatanUser.setText( "Kepala "+String.valueOf( user.get( sessionManager.NAMA_BAGIAN )  ) );
+        }else if(String.valueOf(user.get( sessionManager.LEVEL_USER )).equals( "sekertaris" )){
+            jabatanUser.setText( "Sekertaris "+String.valueOf( user.get( sessionManager.NAMA_BAGIAN )  ) );
+        }else if(String.valueOf(user.get( sessionManager.LEVEL_USER )).equals( "staf" )){
+            jabatanUser.setText( "Staf "+String.valueOf( user.get( sessionManager.NAMA_BAGIAN )  ) );
+        }
         jabatanUser.setText( "Kepala "+String.valueOf( user.get( sessionManager.NAMA_BAGIAN )  ) );
         urlGambar = baseUrl+String.valueOf( user.get( sessionManager.FOTO )  );
 
@@ -127,21 +136,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onReceive(Context context, Intent intent) {
 
-                // checking for type intent filter
-                if (intent.getAction().equals(Config.REGISTRATION_COMPLETE)) {
-                    // gcm successfully registered
-                    // now subscribe to `global` topic to receive app wide notifications
-                    FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_GLOBAL);
+            // checking for type intent filter
+            if (intent.getAction().equals(Config.REGISTRATION_COMPLETE)) {
+                // gcm successfully registered
+                // now subscribe to `global` topic to receive app wide notifications
+                FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_GLOBAL);
 
-                    displayFirebaseRegId();
+                displayFirebaseRegId();
 
-                } else if (intent.getAction().equals(Config.PUSH_NOTIFICATION)) {
-                    // new push notification is received
+            } else if (intent.getAction().equals(Config.PUSH_NOTIFICATION)) {
+                // new push notification is received
 
-                    String message = intent.getStringExtra("message");
+                String message = intent.getStringExtra("message");
 
-                    Toast.makeText(getApplicationContext(), "Push notification: " + message, Toast.LENGTH_LONG).show();
-                }
+                Toast.makeText(getApplicationContext(), "Push notification: " + message, Toast.LENGTH_LONG).show();
+            }
             }
         };
 
