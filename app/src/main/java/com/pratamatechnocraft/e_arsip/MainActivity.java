@@ -115,7 +115,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }else if(String.valueOf(user.get( sessionManager.LEVEL_USER )).equals( "staf" )){
             jabatanUser.setText( "Staf "+String.valueOf( user.get( sessionManager.NAMA_BAGIAN )  ) );
         }
-        jabatanUser.setText( "Kepala "+String.valueOf( user.get( sessionManager.NAMA_BAGIAN )  ) );
         urlGambar = baseUrl+String.valueOf( user.get( sessionManager.FOTO )  );
 
         Glide.with(MainActivity.this)

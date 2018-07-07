@@ -1,6 +1,7 @@
 package com.pratamatechnocraft.e_arsip;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -11,6 +12,7 @@ import android.provider.MediaStore;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.FileProvider;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -33,6 +35,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -41,7 +44,9 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.pratamatechnocraft.e_arsip.Adapter.AdapterRecycleViewJenisSurat;
 import com.pratamatechnocraft.e_arsip.Model.BaseUrlApiModel;
+import com.pratamatechnocraft.e_arsip.Model.ListItemBagianMendisposisikan;
 import com.pratamatechnocraft.e_arsip.Model.ListItemJenisSurat;
+import com.pratamatechnocraft.e_arsip.Service.SessionManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -54,7 +59,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class TambahSuratKeluarActivity extends AppCompatActivity {
     private RecyclerView recyclerViewJenisSurat;
@@ -77,10 +84,15 @@ public class TambahSuratKeluarActivity extends AppCompatActivity {
     private String mCurrentPhotoPath;
     private Button galeri,kamera;
     private TextView txtFotoSurat;
+    private ProgressDialog progress;
+    SwipeRefreshLayout refreshTambahSuratKeluar;
+    SessionManager sessionManager;
+    HashMap<String, String> user=null;
 
     BaseUrlApiModel baseUrlApiModel = new BaseUrlApiModel();
     private String baseUrl=baseUrlApiModel.getBaseURL();
     private static final String API_URL_JENIS_SURAT = "api/jenis_surat?api=jenis_suratall";
+    private static final String API_URL_TAMBAH = "api/surat_keluar";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +106,10 @@ public class TambahSuratKeluarActivity extends AppCompatActivity {
         day=calendar.get(Calendar.DAY_OF_MONTH);
         year=calendar.get(Calendar.YEAR);
         month=calendar.get(Calendar.MONTH);
+
+        sessionManager = new SessionManager( this );
+        user = sessionManager.getUserDetail();
+        progress = new ProgressDialog(this);
 
         /*BUTTON*/
         buttonTambahSuratKeluar = findViewById( R.id.buttonTambahSuratKeluar );
@@ -166,12 +182,84 @@ public class TambahSuratKeluarActivity extends AppCompatActivity {
                 if (!validateNoSurat() || !validateTujuan() || !validatePerihal() || !validateIsi() || !validateKeterangan()) {
                     return;
                 }else {
-
+                    ListItemJenisSurat listItemJenisSurat = listItemJenisSurats.get(adapterRecycleViewJenisSurat.getLastSelectedPosition());
+                    progress.setMessage("Mohon Ditunggu, Sedang diProses.....");
+                    progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                    progress.setIndeterminate(false);
+                    progress.setCanceledOnTouchOutside(false);
+                    prosesTambahSuratKeluar(
+                            inputNoSrtKeluarTambah.getText().toString().trim(),
+                            String.valueOf(user.get(sessionManager.ID_BAGIAN)),
+                            inputTujuanKeluarTambah.getText().toString().trim(),
+                            inputPerihalKeluarTambah.getText().toString().trim(),
+                            txtTanggalSuratKeluarTambah.getText().toString().trim(),
+                            listItemJenisSurat.getIdJenisSurat(),
+                            inputIsiKeluarTambah.getText().toString().trim(),
+                            inputKeteranganKeluarTambah.getText().toString().trim(),
+                            txtFotoSurat.getText().toString()
+                    );
                 }
             }
         } );
 
         recyclerViewJenisSurat.setAdapter(adapterRecycleViewJenisSurat);
+    }
+
+    private void prosesTambahSuratKeluar(final String noSurat, final String idBagian, final String tujuan, final String perihal, final String tglSurat, final String idJenisSurat, final String isiSingkat, final String keterangan, final String file) {
+        progress.show();
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, baseUrl+API_URL_TAMBAH, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String kode = jsonObject.getString("kode");
+                    if (kode.equals("1")) {
+                        JSONObject data = jsonObject.getJSONObject("data");
+                        String id_surat_keluar = data.getString("id_surat_keluar").trim();
+
+                        Intent i = new Intent(TambahSuratKeluarActivity.this, DetailSuratKeluarActivity.class);
+                        i.putExtra( "idSuratKeluar", id_surat_keluar );
+                        startActivity(i);
+                        Toast.makeText(TambahSuratKeluarActivity.this, "Berhasil Menambahkan Surat Keluar", Toast.LENGTH_SHORT).show();
+
+                    }else{
+                        Toast.makeText(TambahSuratKeluarActivity.this, "Gagal Menambahkan Surat Keluar", Toast.LENGTH_SHORT).show();
+                    }
+                    progress.dismiss();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Log.d( "TAG", e.toString() );
+                    Toast.makeText(TambahSuratKeluarActivity.this, "Periksa koneksi & coba lagi", Toast.LENGTH_SHORT).show();
+                    progress.dismiss();
+                }
+            }
+        },new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                Toast.makeText(TambahSuratKeluarActivity.this, "Periksa koneksi & coba lagi1", Toast.LENGTH_SHORT).show();
+                progress.dismiss();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("no_surat", noSurat);
+                params.put("id_bagian", idBagian);
+                params.put("tujuan", tujuan);
+                params.put("perihal", perihal);
+                params.put("tgl_surat", tglSurat);
+                params.put("id_jenis_surat", idJenisSurat);
+                params.put("isi_singkat", isiSingkat);
+                params.put("keterangan", keterangan);
+                params.put("file", file);
+                params.put("api", "tambah");
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
     }
 
     private void klikfoto(){

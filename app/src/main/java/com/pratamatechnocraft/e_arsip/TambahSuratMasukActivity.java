@@ -1,9 +1,16 @@
 package com.pratamatechnocraft.e_arsip;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.graphics.Rect;
+import android.net.Uri;
+import android.provider.MediaStore;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -12,6 +19,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Base64;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.WindowManager;
@@ -24,6 +33,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -33,14 +43,19 @@ import com.android.volley.toolbox.Volley;
 import com.pratamatechnocraft.e_arsip.Adapter.AdapterRecycleViewJenisSurat;
 import com.pratamatechnocraft.e_arsip.Model.BaseUrlApiModel;
 import com.pratamatechnocraft.e_arsip.Model.ListItemJenisSurat;
+import com.pratamatechnocraft.e_arsip.Service.SessionManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class TambahSuratMasukActivity extends AppCompatActivity {
     private RecyclerView recyclerViewJenisSurat;
@@ -56,10 +71,22 @@ public class TambahSuratMasukActivity extends AppCompatActivity {
     ImageView fotoSuratMasuk;
     private Calendar calendar=Calendar.getInstance();
     private int year, month, day;
+    BottomSheetDialog bottomSheetDialog;
+    private Bitmap bitmap;
+    static final int REQUEST_IMAGE_CAPTURE = 1;
+    private Bitmap mImageBitmap;
+    private String mCurrentPhotoPath;
+    private Button galeri,kamera;
+    private TextView txtFotoSurat;
+    private ProgressDialog progress;
+    SwipeRefreshLayout refreshTambahSuratKeluar;
+    SessionManager sessionManager;
+    HashMap<String, String> user=null;
 
     BaseUrlApiModel baseUrlApiModel = new BaseUrlApiModel();
     private String baseUrl=baseUrlApiModel.getBaseURL();
     private static final String API_URL_JENIS_SURAT = "api/jenis_surat?api=jenis_suratall";
+    private static final String API_URL_TAMBAH = "api/surat_masuk";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +100,10 @@ public class TambahSuratMasukActivity extends AppCompatActivity {
         day=calendar.get(Calendar.DAY_OF_MONTH);
         year=calendar.get(Calendar.YEAR);
         month=calendar.get(Calendar.MONTH);
+
+        sessionManager = new SessionManager( this );
+        user = sessionManager.getUserDetail();
+        progress = new ProgressDialog(this);
 
         /*BUTTON*/
         buttonTambahSuratMasuk = findViewById( R.id.buttonTambahSuratMasuk );
@@ -94,6 +125,7 @@ public class TambahSuratMasukActivity extends AppCompatActivity {
 
         /*IMAGE*/
         fotoSuratMasuk = (ImageView) findViewById( R.id.fotoSuratMasuk );
+        txtFotoSurat = (TextView) findViewById( R.id.txtFotoSurat );
 
         /*TGL SURAT*/
         txtTanggalSuratMasukTambah = findViewById( R.id.txtTanggalSuratMasukTambah );
@@ -128,7 +160,7 @@ public class TambahSuratMasukActivity extends AppCompatActivity {
         fotoSuratMasuk.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                klikfoto();
             }
         } );
 
@@ -144,12 +176,150 @@ public class TambahSuratMasukActivity extends AppCompatActivity {
                 if (!validateNoSurat() || !validateAsal() || !validatePerihal() || !validateIsi() || !validateKeterangan()) {
                     return;
                 }else {
-
+                    ListItemJenisSurat listItemJenisSurat = listItemJenisSurats.get(adapterRecycleViewJenisSurat.getLastSelectedPosition());
+                    progress.setMessage("Mohon Ditunggu, Sedang diProses.....");
+                    progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                    progress.setIndeterminate(false);
+                    progress.setCanceledOnTouchOutside(false);
+                    prosesTambahSuratMasuk(
+                            inputNoSrt.getText().toString().trim(),
+                            inputAsalMasukTambah.getText().toString().trim(),
+                            inputPerihalMasukTambah.getText().toString().trim(),
+                            txtTanggalSuratMasukTambah.getText().toString().trim(),
+                            listItemJenisSurat.getIdJenisSurat(),
+                            inputIsiMasukTambah.getText().toString().trim(),
+                            inputKeteranganMasukTambah.getText().toString().trim(),
+                            txtFotoSurat.getText().toString()
+                    );
                 }
             }
         } );
 
         recyclerViewJenisSurat.setAdapter(adapterRecycleViewJenisSurat);
+    }
+
+    private void prosesTambahSuratMasuk(final String noSurat, final String asal, final String perihal, final String tglSurat, final String idJenisSurat, final String isiSingkat, final String keterangan, final String file) {
+        progress.show();
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, baseUrl+API_URL_TAMBAH, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String kode = jsonObject.getString("kode");
+                    if (kode.equals("1")) {
+                        JSONObject data = jsonObject.getJSONObject("data");
+                        String id_surat_masuk = data.getString("id_surat_masuk").trim();
+
+                        Intent i = new Intent(TambahSuratMasukActivity.this, DetailSuratMasukActivity.class);
+                        i.putExtra( "idSuratMasuk", id_surat_masuk );
+                        startActivity(i);
+                        Toast.makeText(TambahSuratMasukActivity.this, "Berhasil Menambahkan Surat Keluar", Toast.LENGTH_SHORT).show();
+
+                    }else{
+                        Toast.makeText(TambahSuratMasukActivity.this, "Gagal Menambahkan Surat Keluar", Toast.LENGTH_SHORT).show();
+                    }
+                    progress.dismiss();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Log.d( "TAG", e.toString() );
+                    Toast.makeText(TambahSuratMasukActivity.this, "Periksa koneksi & coba lagi", Toast.LENGTH_SHORT).show();
+                    progress.dismiss();
+                }
+            }
+        },new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                Toast.makeText(TambahSuratMasukActivity.this, "Periksa koneksi & coba lagi1", Toast.LENGTH_SHORT).show();
+                progress.dismiss();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("no_surat", noSurat);
+                params.put("asal_surat", asal);
+                params.put("perihal", perihal);
+                params.put("tgl_surat", tglSurat);
+                params.put("id_jenis_surat", idJenisSurat);
+                params.put("isi_singkat", isiSingkat);
+                params.put("keterangan", keterangan);
+                params.put("file", file);
+                params.put("api", "tambah");
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+    private void klikfoto(){
+        View view = getLayoutInflater().inflate(R.layout.fragment_bottom_sheet_dialog_tambah_foto_surat, null);
+        bottomSheetDialog = new BottomSheetDialog(this);
+        bottomSheetDialog.setContentView(view);
+
+        galeri = view.findViewById( R.id.galeri1 );
+        kamera = view.findViewById( R.id.kamera1 );
+        galeri.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bottomSheetDialog.dismiss();
+                pilihFoto();
+            }
+        } );
+        kamera.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bottomSheetDialog.dismiss();
+                takePicture();
+            }
+        } );
+
+        bottomSheetDialog.show();
+    }
+
+    private void pilihFoto(){
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(intent.ACTION_PICK);
+        startActivityForResult(Intent.createChooser(intent,"Pilih Foto"),1);
+    }
+
+    private void takePicture() {
+        Intent takePictureIntent = new Intent( MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult( requestCode, resultCode, data );
+        if (requestCode==1 && resultCode==RESULT_OK && data!=null && data.getData() !=null){
+            Uri filePath = data.getData();
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap( getContentResolver(),filePath );
+                fotoSuratMasuk.setImageBitmap( bitmap );
+                txtFotoSurat.setText( getStringImage( bitmap ) );
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            mImageBitmap = (Bitmap) extras.get("data");
+            fotoSuratMasuk.setImageBitmap(mImageBitmap);
+            txtFotoSurat.setText( getStringImage( mImageBitmap ) );
+        }
+    }
+
+    private String getStringImage(Bitmap bitmap) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(  );
+        bitmap.compress( Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream );
+        byte[] imageByteArray =  byteArrayOutputStream.toByteArray();
+        String encodedImage = Base64.encodeToString( imageByteArray, Base64.DEFAULT );
+
+        return encodedImage;
     }
 
     private void loadJenisSurat(){
