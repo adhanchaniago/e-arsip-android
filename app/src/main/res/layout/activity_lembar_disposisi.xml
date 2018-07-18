@@ -31,8 +31,91 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginBottom="20dp">
+                android:layout_marginBottom="20dp"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/activity_horizontal_margin"
+                    android:gravity="center"
+                    app:cardCornerRadius="@dimen/radiusCardView"
+                    app:cardElevation="@dimen/shadowCardView"
+                    app:contentPadding="10dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:weightSum="2">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:padding="@dimen/cellpadingdetailsuratmasuk"
+                                android:text="Isi Disposisi"
+                                android:textAlignment="center"
+                                android:textColor="@color/ColorPrimaryText"
+                                android:textStyle="bold" />
+
+                            <View
+                                android:id="@+id/divider2"
+                                android:layout_width="1dp"
+                                android:layout_height="match_parent"
+                                android:background="?android:attr/listDivider" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:padding="@dimen/cellpadingdetailsuratmasuk"
+                                android:text="*Catatan"
+                                android:textAlignment="center"
+                                android:textColor="@color/ColorPrimaryText"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:weightSum="2">
+
+                            <TextView
+                                android:id="@+id/txtIsiDisposisi"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:padding="@dimen/cellpadingdetailsuratmasuk"
+                                android:textColor="@color/ColorPrimaryText"
+                                android:textSize="12sp" />
+
+                            <View
+                                android:id="@+id/divider3"
+                                android:layout_width="1dp"
+                                android:layout_height="match_parent"
+                                android:background="?android:attr/listDivider" />
+
+                            <TextView
+                                android:id="@+id/txtCatatanDisposisi"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:padding="@dimen/cellpadingdetailsuratmasuk"
+                                android:textColor="@color/ColorPrimaryText"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
 
                 <android.support.v7.widget.CardView
                     android:id="@+id/cardView"
@@ -190,8 +273,8 @@
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:cardCornerRadius="@dimen/radiusCardView"
                     android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                    app:cardCornerRadius="@dimen/radiusCardView"
                     app:cardElevation="@dimen/shadowCardView"
                     app:contentPadding="10dp">
 
@@ -224,87 +307,17 @@
 
                 </android.support.v7.widget.CardView>
 
-                <android.support.v7.widget.CardView
-                    android:gravity="center"
-                    android:layout_width="match_parent"
+                <Button
+                    android:id="@+id/buttonLihatSurat"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/activity_horizontal_margin"
-                    app:cardCornerRadius="@dimen/radiusCardView"
-                    app:cardElevation="@dimen/shadowCardView"
-                    app:contentPadding="10dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal"
-                            android:weightSum="2">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:padding="@dimen/cellpadingdetailsuratmasuk"
-                                android:text="Isi Disposisi"
-                                android:textAlignment="center"
-                                android:textColor="@color/ColorPrimaryText"
-                                android:textStyle="bold" />
-
-                            <View
-                                android:id="@+id/divider2"
-                                android:layout_width="1dp"
-                                android:layout_height="match_parent"
-                                android:background="?android:attr/listDivider" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:padding="@dimen/cellpadingdetailsuratmasuk"
-                                android:text="*Catatan"
-                                android:textAlignment="center"
-                                android:textColor="@color/ColorPrimaryText"
-                                android:textStyle="bold" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal"
-                            android:weightSum="2">
-
-                            <TextView
-                                android:id="@+id/txtIsiDisposisi"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:padding="@dimen/cellpadingdetailsuratmasuk"
-                                android:textColor="@color/ColorPrimaryText"
-                                android:textSize="12sp" />
-
-                            <View
-                                android:id="@+id/divider3"
-                                android:layout_width="1dp"
-                                android:layout_height="match_parent"
-                                android:background="?android:attr/listDivider" />
-
-                            <TextView
-                                android:id="@+id/txtCatatanDisposisi"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:padding="@dimen/cellpadingdetailsuratmasuk"
-                                android:textColor="@color/ColorPrimaryText"
-                                android:textSize="12sp" />
-                        </LinearLayout>
-                    </LinearLayout>
-
-                </android.support.v7.widget.CardView>
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Lihat Surat Masuk"
+                    android:textAllCaps="false" />
 
             </LinearLayout>
         </ScrollView>

@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +40,7 @@ public class LembarDisposisiActivity extends AppCompatActivity {
     public TextView txtNoSuratDisposisi,txtIdBagianLembarDisposisi, txtAsalSuratDisposisi;
     public TextView txtTglSuratDisposisi,txtTglArsipDisposisi,txtSifatDisposisi,txtIsiDisposisi,txtCatatanDisposisi;
     SwipeRefreshLayout refreshLembarDisposisi;
+    private Button btnLihatSurat;
 
     BaseUrlApiModel baseUrlApiModel = new BaseUrlApiModel();
     private String baseUrl=baseUrlApiModel.getBaseURL();
@@ -52,6 +54,7 @@ public class LembarDisposisiActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lembar_disposisi);
         refreshLembarDisposisi = findViewById( R.id.refreshLembarDisposisi );
+        btnLihatSurat = findViewById( R.id.buttonLihatSurat );
 
         recyclerViewBagianLembarDisposisi = (RecyclerView)findViewById(R.id.recycleViewBagianLembarDisposisi);
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
@@ -111,6 +114,15 @@ public class LembarDisposisiActivity extends AppCompatActivity {
                         txtIsiDisposisi.setText( lembardisposisi.getString( "isi_disposisi" ) );
                         txtCatatanDisposisi.setText( lembardisposisi.getString( "catatan" ) );
                         loadBagianLembarDisposisi(lembardisposisi.getString( "bagian" ));
+                        final String idSuratMasuk=lembardisposisi.getString( "id_surat_masuk" );
+                        btnLihatSurat.setOnClickListener( new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent i = new Intent(LembarDisposisiActivity.this, DetailSuratMasukActivity.class);
+                                i.putExtra( "idSuratMasuk",  idSuratMasuk);
+                                startActivity(i);
+                            }
+                        } );
                     }catch (JSONException e){
                         e.printStackTrace();
                         refreshLembarDisposisi.setRefreshing( false );
